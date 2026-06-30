@@ -152,45 +152,55 @@
             max-width: 640px;
             margin: 0 auto 28px;
         }
-        /* Hero — skimmable: a lead deck on top, then a grid of story cards.
-           Each card has a bold headline line (the skim layer) + supporting text. */
-        .hero-lead {
-            color: rgba(255,255,255,0.90);
-            font-size: clamp(18px, 2vw, 22px);
-            line-height: 1.55;
-            max-width: 780px;
-            margin: 0 auto 36px;
-        }
-        .hero-lead strong { color: #fff; font-weight: 700; }
-        /* Closing line below the story cards, above the stat pills */
-        .hero-footer {
-            color: rgba(255,255,255,0.90);
-            font-size: clamp(17px, 1.8vw, 20px);
-            line-height: 1.55;
-            max-width: 780px;
-            margin: 30px auto 0;
-        }
-        .hero-footer strong { color: var(--cyan); font-weight: 700; }
+        /* Hero — header, then a 2×2 grid of icon cards, then a bordered
+           "breakout" box holding the closing statement + stat pills. */
         .hero-story {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            max-width: 1000px;
-            margin: 0 auto;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px 44px;
+            max-width: 1040px;
+            margin: 8px auto 0;
             text-align: left;
         }
+        /* Borderless card: icon tile on the left, text on the right. */
         .hero-card {
-            background: rgba(255,255,255,0.045);
-            border: 1px solid rgba(255,255,255,0.10);
-            border-radius: 14px;
-            padding: 22px 24px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            background: none;
+            border: none;
+            padding: 0;
         }
+        .card-icon {
+            flex-shrink: 0;
+            width: 54px;
+            height: 54px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(255,255,255,0.045);
+            color: var(--pink);
+        }
+        .card-icon svg, .card-icon img { width: 26px; height: 26px; display: block; }
+        .card-text { min-width: 0; }
+        .card-kicker {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 8px;
+        }
+        .card-kicker .num { color: #ff8bc8; margin-right: 7px; }
         .hero-card .card-lead {
             color: #fff;
             font-size: 16px;
             font-weight: 700;
             line-height: 1.45;
-            margin: 0 0 10px;
+            margin: 0 0 8px;
         }
         .hero-card .card-body {
             color: rgba(255,255,255,0.66);
@@ -198,23 +208,101 @@
             line-height: 1.6;
             margin: 0;
         }
-        .hero-card .hl { color: var(--cyan); }
+        .hero-card .hl { color: var(--cyan); font-weight: 600; }
+        /* Divider under the top-row cards (between 1↓3 and 2↓4), inset past the icon */
+        .hero-card--divider { position: relative; padding-bottom: 18px; }
+        .hero-card--divider::after {
+            content: '';
+            position: absolute;
+            left: 72px;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: rgba(255,255,255,0.12);
+        }
+        /* Checklist variant (card 03) */
+        .card-checks {
+            list-style: none;
+            margin: 2px 0 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .card-checks li {
+            position: relative;
+            padding-left: 24px;
+            color: rgba(255,255,255,0.66);
+            font-size: 14px;
+            line-height: 1.55;
+        }
+        .card-checks li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 15px;
+            height: 15px;
+            background: url("images/check.png") center / contain no-repeat;
+        }
+
+        /* ── HERO BREAKOUT (bordered closing box + stat pills) ── */
+        .hero-breakout {
+            max-width: 1040px;
+            margin: 44px auto 0;
+            border: 1px solid rgba(248,87,166,0.34);
+            border-radius: 16px;
+            background: rgba(248,87,166,0.06);
+            box-shadow: inset 0 0 60px rgba(248,87,166,0.08), 0 10px 34px rgba(248,87,166,0.07);
+            padding: 22px 26px;
+            text-align: left;
+        }
+        .breakout-statement {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .breakout-icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(248,87,166,0.40);
+            background: rgba(248,87,166,0.10);
+            color: var(--pink);
+        }
+        .breakout-icon svg, .breakout-icon img { width: 22px; height: 22px; display: block; }
+        .breakout-statement p {
+            margin: 0;
+            align-self: center;
+            font-size: 15px;
+            line-height: 1.55;
+            color: rgba(255,255,255,0.80);
+        }
+        .breakout-statement strong { color: var(--pink); font-weight: 700; }
         .hero-pills {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 28px;
+            gap: 12px;
+            margin-top: 20px;
         }
         .hero-pill {
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 32px;
-            padding: 8px 16px;
-            color: rgba(255,255,255,0.88);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 999px;
+            padding: 9px 18px;
+            color: rgba(255,255,255,0.70);
             font-size: 13px;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.03);
         }
-        .hero-pill strong { color: var(--cyan); margin-right: 6px; }
+        .hero-pill strong { color: var(--pink); margin-right: 2px; font-weight: 800; }
+        .pill-icon { display: inline-flex; color: var(--pink); }
+        .pill-icon svg, .pill-icon img { width: 18px; height: 18px; display: block; }
 
         /* ── CALCULATOR LAYOUT ── */
         .calc-section {
@@ -1513,27 +1601,78 @@
     <div class="hero-inner">
         <div class="hero-eyebrow">YouTube Social Listening Firehose · Pricing Calculator</div>
         <h1>YouTube Social Listening Data</h1>
-        <p class="hero-lead">After two decades of trying, Social Listening Platforms still cannot report YouTube results. Noisy, inaccurate and incomplete, <strong>today's video results are simply not good enough.</strong> YouTube Quota Limitations are to blame, people say. <strong>Actually, that's not the problem.</strong></p>
-
         <div class="hero-story">
-            <div class="hero-card">
-                <p class="card-lead">Introducing Touchstorm DataLabs. We're the only company to solve the most vexxing Big Data Problem in marketing - YouTube Social Listening.</p>
-                <p class="card-body">We've expanded, appended, enriched, transformed and classified YouTube's data so it can be accurately queried. It took us 15 years to do it, but <span class="hl">your results come back in 24 hours.</span></p>
+            <!-- 01 THE PROBLEM -->
+            <div class="hero-card hero-card--divider">
+                <span class="card-icon" aria-hidden="true">
+                    <img src="images/search.png" alt="" decoding="async">
+                </span>
+                <div class="card-text">
+                    <span class="card-kicker"><span class="num">01</span>The Problem</span>
+                    <p class="card-lead">After two decades of trying, Social Listening Platforms still cannot report YouTube results.</p>
+                    <p class="card-body">Noisy, inaccurate and incomplete, <strong>today's video results are simply not good enough.</strong> YouTube Quota Limitations are to blame, people say. <strong>Actually, that's not the problem.</strong></p>
+                </div>
             </div>
-            <div class="hero-card">
-                <p class="card-lead">No more missing videos. No more results where Noise outweighs Signal.</p>
-                <p class="card-body">Your users' queries for Brands, Brand Divisions, Products, Product Categories and Topics return shockingly better results - see left panel. And once we process your queries against our database, you can dramatically improve results from <span class="hl">Reels &amp; TikTok</span>, too. Most creators post on all three sites, so at a certain spending threshold, we return your queries, fully fixed up and ready to improve results elsewhere.</p>
+            <!-- 02 THE BREAKTHROUGH -->
+            <div class="hero-card hero-card--divider">
+                <span class="card-icon" aria-hidden="true">
+                    <img src="images/chemistry.png" alt="" decoding="async">
+                </span>
+                <div class="card-text">
+                    <span class="card-kicker"><span class="num">02</span>The Breakthrough</span>
+                    <p class="card-lead">Introducing Touchstorm DataLabs. We're the only company to solve the most vexxing Big Data Problem in marketing - YouTube Social Listening.</p>
+                    <p class="card-body">We've expanded, appended, enriched, transformed and classified YouTube's data so it can be accurately queried. It took us 15 years to do it, but <span class="hl">your results come back in 24 hours.</span></p>
+                </div>
             </div>
+            <!-- 03 WHAT YOU GET -->
             <div class="hero-card">
-                <p class="card-lead">Late 2026 will bring disruption to Social Listening.</p>
-                <p class="card-body">Data parity is the industry curse, giving customers few reasons to switch providers. As a result, market shares are pretty stagnant. But now, a breakthrough. Accessing our data, some platforms are about to conquer Video Social Listening. For them, platform switchers will arrive at their door, PO in hand. <span class="hl">Market share will tilt toward those that solved the video problem.</span> The difference is that dramatic.</p>
+                <span class="card-icon" aria-hidden="true">
+                    <img src="images/graph.png" alt="" decoding="async">
+                </span>
+                <div class="card-text">
+                    <span class="card-kicker"><span class="num">03</span>What You Get</span>
+                    <p class="card-lead">No more missing videos. No more results where Noise outweighs Signal.</p>
+                    <ul class="card-checks">
+                        <li>Your users' queries for Brands, Brand Divisions, Products, Product Categories and Topics return shockingly better results.</li>
+                        <li>Once we process your queries against our database, you can dramatically improve results from <span class="hl">Reels &amp; TikTok</span>, too. Most creators post on all three sites, so at a certain spending threshold, we return your queries, fully fixed up and ready to improve results elsewhere.</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 04 WHY IT MATTERS -->
+            <div class="hero-card">
+                <span class="card-icon" aria-hidden="true">
+                    <img src="images/thunder.png" alt="" decoding="async">
+                </span>
+                <div class="card-text">
+                    <span class="card-kicker"><span class="num">04</span>Why It Matters</span>
+                    <p class="card-lead">Late 2026 will bring disruption to Social Listening. Data parity is the industry curse, giving customers few reasons to switch providers.</p>
+                    <p class="card-body">As a result, market shares are pretty stagnant. But now, a breakthrough. Accessing our data, some platforms are about to conquer Video Social Listening. For them, platform switchers will arrive at their door, PO in hand. <span class="hl">Market share will tilt toward those that solved the video problem.</span> The difference is that dramatic.</p>
+                </div>
             </div>
         </div>
-        <p class="hero-footer"><strong>Finally, true YouTube Social Listening is here.</strong> Fully YouTube API Compliant, we're ready for your queries.</p>
-        <div class="hero-pills">
-            <div class="hero-pill"><strong>~35M</strong>Channels searched</div>
-            <div class="hero-pill"><strong>~5B</strong>Videos searched</div>
-            <div class="hero-pill"><strong>All Signal</strong>No Noise guarantee</div>
+
+        <!-- BREAKOUT: closing statement + stat pills -->
+        <div class="hero-breakout">
+            <div class="breakout-statement">
+                <span class="breakout-icon" aria-hidden="true">
+                    <img src="images/Flag.png" alt="" decoding="async">
+                </span>
+                <p><strong>Touchstorm DataLabs is the only place on the planet with the data you need to do Video Social Listening right.</strong> Fully YouTube API Compliant, we're ready for your queries.</p>
+            </div>
+            <div class="hero-pills">
+                <div class="hero-pill">
+                    <span class="pill-icon" aria-hidden="true"><img src="images/play-circle-svgrepo-com.png" alt="" decoding="async"></span>
+                    <strong>+35M</strong> Channels searched
+                </div>
+                <div class="hero-pill">
+                    <span class="pill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span>
+                    <strong>+5B</strong> Videos searched
+                </div>
+                <div class="hero-pill">
+                    <span class="pill-icon" aria-hidden="true"><img src="images/signal-svgrepo-com.png" alt="" decoding="async"></span>
+                    <strong>All Signal</strong> No Noise guarantee
+                </div>
+            </div>
         </div>
     </div>
 </section>

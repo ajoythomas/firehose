@@ -162,9 +162,18 @@
             margin: 0 auto 36px;
         }
         .hero-lead strong { color: #fff; font-weight: 700; }
+        /* Closing line below the story cards, above the stat pills */
+        .hero-footer {
+            color: rgba(255,255,255,0.90);
+            font-size: clamp(17px, 1.8vw, 20px);
+            line-height: 1.55;
+            max-width: 780px;
+            margin: 30px auto 0;
+        }
+        .hero-footer strong { color: var(--cyan); font-weight: 700; }
         .hero-story {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 18px;
             max-width: 1000px;
             margin: 0 auto;
@@ -1519,11 +1528,8 @@
                 <p class="card-lead">Late 2026 will bring disruption to Social Listening.</p>
                 <p class="card-body">Data parity is the industry curse, giving customers few reasons to switch providers. As a result, market shares are pretty stagnant. But now, a breakthrough. Accessing our data, some platforms are about to conquer Video Social Listening. For them, platform switchers will arrive at their door, PO in hand. <span class="hl">Market share will tilt toward those that solved the video problem.</span> The difference is that dramatic.</p>
             </div>
-            <div class="hero-card">
-                <p class="card-lead">Finally, true YouTube Social Listening is here.</p>
-                <p class="card-body">Fully YouTube API Compliant, we're ready for your queries.</p>
-            </div>
         </div>
+        <p class="hero-footer"><strong>Finally, true YouTube Social Listening is here.</strong> Fully YouTube API Compliant, we're ready for your queries.</p>
         <div class="hero-pills">
             <div class="hero-pill"><strong>~35M</strong>Channels searched</div>
             <div class="hero-pill"><strong>~5B</strong>Videos searched</div>

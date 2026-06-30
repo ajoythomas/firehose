@@ -1,1 +1,2761 @@
-firehose
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Calculator | Touchstorm DATAlabs Social Listening Firehose</title>
+    <meta name="description" content="Configure your YouTube Social Listening Firehose. Five decisions, eighteen pricing combinations, transparent volume curve. No surprises on your invoice.">
+    <meta property="og:title" content="Pricing Calculator | Touchstorm DATAlabs">
+    <meta property="og:description" content="Five decisions. Real per-query rates. Live monthly + annual totals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.touchstormdatalabs.com/data/pricing.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --pink: #F857A6;
+            --pink-dark: #e14491;
+            --pink-light: rgba(248, 87, 166, 0.12);
+            --pink-mid: rgba(248, 87, 166, 0.2);
+            --panel-bg: #FDF3F9;
+            --cyan: #81CFF8;
+            --cyan-soft: rgba(129, 207, 248, 0.14);
+            --navy: #0B0C23;
+            --navy-soft: #171b39;
+            --white: #ffffff;
+            --text-dark: #10152f;
+            --text-muted: #5f6885;
+            --border-light: rgba(11,12,35,0.1);
+            --footer-gray: #6D6E71;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            background: #0B0C23;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 200;
+            padding: 0 clamp(24px, 4vw, 72px);
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #090b1d 0%, #0b0c23 58%, #171b39 100%);
+            box-shadow: 0 10px 30px rgba(7, 10, 28, 0.28);
+        }
+        .site-logo-img { display: flex; align-items: center; gap: 20px; }
+        .site-logo-img a { display: flex; align-items: center; }
+        .site-logo-img img { height: 22px; width: auto; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links > a {
+            color: rgba(255,255,255,0.82);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+        .nav-links > a:hover { color: var(--cyan); }
+        .nav-links > a.active { color: var(--cyan); }
+        .nav-cta-wrap { display: inline-flex; flex-shrink: 0; }
+        .nav-cta {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: transparent;
+            color: rgba(255,255,255,0.9);
+            border: 1.5px solid rgba(255,255,255,0.5);
+            padding: 10px 24px;
+            border-radius: 48px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .nav-cta:hover { border-color: rgba(255,255,255,0.85); color: white; }
+        .cta-chevron { display: inline-block; font-size: 20px; line-height: 1; transition: transform 0.2s; }
+        .cta-chevron::before { content: '›'; }
+        .nav-cta:hover .cta-chevron::before { content: '→'; }
+        .nav-cta:hover .cta-chevron { transform: translateX(2px); }
+
+        /* ── HERO ── */
+        .hero {
+            background:
+                radial-gradient(circle at 20% 30%, rgba(248, 87, 166, 0.25), transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(129, 207, 248, 0.22), transparent 50%),
+                linear-gradient(160deg, #0b0c23 0%, #171b39 50%, #0b0c23 100%);
+            margin-top: 76px;
+            padding: 80px clamp(24px, 4vw, 80px) 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20% 20%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 70% 35%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 35% 75%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 85% 85%, rgba(255,255,255,0.3), transparent);
+            background-size: 300px 300px;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+        .hero-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 1; }
+        .hero-eyebrow {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 22px;
+        }
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 60px);
+            color: white;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+        .hero h1 em {
+            color: var(--cyan);
+            font-style: normal;
+        }
+        .hero-sub {
+            color: rgba(255,255,255,0.78);
+            font-size: 18px;
+            max-width: 640px;
+            margin: 0 auto 28px;
+        }
+        /* Hero — skimmable: a lead deck on top, then a grid of story cards.
+           Each card has a bold headline line (the skim layer) + supporting text. */
+        .hero-lead {
+            color: rgba(255,255,255,0.90);
+            font-size: clamp(18px, 2vw, 22px);
+            line-height: 1.55;
+            max-width: 780px;
+            margin: 0 auto 36px;
+        }
+        .hero-lead strong { color: #fff; font-weight: 700; }
+        .hero-story {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .hero-card {
+            background: rgba(255,255,255,0.045);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 14px;
+            padding: 22px 24px;
+        }
+        .hero-card .card-lead {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.45;
+            margin: 0 0 10px;
+        }
+        .hero-card .card-body {
+            color: rgba(255,255,255,0.66);
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .hero-card .hl { color: var(--cyan); }
+        .hero-pills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+        .hero-pill {
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 32px;
+            padding: 8px 16px;
+            color: rgba(255,255,255,0.88);
+            font-size: 13px;
+            background: rgba(255,255,255,0.04);
+        }
+        .hero-pill strong { color: var(--cyan); margin-right: 6px; }
+
+        /* ── CALCULATOR LAYOUT ── */
+        .calc-section {
+            background: #f3f5f8;
+            padding: 64px clamp(20px, 4vw, 80px) 96px;
+            position: relative;
+        }
+        /* Full-width 3-area layout:
+           [ explainer rail ] [ query-type tabs ] [ (empty) ]
+           [ explainer rail ] [ form cards      ] [ live estimate ]
+           The explainer spans both rows; the price panel starts on row 2 (below the
+           dotted line / tabs). calc-config + tabbed-unit use display:contents so the
+           tabs and form become direct grid items. */
+        .calc-grid {
+            max-width: none;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns:
+                [explainer] minmax(260px, 340px)
+                [unit] minmax(0, 1fr)
+                [price] minmax(360px, 420px);
+            grid-template-rows: auto auto;
+            grid-template-areas:
+                ".         tabs  ."
+                "explainer form  price";
+            column-gap: 32px;
+            row-gap: 0;
+            align-items: start;
+        }
+        .calc-config { display: contents; }
+        .tabbed-unit { display: contents; }
+        .query-type-select { grid-area: tabs; }
+        .form-wrapper { grid-area: form; }
+        .price-panel-wrap { grid-area: price; }
+        .calc-explainer { grid-area: explainer; }
+        /* ── QUERY TYPE SELECTOR (pick one of two) ── */
+        .query-type-select {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .query-type-box {
+            position: relative;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(11,12,35,0.06);
+            border: 2px solid rgba(11,12,35,0.08);
+            padding: 22px 24px;
+            cursor: pointer;
+            transition: all 0.18s;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .query-type-box:hover { border-color: var(--pink); }
+        .query-type-box.selected {
+            border-color: var(--pink);
+            background: var(--panel-bg);
+            box-shadow: 0 4px 20px rgba(248,87,166,0.18);
+        }
+        .query-type-badge {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            color: white;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 0.02em;
+        }
+        .query-type-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin: 0;
+            padding-right: 28px;
+        }
+        .query-type-radio {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(11,12,35,0.25);
+            transition: all 0.18s;
+        }
+        .query-type-box.selected .query-type-radio {
+            border-color: var(--pink);
+            background: var(--pink);
+            box-shadow: inset 0 0 0 4px white;
+        }
+        .query-type-amount {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--pink-dark);
+            font-variant-numeric: tabular-nums;
+            margin-top: 2px;
+        }
+        /* The Query Type 2 box carries the same light-blue theme as its form. */
+        .query-type-box[data-querytype="type2"] {
+            --pink: #3B245A;
+            --pink-dark: #261540;
+            --pink-light: rgba(59, 36, 90, 0.13);
+            --pink-mid: rgba(59, 36, 90, 0.24);
+            --panel-bg: #F1EDF6;
+        }
+        .query-type-box[data-querytype="type2"] .query-type-badge {
+            background: linear-gradient(135deg, #5B3A86, #3B245A);
+        }
+        .query-type-box[data-querytype="type2"].selected {
+            box-shadow: 0 4px 20px rgba(59, 36, 90, 0.22);
+        }
+        /* ── TABBED UNIT — connect the active tab to the form like a browser tab ── */
+        .tabbed-unit { position: relative; }
+        /* Form sits under the tabs; the active tab overlaps the form's top border by
+           enough (tab border 2px + form border 2px) that its opaque fill hides the seam. */
+        .tabbed-unit .form-wrapper {
+            position: relative;
+            z-index: 2;
+            margin-top: -2px;
+        }
+        .tabbed-unit .query-type-box { z-index: 1; }
+        /* Inactive tab lifts up, leaving a gap above the form. */
+        .tabbed-unit .query-type-box:not(.selected) {
+            margin-bottom: 16px;
+        }
+        /* Active tab merges flush into the form: opaque fill, no bottom border/seam,
+           sits on top so it covers the form's top border beneath it. */
+        .tabbed-unit .query-type-box.selected {
+            z-index: 3;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-color: transparent;
+            box-shadow: none;
+        }
+        /* Solid bar over the outer-edge junction — covers the 1px subpixel seam where the
+           tab's and form's separate borders stack at a fractional pixel. */
+        .tabbed-unit .query-type-box.selected::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            width: 2px;
+            height: 16px;
+            background: var(--pink);
+            z-index: 3;
+        }
+        .tabbed-unit .query-type-box[data-querytype="type1"].selected::after { left: -2px; }
+        .tabbed-unit .query-type-box[data-querytype="type2"].selected::after { right: -2px; }
+        /* Square the form's top corner on the side the active tab joins. */
+        .form-wrapper.tab-left { border-top-left-radius: 0; }
+        .form-wrapper.tab-right { border-top-right-radius: 0; }
+        /* ── FORM WRAPPER — frames the whole form for the active query type ── */
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border: 2px solid var(--pink);
+            border-radius: 16px;
+            padding: 20px;
+            background: var(--panel-bg);
+            transition: border-color 0.18s, background 0.18s;
+        }
+        /* Footer nav inside the form (e.g. "Save and Move to Query Type 2") */
+        .form-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .form-nav-error {
+            font-size: 13px;
+            font-weight: 600;
+            color: #d61f4e;
+            text-align: right;
+            max-width: 520px;
+        }
+        /* Missing required field highlight */
+        .calc-card.field-error {
+            border-color: #e23b5a;
+            box-shadow: 0 0 0 2px rgba(226,59,90,0.18);
+        }
+        .calc-card.field-error .calc-card-num {
+            background: #e23b5a;
+        }
+        .form-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 4px 14px rgba(248,87,166,0.28);
+        }
+        .form-nav-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(248,87,166,0.36); }
+        .form-nav-btn:active { transform: translateY(0); }
+        .form-wrapper-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .form-wrapper-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            color: white;
+            font-weight: 800;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        /* Query Type 2 re-themes the whole form to light blue by overriding the pink
+           variables in scope — every var(--pink*) element (borders, pills, backgrounds,
+           toggles, slider, checkboxes) recolors automatically. */
+        .form-wrapper.type2 {
+            --pink: #3B245A;
+            --pink-dark: #261540;
+            --pink-light: rgba(59, 36, 90, 0.13);
+            --pink-mid: rgba(59, 36, 90, 0.24);
+            --panel-bg: #F1EDF6;
+            background: var(--panel-bg);
+        }
+        /* Richer purple gradient on the badge/pill for visible shading. */
+        .form-wrapper.type2 .form-wrapper-badge {
+            background: linear-gradient(135deg, #5B3A86, #3B245A);
+        }
+        .calc-card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(11,12,35,0.06);
+            border: 1px solid rgba(11,12,35,0.06);
+            padding: 26px 28px;
+        }
+        .calc-card-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        .calc-card-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 30px;
+            height: 30px;
+            padding: 0 8px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            color: white;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        .calc-card-head-text { flex: 1; min-width: 0; }
+        .calc-card-head h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .calc-card-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .free-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(44, 202, 166, 0.14);
+            color: #1a8a6e;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(11,12,35,0.32);
+            background: transparent;
+            color: rgba(11,12,35,0.55);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-style: italic;
+            font-family: Georgia, serif;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .info-icon:hover, .info-icon:focus {
+            background: var(--pink);
+            border-color: var(--pink);
+            color: white;
+            outline: none;
+        }
+        .info-icon::before { content: 'i'; }
+
+        /* Tooltip */
+        .info-popover {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 280px;
+            max-width: 360px;
+            background: #1a1d3a;
+            color: white;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.55;
+            padding: 14px 16px;
+            border-radius: 10px;
+            box-shadow: 0 10px 32px rgba(0,0,0,0.3);
+            z-index: 50;
+            text-transform: none;
+            letter-spacing: normal;
+            font-style: normal;
+            font-family: Helvetica, sans-serif;
+            display: none;
+            text-align: left;
+            white-space: normal;
+        }
+        .info-popover::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 12px;
+            height: 12px;
+            background: #1a1d3a;
+        }
+        .info-popover strong { color: var(--cyan); font-weight: 700; }
+        .info-popover em { color: var(--pink); font-style: normal; }
+        .info-popover ul { margin: 8px 0 0 18px; padding: 0; }
+        .info-popover li { margin-bottom: 4px; }
+        .info-icon.open .info-popover { display: block; }
+        .info-icon.open { background: var(--pink); border-color: var(--pink); color: white; }
+
+        /* ── TOGGLE BUTTONS (refresh, query type, depth) ── */
+        .toggle-row {
+            display: grid;
+            gap: 10px;
+        }
+        .toggle-row.cols-1 { grid-template-columns: 1fr; }
+        .toggle-row.cols-2 { grid-template-columns: 1fr 1fr; }
+        .toggle-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .toggle-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+        .toggle-btn {
+            border: 1.5px solid rgba(11,12,35,0.12);
+            background: white;
+            border-radius: 10px;
+            padding: 14px 14px 14px 42px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.18s;
+            position: relative;
+            font-family: inherit;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        /* Radio indicator on every toggle option (pure CSS, no markup).
+           Vertically centered so it lines up regardless of box height or line count. */
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid rgba(11,12,35,0.25);
+            background: white;
+            transition: all 0.18s;
+        }
+        .toggle-btn.active::before {
+            border-color: var(--pink);
+            background: var(--pink);
+            box-shadow: inset 0 0 0 4px white;
+        }
+        .toggle-btn:hover {
+            border-color: var(--pink);
+            box-shadow: 0 2px 10px rgba(248,87,166,0.12);
+        }
+        .toggle-btn.active {
+            border-color: var(--pink);
+            background: var(--pink-light);
+            box-shadow: 0 2px 12px rgba(248,87,166,0.18);
+        }
+        .toggle-btn-label {
+            display: block;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        .toggle-btn-hint {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .toggle-btn.active .toggle-btn-label { color: var(--pink-dark); }
+        .toggle-badge {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--pink);
+            color: white;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 999px;
+            line-height: 1.4;
+            white-space: nowrap;
+            box-shadow: 0 1px 4px rgba(11,12,35,0.18);
+        }
+
+        /* ── INLINE SHORTS CHECKBOX (Video Metrics card) ── */
+        .inline-checkbox {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border: 1.5px solid rgba(11,12,35,0.12);
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            transition: all 0.18s;
+            user-select: none;
+        }
+        .inline-checkbox:hover { border-color: var(--pink); }
+        .inline-checkbox.checked {
+            border-color: var(--pink);
+            background: var(--pink-light);
+            color: var(--pink-dark);
+        }
+        .inline-checkbox input { display: none; }
+        .inline-checkbox .checkbox-square {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(11,12,35,0.22);
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.18s;
+        }
+        .inline-checkbox.checked .checkbox-square {
+            background: var(--pink);
+            border-color: var(--pink);
+        }
+        .inline-checkbox.checked .checkbox-square::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 3px;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* ── ADD-ON BLOCK (bordered group, e.g. Inclusion & Disclusion) ── */
+        .addon-block {
+            border: 1.5px solid rgba(11,12,35,0.14);
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-top: 16px;
+        }
+        .addon-block-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+        .addon-block-sub {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted, rgba(11,12,35,0.55));
+            margin: 4px 0 10px;
+        }
+        .addon-checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .addon-checkbox-row .inline-checkbox { margin-bottom: 0; }
+
+        /* ── ONE-TIME FEES BLOCK (price panel) ── */
+        .price-onetime {
+            background: rgba(129, 207, 248, 0.08);
+            border: 1px solid rgba(129, 207, 248, 0.22);
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-top: 14px;
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+        }
+        .price-onetime-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 8px;
+        }
+        .price-onetime-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            color: rgba(255,255,255,0.85);
+        }
+        .price-onetime-row .price-line-value {
+            color: white;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+        .price-onetime-note {
+            font-size: 11px;
+            color: rgba(255,255,255,0.55);
+            margin-top: 6px;
+        }
+
+        /* ── QUERY GROUPS (branded / non-branded) ── */
+        .query-group { margin-bottom: 18px; }
+        .query-group + .query-group {
+            border-top: 1px solid rgba(11,12,35,0.08);
+            padding-top: 16px;
+        }
+        .query-group-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .query-group-note {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .query-total-readout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 0;
+            background: none;
+            margin-bottom: 16px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .query-total-readout strong {
+            font-size: 18px;
+            color: var(--pink-dark);
+            font-variant-numeric: tabular-nums;
+        }
+        .price-line.group-head { margin-top: 8px; }
+        .price-line.group-head .price-line-label {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* ── VOLUME SLIDER ── */
+        .volume-display {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin-top: 16px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .volume-num {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--pink);
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+        .volume-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 6px;
+            background: linear-gradient(to right, var(--pink) 0%, var(--pink) var(--vol-pct, 32%), rgba(11,12,35,0.1) var(--vol-pct, 32%), rgba(11,12,35,0.1) 100%);
+            outline: none;
+            margin: 8px 0 8px;
+            cursor: pointer;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--pink);
+            cursor: grab;
+            box-shadow: 0 2px 8px rgba(248,87,166,0.4);
+            transition: transform 0.15s;
+        }
+        .volume-slider::-webkit-slider-thumb:active { transform: scale(1.15); cursor: grabbing; }
+        .volume-slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--pink);
+            cursor: grab;
+        }
+        .volume-ticks {
+            position: relative;
+            height: 14px;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        /* Labels are positioned at their true place on the (non-linear) slider scale. */
+        .volume-ticks span {
+            position: absolute;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        .volume-ticks span:first-child { transform: none; }
+        .volume-ticks span:last-child { transform: translateX(-100%); }
+        .volume-tier-pill {
+            display: inline-block;
+            font-size: 11px;
+            color: white;
+            background: var(--text-dark);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        /* ── CHECKBOX GROUP (data types) ── */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .checkbox-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border: 1.5px solid rgba(11,12,35,0.12);
+            background: white;
+            border-radius: 10px;
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .checkbox-card:hover { border-color: var(--pink); }
+        .checkbox-card.checked {
+            border-color: var(--pink);
+            background: var(--pink-light);
+        }
+        .checkbox-card.locked {
+            cursor: default;
+            border-color: rgba(11,12,35,0.1);
+            background: #f7f8fb;
+        }
+        .checkbox-card.locked:hover { border-color: rgba(11,12,35,0.1); }
+        .checkbox-card.locked .checkbox-title,
+        .checkbox-card.locked .checkbox-hint { color: var(--text-muted); }
+        .checkbox-card input { display: none; }
+        .checkbox-square {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(11,12,35,0.22);
+            border-radius: 5px;
+            flex-shrink: 0;
+            margin-top: 1px;
+            position: relative;
+            transition: all 0.18s;
+        }
+        .checkbox-card.checked .checkbox-square {
+            background: var(--pink);
+            border-color: var(--pink);
+        }
+        .checkbox-card.checked .checkbox-square::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 4px;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .checkbox-content { flex: 1; min-width: 0; }
+        .checkbox-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        .checkbox-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+
+        /* ── DISABLED STATE (for transcript-only options) ── */
+        .calc-card.disabled,
+        .addon-block.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .disabled-banner {
+            background: rgba(11,12,35,0.06);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 12px;
+        }
+
+        /* ── EDUCATIONAL FILTERS SECTION ── */
+        .filters-section {
+            margin-top: 16px;
+            padding: 26px 28px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(11,12,35,0.06);
+            border: 1px solid rgba(11,12,35,0.06);
+        }
+        .filters-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .filters-header h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .filters-header-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+        .filter-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(11,12,35,0.06);
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .filter-row:last-child { border-bottom: none; }
+        .filter-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-dark);
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .filter-control {
+            min-width: 180px;
+            flex-shrink: 0;
+        }
+        .filter-control select {
+            width: 100%;
+            border: 1.5px solid rgba(11,12,35,0.12);
+            border-radius: 8px;
+            padding: 8px 32px 8px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            background-color: white;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8' fill='none' stroke='%23F857A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='1 1 7 7 13 1'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            cursor: pointer;
+            font-family: inherit;
+            appearance: none;
+        }
+
+        /* ── PRICE PANEL (right side, sticky) ── */
+        .price-panel-wrap { position: sticky; top: 96px; }
+        .price-panel {
+            background: linear-gradient(160deg, #0b0c23 0%, #171b39 60%, #0b0c23 100%);
+            color: white;
+            border-radius: 18px;
+            box-shadow: 0 16px 48px rgba(11,12,35,0.22);
+            padding: 32px 30px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .price-panel::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(248,87,166,0.18), transparent 70%);
+            pointer-events: none;
+        }
+        .price-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        .price-totals {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 22px;
+            position: relative;
+            z-index: 1;
+        }
+        .price-monthly {
+            font-size: 44px;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
+        }
+        .price-monthly-label {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
+        .price-annual-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            padding-top: 14px;
+            margin-top: 6px;
+        }
+        .price-annual-num {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--cyan);
+            font-variant-numeric: tabular-nums;
+        }
+        .price-annual-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .price-perquery {
+            font-size: 13px;
+            color: rgba(255,255,255,0.78);
+            margin-top: 6px;
+        }
+        .price-perquery strong {
+            color: white;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .price-change-callout {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #f5a623;
+            background: rgba(245, 166, 35, 0.12);
+            border: 1px solid rgba(245, 166, 35, 0.35);
+            border-radius: 6px;
+            padding: 7px 10px;
+            margin: 10px 0 4px;
+            line-height: 1.4;
+        }
+
+        .price-itemized {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 18px 18px;
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+        }
+        .price-itemized-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 12px;
+        }
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.78);
+            gap: 10px;
+        }
+        .price-line:last-of-type { border-bottom: none; }
+        .price-line-label { flex: 1; min-width: 0; }
+        .price-line-value {
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+        }
+        .price-line.subtotal {
+            border-top: 1.5px solid rgba(255,255,255,0.18);
+            border-bottom: none;
+            margin-top: 8px;
+            padding-top: 12px;
+            font-size: 14px;
+        }
+        .price-line.subtotal .price-line-label {
+            font-weight: 700;
+            color: white;
+        }
+        .price-line.subtotal .price-line-value {
+            color: var(--pink);
+            font-weight: 800;
+            font-size: 16px;
+        }
+        .price-cta-wrap {
+            margin-top: 22px;
+            position: relative;
+            z-index: 1;
+        }
+        .price-cta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            color: white;
+            border: none;
+            border-radius: 32px;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .price-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(248,87,166,0.35);
+        }
+        .price-notes {
+            margin-top: 18px;
+            padding: 14px 16px;
+            background: rgba(248,87,166,0.08);
+            border-radius: 10px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(248,87,166,0.18);
+        }
+        .price-notes strong { color: var(--cyan); font-weight: 700; }
+
+        /* ── CALC HEADER (above grid) ── */
+        .calc-section-head {
+            max-width: 1280px;
+            margin: 0 auto 36px;
+            text-align: center;
+        }
+        .section-eyebrow {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 12px;
+        }
+        .calc-section-head h2 {
+            font-size: clamp(26px, 4vw, 38px);
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        .calc-section-head p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* ── FAQ / NOTES BLOCK ── */
+        /* Left rail — read how queries work upfront. Sticky so it stays in view. */
+        .calc-explainer {
+            margin: 0;
+            background: white;
+            border-radius: 14px;
+            padding: 24px 26px;
+            box-shadow: 0 2px 14px rgba(11,12,35,0.06);
+            border: 1px solid rgba(11,12,35,0.06);
+            position: sticky;
+            top: 20px;
+            align-self: start;
+        }
+        .calc-explainer h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+        .calc-explainer-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 4px;
+        }
+        .calc-explainer-item h4 {
+            font-size: 14px;
+            color: var(--pink-dark);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 800;
+        }
+        .calc-explainer-item p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #0b0c23;
+            color: var(--footer-gray);
+            padding: 42px clamp(20px, 4vw, 80px);
+            font-size: 13px;
+        }
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .footer-logo img { height: 26px; }
+        .footer-copy a { color: var(--footer-gray); text-decoration: none; }
+        .footer-copy a:hover { color: var(--cyan); }
+        .footer-copy span { margin: 0 6px; opacity: 0.5; }
+        .footer-linkedin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.18);
+            color: rgba(255,255,255,0.7);
+            transition: all 0.2s;
+        }
+        .footer-linkedin:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+        .footer-linkedin svg { width: 16px; height: 16px; }
+
+        /* ── CONTACT MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 12, 35, 0.82);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .modal-overlay.open { display: flex; opacity: 1; }
+        .modal {
+            background: white;
+            border-radius: 18px;
+            padding: 44px 40px 36px;
+            max-width: 540px;
+            width: 100%;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(11,12,35,0.06);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+        }
+        .modal-close:hover { background: rgba(11,12,35,0.12); }
+        .modal-close svg { width: 16px; height: 16px; }
+        .modal h3 {
+            font-size: 26px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .modal h3 em {
+            color: var(--pink);
+            font-style: normal;
+        }
+        .modal-sub {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .form-group { margin-bottom: 14px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid rgba(11,12,35,0.14);
+            border-radius: 9px;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--pink);
+        }
+        .form-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        .modal-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            color: white;
+            border: none;
+            border-radius: 32px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 10px;
+        }
+        .modal-submit:hover { box-shadow: 0 8px 24px rgba(248,87,166,0.35); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            /* Stack everything: explainer (read first) → tabs → form → price */
+            .calc-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "explainer"
+                    "tabs"
+                    "form"
+                    "price";
+                row-gap: 20px;
+            }
+            .calc-explainer { position: static; }
+            .price-panel-wrap { position: static; }
+            .form-wrapper { margin-top: 0; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { gap: 14px; }
+            .nav-links > a { font-size: 13px; white-space: nowrap; }
+            .nav-links > a:first-child { display: none; }
+            .toggle-row.cols-4 { grid-template-columns: 1fr; }
+            .toggle-row.cols-3 { grid-template-columns: 1fr; }
+            .toggle-row.cols-2 { grid-template-columns: 1fr; }
+            .query-type-select { grid-template-columns: 1fr; }
+            .hero-story { grid-template-columns: 1fr; }
+            .checkbox-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+            .calc-explainer { padding: 28px 24px; }
+        }
+        @media (max-width: 520px) {
+            nav { padding: 12px 16px; }
+            .nav-links { gap: 10px; }
+            .nav-links > a:nth-child(2) { display: none; }
+            .nav-cta { padding: 8px 14px; font-size: 12px; }
+            .calc-section { padding: 40px 16px 64px; }
+            .calc-card { padding: 22px 20px; }
+            .price-panel { padding: 26px 22px 22px; }
+            .price-monthly { font-size: 36px; }
+            .info-popover { left: auto; right: -10px; transform: none; min-width: 240px; }
+            .info-popover::before { left: auto; right: 14px; transform: rotate(45deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav">
+    <span class="site-logo-img">
+        <a href="/data/" rel="home" aria-label="Touchstorm DATAlabs home">
+            <img src="images/logo_TDL.png" alt="Touchstorm DATAlabs" decoding="async">
+        </a>
+    </span>
+</nav>
+
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-eyebrow">YouTube Social Listening Firehose · Pricing Calculator</div>
+        <h1>YouTube Social Listening Data</h1>
+        <p class="hero-lead">After two decades of trying, Social Listening Platforms still cannot report YouTube results. Noisy, inaccurate and incomplete, <strong>today's video results are simply not good enough.</strong> YouTube Quota Limitations are to blame, people say. <strong>Actually, that's not the problem.</strong></p>
+
+        <div class="hero-story">
+            <div class="hero-card">
+                <p class="card-lead">Introducing Touchstorm DataLabs. We're the only company to solve the most vexxing Big Data Problem in marketing - YouTube Social Listening.</p>
+                <p class="card-body">We've expanded, appended, enriched, transformed and classified YouTube's data so it can be accurately queried. It took us 15 years to do it, but <span class="hl">your results come back in 24 hours.</span></p>
+            </div>
+            <div class="hero-card">
+                <p class="card-lead">No more missing videos. No more results where Noise outweighs Signal.</p>
+                <p class="card-body">Your users' queries for Brands, Brand Divisions, Products, Product Categories and Topics return shockingly better results - see left panel. And once we process your queries against our database, you can dramatically improve results from <span class="hl">Reels &amp; TikTok</span>, too. Most creators post on all three sites, so at a certain spending threshold, we return your queries, fully fixed up and ready to improve results elsewhere.</p>
+            </div>
+            <div class="hero-card">
+                <p class="card-lead">Late 2026 will bring disruption to Social Listening.</p>
+                <p class="card-body">Data parity is the industry curse, giving customers few reasons to switch providers. As a result, market shares are pretty stagnant. But now, a breakthrough. Accessing our data, some platforms are about to conquer Video Social Listening. For them, platform switchers will arrive at their door, PO in hand. <span class="hl">Market shares will tilt toward those that solved the video problem.</span> The difference is that dramatic.</p>
+            </div>
+            <div class="hero-card">
+                <p class="card-lead">Touchstorm DataLabs is the only place on the planet with the data you need to do Video Social Listening right.</p>
+                <p class="card-body">Fully YouTube API Compliant, we're ready for your queries.</p>
+            </div>
+        </div>
+        <div class="hero-pills">
+            <div class="hero-pill"><strong>~35M</strong>Channels searched</div>
+            <div class="hero-pill"><strong>~5B</strong>Videos searched</div>
+            <div class="hero-pill"><strong>All Signal</strong>No Noise guarantee</div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════ CALCULATOR ══════════ -->
+<section class="calc-section">
+
+    <div class="calc-section-head">
+        <div class="section-eyebrow"></div>
+        <h2>Configure Your YouTube Social Listening Firehose</h2>
+        
+        <p> Click any <span style="display:inline-block;width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(11,12,35,0.32);font-size:11px;line-height:14px;font-style:italic;font-family:Georgia,serif;text-align:center;vertical-align:3px;">i</span>  for more information and examples.</p>
+    </div>
+
+    <div class="calc-grid">
+
+        <!-- ─── LEFT RAIL: HOW QUERIES OPERATE (read upfront) ─── -->
+        <div class="calc-explainer">
+            <h3>How our queries operate</h3>
+            <div class="calc-explainer-grid">
+                <div class="calc-explainer-item">
+                    <h4>Returns 100% of results</h4>
+                    <p>We don't truncate. Every video that responds to your query — across ~35M channels and ~5B videos — is returned, with no volume cap.</p>
+                </div>
+                <div class="calc-explainer-item">
+                    <h4>Daily or weekly cadence</h4>
+                    <p>Daily pulls yesterday's activity at a higher rate. Weekly pulls the past week's activity at a lower rate. Both deliver in increments that power timeline charts: yesterday, week, month, quarter, year, past 18 months.</p>
+                </div>
+                <div class="calc-explainer-item">
+                    <h4>Owned media + sponsorships removed</h4>
+                    <p>We auto-strip anything published by the brand itself (across all their channels), plus sponsorship, licensing, and incidental mentions — so your earned-media signal stays clean.</p>
+                </div>
+                <div class="calc-explainer-item">
+                    <h4>All Signal, No Noise guarantee</h4>
+                    <p>Adjusted and Contextual queries are guaranteed. We tune the search strings until the firehose returns exactly what you'd expect — no more, no less.</p>
+                </div>
+                <div class="calc-explainer-item">
+                    <h4>Contextual is for generic-name brands</h4>
+                    <p>Orange Telecom, Dodge Cars, Specialized Bicycles, Columbia Sportswear, Liberty Financial — only Contextual Queries (1,000–10,000 terms per string) work for brands whose names overlap with everyday English.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── CONFIGURATION CARDS ─── -->
+        <div class="calc-config">
+
+            <!-- TABBED UNIT — query-type tabs visually connected to the form below -->
+            <div class="tabbed-unit">
+
+            <!-- QUERY TYPE SELECTOR (pick one) -->
+            <div class="query-type-select" id="queryTypeSelect">
+                <div class="query-type-box selected" data-querytype="type1">
+                    <span class="query-type-radio"></span>
+                    <span class="query-type-badge">Query Type 1</span>
+                    <h3>Use This Section for Queries that Contain at Least One Brand Name</h3>
+                    <span class="query-type-amount" id="qtAmount1">$0/mo</span>
+                </div>
+                <div class="query-type-box" data-querytype="type2">
+                    <span class="query-type-radio"></span>
+                    <span class="query-type-badge">Query Type 2</span>
+                    <h3>Use this Section for Subject-Matter Queries That Do Not Contain a Brand </h3>
+                    <span class="query-type-amount" id="qtAmount2">$0/mo</span>
+                </div>
+            </div>
+
+            <!-- FORM WRAPPER — encloses the entire form for the active query type -->
+            <div class="form-wrapper" id="formWrapper">
+
+            <!-- DECISION 1: HISTORICAL BACKFILL -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">a</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Historical Backfill
+                            <button class="info-icon" data-info="backfill" aria-label="More info"></button>
+                        </h3>
+                        <div class="calc-card-sub">On your first data pull, how far back should we go? With each data refresh you will receive this amount of historical data on a rolling basis. </div>
+                    </div>
+                </div>
+                <div class="toggle-row cols-4" data-input="backfill" id="backfillRow">
+                    <button class="toggle-btn" data-value="1mo" id="backfill1mo">
+                        <span class="toggle-btn-label">1 month</span>
+                        
+                    </button>
+                    <button class="toggle-btn" data-value="6mo">
+                        <span class="toggle-badge" id="backfillBadge6" style="display:none;">Best for Research</span>
+                        <span class="toggle-btn-label">6 months</span>
+                        
+                    </button>
+                    <button class="toggle-btn" data-value="12mo">
+                        <span class="toggle-btn-label">12 months</span>
+                       
+                    </button>
+                    <button class="toggle-btn" data-value="18mo">
+                        <span class="toggle-badge" id="backfillBadge18">Best for Brands</span>
+                        <span class="toggle-btn-label">18 months</span>
+                        
+                    </button>
+                </div>
+            </div>
+
+            <!-- DECISION 2: DATA REFRESH FREQUENCY -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">b</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Data Refresh Frequency
+                            <button class="info-icon" data-info="refresh" aria-label="More info"></button>
+                        </h3>
+                        <div class="calc-card-sub">What you choose will impact your users.</div>
+                    </div>
+                </div>
+                <div class="toggle-row cols-2" data-input="refresh" id="refreshRow">
+                    <button class="toggle-btn" data-value="monthly" id="refreshMonthly" style="display:none;">
+                        <span class="toggle-badge" id="refreshBadgeMonthly" style="display:none;">Best for Research</span>
+                        <span class="toggle-btn-label">Monthly refresh</span>
+                       
+                    </button>
+                    <button class="toggle-btn" data-value="weekly">
+                        <span class="toggle-btn-label">Weekly refresh</span>
+                        
+                    </button>
+                    <button class="toggle-btn" data-value="daily">
+                        <span class="toggle-badge" id="refreshBadgeDaily">Best for Brands</span>
+                        <span class="toggle-btn-label">Daily refresh</span>
+                 
+                    </button>
+                </div>
+            </div>
+
+            <!-- DECISION 3: SEARCH DEPTH -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">c</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Search Depth
+                         
+                        </h3>
+                        <div class="calc-card-sub">How deep into each video should we look? </div>
+                    </div>
+                </div>
+                <div class="toggle-row cols-3" data-input="depth" id="depthRow">
+                    <button class="toggle-btn" data-value="titles">
+                        <span class="toggle-badge" id="depthBadgeTitles" style="display:none;">Best for Research</span>
+                        <span class="toggle-btn-label">Titles only <span class="info-icon" data-info="depth-titles" role="button" tabindex="0" aria-label="More info"></span></span>
+                 
+                    </button>
+                    <button class="toggle-btn" data-value="ttd">
+                        <span class="toggle-btn-label">Titles + Tags + Descriptions <span class="info-icon" data-info="depth-ttd" role="button" tabindex="0" aria-label="More info"></span></span>
+                 
+                    </button>
+                    <button class="toggle-btn" data-value="transcripts" id="depthTranscripts">
+                        <span class="toggle-badge" id="depthBadgeTranscripts">Best for Brands</span>
+                        <span class="toggle-btn-label">All + Category Transcripts &amp; Snippets <span class="info-icon" data-info="depth-transcripts" role="button" tabindex="0" aria-label="More info"></span></span>
+                        
+                    </button>
+                </div>
+            </div>
+
+            <!-- DECISION 4: VIDEO METRICS -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">d</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Metrics Selection
+                            <button class="info-icon" data-info="videoMetrics" aria-label="More info"></button>
+                        </h3>
+                        <div class="calc-card-sub">These options apply to queries that mention one or two brands with other terms.</div>
+                    </div>
+                </div>
+                
+                <div class="toggle-row cols-4" data-input="videoMetrics" id="videoMetricsRow">
+                    <button class="toggle-btn" data-value="basic">
+                        <span class="toggle-btn-label">Basic Video Metrics <span class="info-icon" data-info="vm-basic" role="button" tabindex="0" aria-label="More info"></span></span>
+
+                    </button>
+                    <button class="toggle-btn" data-value="sentiment" id="vmSentiment">
+                        <span class="toggle-badge" id="vmBadgeSentiment">Best for Brands</span>
+                        <span class="toggle-btn-label"> Basic Video Metrics + Video Sentiment <span class="info-icon" data-info="vm-sentiment" role="button" tabindex="0" aria-label="More info"></span></span>
+
+                    </button>
+                    <button class="toggle-btn" data-value="comments">
+                        <span class="toggle-badge" id="vmBadgeComments" style="display:none;">Best for Research</span>
+                        <span class="toggle-btn-label"><span id="vmCommentsText">Basic Video Metrics + Video Sentiment + Video Comments</span> <span class="info-icon" data-info="vm-comments" role="button" tabindex="0" aria-label="More info"></span></span>
+                              </button>
+                    <button class="toggle-btn" data-value="commentSent">
+                        <span class="toggle-btn-label"><span id="vmCommentSentText">Basic Video Metrics + Video Sentiment + Comment Sentiment</span> <span class="info-icon" data-info="vm-commentSent" role="button" tabindex="0" aria-label="More info"></span></span>
+                          </button>
+                </div><br>
+                <label class="inline-checkbox" id="shortsToggle">
+                    <input type="checkbox" id="shortsCheckbox">
+                    <span class="checkbox-square"></span>
+                    <span>Add On:  I'd like an extra data point that distinguishes Vertical Videos (#Shorts) from Horizontal Videos (On Demands & Former Live Videos). <button class="info-icon" data-info="shorts" aria-label="More info" tabindex="-1"></button></span>
+                </label>
+            </div>
+
+            <!-- DECISION E: CREATOR METRICS -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">e</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Creator Metrics
+                            <button class="info-icon" data-info="creatorMetrics" aria-label="More info"></button>
+                        </h3>
+                        <div class="calc-card-sub">Placeholder copy for Creator Metrics — describe what these options deliver.</div>
+                    </div>
+                </div>
+                <div class="toggle-row cols-2" data-input="creatorMetrics">
+                    <button class="toggle-btn" data-value="basic">
+                        <span class="toggle-btn-label">Basic Creator Metrics <span class="info-icon" data-info="cm-basic" role="button" tabindex="0" aria-label="More info"></span></span>
+                    </button>
+                    <button class="toggle-btn" data-value="advanced">
+                        <span class="toggle-btn-label">Advanced Creator Metrics <span class="info-icon" data-info="cm-advanced" role="button" tabindex="0" aria-label="More info"></span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DECISION F: QUERIES (query type + volume, branded vs non-branded) -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">f</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Query Management
+                            <button class="info-icon" data-info="query" aria-label="More info"></button>
+                        </h3>
+                        <div class="calc-card-sub">Placeholder Copy</div>
+                    </div>
+                </div>
+
+                <!-- Branded queries -->
+                <div class="query-group">
+                    
+                    <div class="toggle-row cols-2" data-input="brandedQueryType" id="brandedQueryTypeRow">
+                        <button class="toggle-btn" data-value="improved" id="qtAdjusted">
+                            <span class="toggle-btn-label">Adjusted <span class="info-icon" data-info="qt-adjusted" role="button" tabindex="0" aria-label="More info"></span></span>
+                        </button>
+                        <button class="toggle-btn" data-value="contextual">
+                            <span class="toggle-btn-label">Contextual <span class="info-icon" data-info="qt-contextual" role="button" tabindex="0" aria-label="More info"></span></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="addon-block">
+                    <div class="addon-block-title">Query Exclusions</div>
+                    <div class="addon-checkbox-row">
+                        <label class="inline-checkbox addon-cat checked" data-cat="earned">
+                            <input type="checkbox" checked>
+                            <span class="checkbox-square"></span>
+                            <span> Owned Media <button class="info-icon" data-info="em-include" aria-label="More info" tabindex="-1"></button></span>
+                        </label>
+                        <label class="inline-checkbox addon-cat" data-cat="gaming">
+                            <input type="checkbox">
+                            <span class="checkbox-square"></span>
+                            <span> Gaming <button class="info-icon" data-info="inc-gaming" aria-label="More info" tabindex="-1"></button></span>
+                        </label>
+                        <label class="inline-checkbox addon-cat" data-cat="music">
+                            <input type="checkbox">
+                            <span class="checkbox-square"></span>
+                            <span> Music <button class="info-icon" data-info="inc-music" aria-label="More info" tabindex="-1"></button></span>
+                        </label>
+                        <label class="inline-checkbox addon-cat" data-cat="kids">
+                            <input type="checkbox">
+                            <span class="checkbox-square"></span>
+                            <span> Kids <button class="info-icon" data-info="inc-kids" aria-label="More info" tabindex="-1"></button></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DECISION G: QUERY VOLUME -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">g</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Query Volume
+                            <button class="info-icon" data-info="volume" aria-label="More info"></button>
+                        </h3>
+                        <div class="calc-card-sub">How many queries you will submit.</div>
+                    </div>
+                </div>
+                <div class="volume-display">
+                    <span class="volume-num" id="brandedNum">0</span>
+                    <span class="volume-label" id="volumeSliderLabel">Queries with Brand Name</span>
+                </div>
+                <input type="range" min="0" max="21" value="0" class="volume-slider" id="brandedSlider">
+                <div class="volume-ticks">
+                    <span style="left:0%">0</span>
+                    <span style="left:23.8%">2.5K</span>
+                    <span style="left:38.1%">10K</span>
+                    <span style="left:57.1%">30K</span>
+                    <span style="left:100%">100K</span>
+                </div>
+                <div class="query-total-readout" style="justify-content:flex-end;">
+                    <span class="volume-tier-pill" id="volTierPill">no queries</span>
+                </div>
+            </div>
+
+            <div class="form-nav" id="formNav">
+                <span class="form-nav-error" id="formNavError" style="display:none;"></span>
+                <button class="form-nav-btn" id="saveMoveBtn" type="button">Save and Move to Query Type 2 →</button>
+                <button class="form-nav-btn" id="requestSampleBtn" type="button">Request Sample Data for this configuration</button>
+            </div>
+
+            </div><!-- /.form-wrapper -->
+            </div><!-- /.tabbed-unit -->
+        </div>
+
+        <!-- ─── RIGHT: PRICE PANEL ─── -->
+        <div class="price-panel-wrap">
+            <div class="price-panel">
+                <div class="price-eyebrow">Your firehose · live estimate</div>
+                <div class="price-totals">
+                    <div>
+                        <div class="price-monthly" id="priceMonthly">$0</div>
+                        <div class="price-monthly-label">Monthly</div>
+                    </div>
+                    <div class="price-change-callout">&#9888; Prices subject to change based on analysis of actual queries.</div>
+                    <div class="price-annual-row">
+                        <span class="price-annual-num" id="priceAnnual">$0</span>
+                        <span class="price-annual-label">/ year</span>
+                    </div>
+                    <div class="price-perquery">
+                        Per-query rate · <strong id="priceperQuery">$0.00</strong>
+                    </div>
+                </div>
+
+                <div class="price-itemized">
+                    <div class="price-itemized-title" id="lineItemsTitle">Line items · Query Type 1</div>
+
+                    <div class="price-line">
+                        <span class="price-line-label">Base per-query rate</span>
+                        <span class="price-line-value">$1.11</span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label" id="lineMetricsLabel">× Video metrics</span>
+                        <span class="price-line-value" id="lineMetricsValue">×1.00</span>
+                    </div>
+                    <div class="price-line" id="lineShorts" style="display:none;">
+                        <span class="price-line-label">× Shorts vs long-form</span>
+                        <span class="price-line-value" id="lineShortsValue">×1.05</span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label" id="lineVolumeLabel">× Volume tier</span>
+                        <span class="price-line-value" id="lineVolumeValue">×1.00</span>
+                    </div>
+
+                    <div class="price-line group-head" id="lineBrandedHead">
+                        <span class="price-line-label" id="lineBrandedHeadLabel">Branded · Adjusted</span>
+                        <span class="price-line-value"></span>
+                    </div>
+                    <div class="price-line" id="lineBrandedRateRow">
+                        <span class="price-line-label" id="lineBrandedRateLabel">× Query rate</span>
+                        <span class="price-line-value" id="lineBrandedRateValue">×0.00</span>
+                    </div>
+                    <div class="price-line" id="lineBrandedSubRow">
+                        <span class="price-line-label" id="lineBrandedSubLabel">2,500 × $0.00</span>
+                        <span class="price-line-value" id="lineBrandedSubValue">$0</span>
+                    </div>
+
+                    <div class="price-line group-head" id="lineNonBrandedHead">
+                        <span class="price-line-label" id="lineNonBrandedHeadLabel">Non-branded · Adjusted</span>
+                        <span class="price-line-value"></span>
+                    </div>
+                    <div class="price-line" id="lineNonBrandedRateRow">
+                        <span class="price-line-label" id="lineNonBrandedRateLabel">× Query rate</span>
+                        <span class="price-line-value" id="lineNonBrandedRateValue">×0.00</span>
+                    </div>
+                    <div class="price-line" id="lineNonBrandedSubRow">
+                        <span class="price-line-label" id="lineNonBrandedSubLabel">0 × $0.00</span>
+                        <span class="price-line-value" id="lineNonBrandedSubValue">$0</span>
+                    </div>
+
+                    <div class="price-line subtotal">
+                        <span class="price-line-label" id="lineSubtotalLabel">Query Type 1 monthly</span>
+                        <span class="price-line-value" id="lineSubtotal">$0</span>
+                    </div>
+
+                    <div class="price-line group-head">
+                        <span class="price-line-label">Both query types</span>
+                        <span class="price-line-value"></span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label">Query Type 1</span>
+                        <span class="price-line-value" id="lineType1Value">$0</span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label">Query Type 2</span>
+                        <span class="price-line-value" id="lineType2Value">$0</span>
+                    </div>
+                    <div class="price-line subtotal">
+                        <span class="price-line-label">Combined monthly</span>
+                        <span class="price-line-value" id="lineCombinedValue">$0</span>
+                    </div>
+                </div>
+
+                <div class="price-onetime">
+                    <div class="price-onetime-title">One-time setup</div>
+                    <div class="price-onetime-row">
+                        <span class="price-line-label" id="lineBackfill1Label">Query Type 1 setup</span>
+                        <span class="price-line-value" id="lineBackfill1Value">$0</span>
+                    </div>
+                    <div class="price-onetime-row">
+                        <span class="price-line-label" id="lineBackfill2Label">Query Type 2 setup</span>
+                        <span class="price-line-value" id="lineBackfill2Value">$0</span>
+                    </div>
+                    <div class="price-onetime-row" style="font-weight:700;margin-top:6px;">
+                        <span class="price-line-label">Combined one-time</span>
+                        <span class="price-line-value" id="lineBackfillTotal">$0</span>
+                    </div>
+                    <div class="price-onetime-note">Billed once on initial pull. Does not recur.</div>
+                </div>
+
+                <div class="price-notes">
+                    <strong>Pricing notes.</strong> Per-query rate is anchored at <strong>$1.11</strong> for our base reference combination at our 15,000-query reference volume. The volume curve runs from a +15% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 15K and 50K. Geography, producer type, and auto-filters do not change the price. All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations. Multi-firehose discounts available — ask us.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-logo">
+            <img src="images/TouchStorm_Logo_Rev.png" alt="Touchstorm">
+        </div>
+        <div class="footer-copy">
+            &copy; 2026 Touchstorm DATAlabs
+            <span>·</span>
+            <a href="https://www.touchstorm.com/terms/" target="_blank" rel="noopener">Terms</a>
+            <span>·</span>
+            <a href="https://www.touchstorm.com/privacy/" target="_blank" rel="noopener">Privacy</a>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ══════════ CONTACT MODAL ══════════ -->
+<div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+        <button class="modal-close" aria-label="Close modal" id="modalClose">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <h3 id="modalTitle">Lock this config. <em>Get sample data.</em></h3>
+        <p class="modal-sub">We'll send a sample extract within 48 hours and schedule a call to walk through your exact configuration, pricing, and delivery options.</p>
+        <form id="contactForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mf-name">Your name</label>
+                    <input id="mf-name" name="name" type="text" required placeholder="Jane Doe">
+                </div>
+                <div class="form-group">
+                    <label for="mf-company">Company</label>
+                    <input id="mf-company" name="company" type="text" required placeholder="Acme Platforms">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mf-email">Work email</label>
+                <input id="mf-email" name="email" type="email" required placeholder="jane@acme.com">
+            </div>
+            <div class="form-group">
+                <label for="mf-message">What are you building? (optional)</label>
+                <textarea id="mf-message" name="message" placeholder="Brief description of your platform and use case..."></textarea>
+            </div>
+            <input type="hidden" id="mf-config" name="config">
+            <button type="submit" class="modal-submit">Request Sample Data</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// 1. PRICING MODEL
+// ══════════════════════════════════════════════════════════════
+
+// Volume tiers — 500 → 100K queries/refresh (fine-grained at the low end so small accounts like 1,500 are selectable)
+const VOLUME_TIERS = [
+    500, 1000, 1500, 2000, 2500, 5000, 7500, 10000,
+    15000, // index 8 = reference (1.00x)
+    20000, 25000, 30000, 35000, 40000, 45000, 50000, 60000, 70000, 80000, 90000, 100000
+];
+// Index of the reference tier (15K = 1.00x). Surcharge below, discount above.
+const VOLUME_REF_IDX = 8;
+
+// Volume multiplier — normalized so 15K = 1.00. Surcharge under 15K (up to +15%),
+// discount over (down to −25% at 100K). Steepest through 15K-50K where most accounts land.
+const VOLUME_MULT = [
+    1.15, 1.13, 1.11, 1.10, 1.08, 1.06, 1.04, 1.02, // 500-10K (surcharge, below ref)
+    1.00,                                            // 15K reference
+    0.96, 0.93, 0.91, 0.89, 0.87, 0.86, 0.85,        // 20K-50K (-4% → -15%)
+    0.82, 0.80, 0.78, 0.76, 0.75                     // 60K-100K (-18% → -25%)
+];
+
+// Per-group query-count slider scale — starts at 0, goes to 100K. One slider each
+// for branded and non-branded queries. The discount tier is set by the COMBINED total.
+const QUERY_TIERS = [
+    0, 500, 1000, 1500, 2000, 2500, 5000, 7500, 10000, 15000, 20000, 25000,
+    30000, 35000, 40000, 45000, 50000, 60000, 70000, 80000, 90000, 100000
+];
+
+// Map a combined query total to the staircase tier index (last tier ≤ total).
+function volumeTierIdx(total) {
+    let idx = 0;
+    for (let i = 0; i < VOLUME_TIERS.length; i++) {
+        if (total >= VOLUME_TIERS[i]) idx = i;
+    }
+    return idx;
+}
+// Volume discount multiplier for a combined query total.
+function volumeMultForTotal(total) {
+    if (total <= 0) return 1.00;
+    return VOLUME_MULT[volumeTierIdx(total)];
+}
+
+// Combo multiplier table — 18 cells from Sheet 2 (rows 38-110, col D / D42).
+// Indexed by COMBO_MULT[refresh][queryType][depth].
+// Base $1.11/query × multiplier = per-query rate (at 30K reference volume).
+const COMBO_MULT = {
+    // Monthly refresh (Query Type 2 only) — least frequent, lowest price (~0.85× weekly).
+    monthly: {
+        exact:      { titles: 0.85, ttd: 0.98, transcripts: 3.40 },
+        improved:   { titles: 1.35, ttd: 1.50, transcripts: 4.25 },
+        contextual: { titles: 6.80, ttd:  7.65, transcripts: 8.50 }
+    },
+    weekly: {
+        exact:      { titles: 1.00, ttd: 1.15, transcripts: 4.00 },
+        improved:   { titles: 1.60, ttd: 1.75, transcripts: 5.00 },
+        contextual: { titles: 8.00, ttd:  9.00, transcripts: 10.00 }
+    },
+    daily: {
+        exact:      { titles: 2.20, ttd: 2.35, transcripts: 6.00 },
+        improved:   { titles: 2.50, ttd: 2.75, transcripts: 7.00 },
+        contextual: { titles: 11.00, ttd: 12.00, transcripts: 13.00 }
+    }
+};
+
+// Base per-query rate (Sheet 2 D42 = $1.11)
+const BASE_RATE = 1.11;
+
+// Data type weights (additive multi-select). Sum of selected = factor applied to rate.
+// Calibration values — proportional to data point coverage in Sheet 1 cols T-V for Option 4.
+// Category, Brand, Creator, and Actionable are included and locked on. Product is optional.
+// All five selected = 1.00; without Product Data = 0.85.
+const DATA_TYPE_WEIGHTS = {
+    category:   0.15,  // ~7 data points (T16-T22)
+    brand:      0.30,  // ~14 data points (T24-T37) — most extensive
+    product:    0.15,  // ~8 data points (T39-T46)
+    creator:    0.20,  // ~9+ data points (T48-T56 + V48-V56)
+    actionable: 0.20   // premium analytics (S57+)
+};
+
+// One-time setup fee (USD) — driven by query type (Query Management).
+const SETUP_FEES = {
+    improved:   2500,  // Adjusted
+    contextual: 4000   // Contextual
+};
+const BACKFILL_LABELS = {
+    '1mo':  '1 month',
+    '6mo':  '6 months',
+    '12mo': '12 months',
+    '18mo': '18 months'
+};
+
+// Video metrics — per-query rate multiplier by tier.
+const VIDEO_METRICS_MULT = {
+    basic:       1.00,
+    sentiment:   1.15,
+    comments:    1.35,
+    commentSent: 1.55
+};
+const VIDEO_METRICS_LABELS = {
+    basic:       'Basic',
+    sentiment:   '+ Sentiment',
+    comments:    '+ Sent. + Comments',
+    commentSent: '+ Comment Sentiment'
+};
+
+// Brand-published video filter — selectable, no price effect (a filter, not a query change).
+const INCLUSION_LABELS = {
+    earned: 'Earned Media',
+    gaming: 'Gaming',
+    music:  'Music',
+    kids:   'Made for Kids'
+};
+
+// Shorts vs long-form distinction — surcharge applied when enabled.
+const SHORTS_SURCHARGE = 1.05;
+
+// ══════════════════════════════════════════════════════════════
+// 2. STATE
+// ══════════════════════════════════════════════════════════════
+// Each query type (1 = contains a brand name, 2 = subject-matter only) gets its own
+// fully independent copy of the entire form. Tabs switch which copy is being edited.
+function makeForm() {
+    return {
+        backfill: null,          // no preselection — user must choose (A)
+        refresh: null,           // B
+        videoMetrics: null,      // D
+        creatorMetrics: null,    // E — 'basic' or 'advanced' (placeholder; no price effect yet)
+        shortsDistinction: false,
+        inclusions: new Set(['earned']),
+        brandedQueryType: null,  // E — 'improved' (Adjusted) or 'contextual'
+        depth: null,             // C
+        brandedVolumeIdx: 0,            // QUERY_TIERS index → 0 (cost is $0 on load)
+        nonBrandedVolumeIdx: 0          // QUERY_TIERS index → 0
+    };
+}
+const forms = { type1: makeForm(), type2: makeForm() };
+let activeTab = 'type1';
+// `state` always points at the form for the active tab. All event handlers read/write
+// through it, so they automatically operate on whichever tab is being edited.
+let state = forms[activeTab];
+
+// ══════════════════════════════════════════════════════════════
+// 3. INFO COPY (tooltip content)
+// ══════════════════════════════════════════════════════════════
+const INFO_COPY = {
+    backfill: `For each query, we'll be returning every video that satisfies the query, no matter when the video was made. Then, on the first data pull, you'll receive <strong>historical data</strong> for each video so your charts can immediately offer perspective. To stay in compliance with YouTube, the maximum history we can provide is <strong>18 months</strong>. We may soon offer <strong>36 months</strong> based on the most recent guidelines. Subsequent pulls will refresh the history on a rolling basis, meaning, we drop off the oldest history to maintain the historical period you have selected.<br><br> <em>To remain in compliance with YouTube's latest guidelines, it is important you use this historical data to refresh your front-end at least every 30 days.</em>   Video titles and other meta data are often changed by the user, and YouTube wants all of us to maintain the most recent data.<br><br>`,
+
+    refresh: `If you choose <strong>Daily Data Refresh</strong>, your users will always have new data through yesterday, no matter when they visit your platform. New data includes any new Videos or Comments that have appeared since the last pull, as well as fresh Metric counts on older evergreen videos. If you choose Daily refresh, new videos will appear the day after they were published, making Daily Refresh especially important for monitoring Crisis PR and the immediate pick-up of time-sensitive campaigns.  <br><br>If you choose <strong>Weekly Data Refresh</strong> you will save money, but depending on the day your user logs in, there could be a data hole. We pull weekly data on Sunday nights, reflecting the prior Monday to Sunday week. If a user visits on a Monday, the data reflects the prior week and is very current. On Tuesday, the freshest data is from the previous Sunday; Monday is missing. For users logging in on Fridays, the entire current week is missing and won't appear until Monday.`,
+
+    videoMetrics: `Each tier <em>adds</em> to the previous tier. Start with <strong>Basic Video Performance Metrics</strong>, then layer on Video Sentiment, Video Comments, and Comment Sentiment Analysis. Each upgrade enriches every record we ship you.`,
+
+    creatorMetrics: `<strong>Creator Metrics (placeholder).</strong> Describe what creator-level data you receive and how Basic vs Advanced differ. Replace this copy when finalized.`,
+
+    'cm-basic': `<strong>Basic Creator Metrics (placeholder).</strong> Placeholder description of the basic creator metrics tier.`,
+
+    'cm-advanced': `<strong>Advanced Creator Metrics (placeholder).</strong> Placeholder description of the advanced creator metrics tier.`,
+
+    shorts: `Tags each video as <strong>short-form</strong> or <strong>long-form</strong> so you can analyze them separately. Useful when shorts behave very differently from long-form in your category — different audience, different engagement curve.<br><br>Adds a small surcharge because we classify and segment on our side.`,
+
+    'em-include': `<strong>Exclude Earned Media.</strong> Exclude any and all videos published by the brand itself across all of the brand's YouTube channels regardless of geography.<br><br>This is a filter, not a query change.`,
+
+    'inc-gaming': `<strong>Exclude Gaming.</strong> Exclude videos that fall in YouTube's Gaming vertical. Leave unchecked to keep gaming content out of your results.<br><br>This is a filter, not a query change.`,
+
+    'inc-music': `<strong>Exclude Music.</strong> Exclude videos that fall in YouTube's Music vertical (official music videos, lyric videos, etc.). Leave unchecked to keep music content out of your results.<br><br>This is a filter, not a query change.`,
+
+    'inc-kids': `<strong>Exclude Kids.</strong> Exclude videos flagged as "Made for Kids" under YouTube's COPPA designation. Leave unchecked to keep kids' content out of your results.<br><br>This is a filter, not a query change.`,
+
+    'vm-basic': `<strong>Basic Video Metrics:</strong> You will receive the following Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step 2.<br><br><strong>Basic Video Performance Metrics Include:</strong>  Video Title, Video Title English Translation, Video URL,	Video ID, Thumbnail URL, Video Tags, Video Upload Date, First Data Date, Video Duration, Language (Video's Audio),	Video Creator's Channel Title,	Video's Lifetime Views, Lifetime Likes, Like Rate %,	Number of Comments,	Comment Rate %,	Lifetime Engagement Rate, Latest Period Views plus Rolling Historical View Updates, Latest Period Likes plus Rolling Historical Like Updates, Latest Period Comment Counts plus Rolling Historical Comment Count Updates.<br><br>
+    <strong>Extra Data Point: </strong> If, in Step 3, you chose to have us look inside Descriptions & Tags for your queries, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br>
+    
+    <strong>These basic video metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br>
+    <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.</em><br><br>
+    
+    <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags & Description copy.  To remain compliant with YouTube, we are continuously re-scanning these fields.  When they change, <em>it is important that your platform pick up on the changes and display them to remain in compliance.</em><br><br>`,
+
+    'vm-sentiment': `<strong>Sentiment Analysis:</strong> Adding Sentiment adds two new Video Metrics. <strong><br><br>1. Video Sentiment:</strong>  We use a 5-point Sentiment Scale from Very Positive to Very Negative.   For videos that compare multiple brands, TDL produces sentiment by brand.   For a video entitled "Ford Focus vs. Toyota Camry...which should you buy?" the sentiment returned will be associated with the brand submitting the query. This is one of many reasons we need to associate each query with a brand for whom we're returning results. <br><br><strong>2. Video Sentiment Score: </strong> We provide the actual Sentiment Score. It's a gauge of how solid the enthusiasm is vs. being close to the edge.`,
+
+    'vm-comments': `<strong>All Comments:</strong> This upgrade is for platforms wanting to show the <em>actual comments</em> associated with each video. We provide the first 100 comments for every video.  When the video is one week old we add any new comments.  We do that again when the video is one month old. `,
+
+    'vm-commentSent': `<strong>Comment Sentiment Analysis:</strong> Adding Comment Sentiment adds four new Video Metrics. <br><br> <strong>1. Comments Summary: </strong>An AI-generated description of what the comments say, on whole. <br><br> 
+    <strong>2. Comments Themes: </strong>A list of the 4 most common things people are saying.<br><br> 
+    <strong>3. Comments Sentiment: </strong>The mood of the Comments Overall are judged on the 5-point sentiment scale to reveal if people are buying what the video is purporting.<br><br> 
+    <strong>4. Overall Comments Sentiment Score: </strong>We provide the actual Comments Sentiment Score that drove the Sentiment Classification on the 5-point Very Positive to Very Negative scale.<br><br>`,
+
+
+    query: `<strong>Adjusted queries</strong> use our search expertise to hone in on punctuation, plurals, and alternate/more popular terms — produces substantially more results than running your strings as-is. Comes with the All-Signal-No-Noise guarantee.<br><br><strong>Complete Contextual queries</strong> contain 1,000 to 10,000 terms per string and produce 5–50× more results than Adjusted. Vital for generic-name brands like <em>Orange Telecom, Dodge Cars, Specialized Bicycles, Columbia Sportswear, Liberty Financial</em>. Lets you control specifics: BMW wants car repair videos, not new car videos. L'Oréal wants Hair only — no makeup, no skincare.`,
+
+    branded: `<strong>Branded queries</strong> target a specific brand, product, or campaign. They can run as <strong>Adjusted</strong> or <strong>Contextual</strong> — Contextual is essential for generic-name brands (Orange, Dodge, Specialized) where 1,000–10,000 terms per string are needed to separate signal from everyday-English noise.`,
+
+    nonbranded: `<strong>Non-branded queries</strong> cover topics, categories, or themes rather than a named brand. These run as <strong>Adjusted</strong> only — Contextual is not offered for non-branded queries.`,
+
+    'qt-adjusted': `Without changing the meaning of your queries, we adjust them to work in our system.`,
+
+    'qt-contextual': `Produces 5 to 50 times the number of results with a 100% Signal, 0% Noise guarantee.`,
+
+    depth: ``,
+
+    'depth-titles': `<strong>Titles Only:</strong> 
+Least expensive.  Likely to miss 20 - 40% of videos where creators included the brand.`,
+
+    'depth-ttd': `<strong>Titles + Tags + Descriptions:</strong>  Mid-price. Catches more relevant videos that don't surface the brand in the title.`,
+
+    'depth-transcripts': `<strong>All + Category Transcripts: </strong> Strongly recommended. Turns up <em>hidden review gems in big-view listicle videos</em> like "Top 5 Blenders for 2026" or "The Least Safe SUVs on the road today." <br><br>This option also includes snippets.  <br><br>Snippets enable your brand clients to see exactly what was said about them in the video. Snippets are short transcript excerpts surrounding a brand mention — the exact words a creator said before and after referencing your client's product. We include up to 3 snippets per video.<br>`,
+
+    volume: `One <em>query</em> = one search string. Each query returns 100% of matching videos in your selected refresh window — no result caps. Volume tiers below 30,000 carry a slight per-query surcharge; tiers above 30,000 receive a slight discount. The curve is gentle (±15%) because our engineering cost scales mostly linearly per query — we won't promise discounts we can't honor.`,
+
+    dataTypes: `The firehose includes <strong>Category Data</strong>, <strong>Brand Data</strong>, <strong>Creator Data</strong>, and <strong>Actionable Insight Data</strong> by default. <strong>Product Data</strong> is the only optional module and carries its existing 0.15 weight when selected.`,
+
+    'dt-category': `<strong>Category Data</strong> — videos made and views achieved per topic, % paid vs unpaid, earned media ranking, share of voice across the category, language distribution, list of all creators making category content.`,
+
+    'dt-brand': `<strong>Brand Data</strong> — earned videos last 12 months, last month, current month-to-date, share vs competitors, video titles / geo / language / upload date / length / views, sentiment count over time (positive/neutral/negative), competitor density.`,
+
+    'dt-product': `<strong>Product Data</strong> — earned video performance by product (views and count), per-product video-count rankings, positive sentiment count by product, product video coverage including competitor benchmarks.`,
+
+    'dt-creator': `<strong>Creator Data</strong> — number of creators covering brand and competitors, brand coverage rate, creator share by producer type / language / geography / subscriber count / engagement, top creators by engagement and subscriber base.`,
+
+    'dt-actionable': `<strong>Actionable Insight Data</strong> — creators to target by producer type, video count, engagement rate, brand coverage, and sentiment. Negative-sentiment creators to monitor. Positive-sentiment creators to thank. Links creators use to sell, plus how often each is used.`,
+
+    geo: `Run the firehose against any single country, minor brand region, major brand region, or globally. <strong>No effect on price</strong> — engineering cost is the same. Brand teams typically scope to country or major region; risk and trend teams typically run globally.`,
+
+    producers: `Control which producer types come back: brands, media, creators (influencers), or any combination. Use this to match your platform's promise: PR Media Monitoring platforms typically receive media-only; Influencer platforms may exclude media. <strong>No effect on price</strong> — it's a filter, not a query change.`,
+
+    'auto-removed': `<strong>Owned media</strong> = anything published by the brand itself across any of its channels. <strong>Sponsorships, licensing, and incidental mentions</strong> are filtered: Coldplay at Gillette Stadium, Emirates Football team, Ford Diecast Cars, Shaboozie singing "Me & Jack Daniels got a history." Always removed — these aren't earned media signals you want polluting brand reports.`,
+
+    increments: `Every refresh delivers data segmented for trending charts. Daily refresh: <em>Yesterday, Last Week, Last Month, Last Quarter, Last Year, Past 18 Months.</em> Weekly refresh: same minus Yesterday. Numbers are pre-aggregated weekly / monthly / quarterly so your timeline visualizations are instant.`
+};
+
+// ══════════════════════════════════════════════════════════════
+// 4. PRICING COMPUTATION
+// ══════════════════════════════════════════════════════════════
+function computePrice(f) {
+    const brandedCount = QUERY_TIERS[f.brandedVolumeIdx];
+    const nonBrandedCount = QUERY_TIERS[f.nonBrandedVolumeIdx];
+    const totalVolume = brandedCount + nonBrandedCount;
+
+    // Discount tier is driven by the COMBINED total.
+    const volumeMult = volumeMultForTotal(totalVolume);
+    // Required selections (B/C/D/E) start unselected — missing ones zero out the price.
+    const metricsMult = f.videoMetrics ? VIDEO_METRICS_MULT[f.videoMetrics] : 0;
+    const shortsMult = f.shortsDistinction ? SHORTS_SURCHARGE : 1;
+
+    // All data types are included by default — rate is anchored to the full bundle.
+    const dataTypeFactor = 1.00;
+
+    // Shared factor applies to both groups; only the combo (refresh·queryType·depth) differs.
+    const sharedFactor = BASE_RATE * volumeMult * metricsMult * shortsMult * dataTypeFactor;
+
+    // Branded can be Adjusted or Contextual; non-branded is always Adjusted (improved).
+    // Combo lookups need refresh + depth (+ query type for branded); otherwise 0 (incomplete).
+    const brandedComboMult = (f.refresh && f.depth && f.brandedQueryType)
+        ? COMBO_MULT[f.refresh][f.brandedQueryType][f.depth] : 0;
+    const nonBrandedComboMult = (f.refresh && f.depth)
+        ? COMBO_MULT[f.refresh].improved[f.depth] : 0;
+
+    const brandedPerQuery = sharedFactor * brandedComboMult;
+    const nonBrandedPerQuery = sharedFactor * nonBrandedComboMult;
+
+    const brandedMonthly = brandedPerQuery * brandedCount;
+    const nonBrandedMonthly = nonBrandedPerQuery * nonBrandedCount;
+
+    const monthlyBase = brandedMonthly + nonBrandedMonthly;
+    const monthlyTotal = monthlyBase;
+    const annualTotal = monthlyTotal * 12;
+    const blendedPerQuery = totalVolume > 0 ? monthlyBase / totalVolume : 0;
+    // One-time setup fee is driven by query type (Adjusted vs Contextual).
+    const setupFee = f.brandedQueryType ? SETUP_FEES[f.brandedQueryType] : 0;
+
+    return {
+        brandedCount, nonBrandedCount, totalVolume,
+        volumeMult, metricsMult, shortsMult, dataTypeFactor,
+        brandedComboMult, nonBrandedComboMult,
+        brandedPerQuery, nonBrandedPerQuery,
+        brandedMonthly, nonBrandedMonthly,
+        monthlyBase, monthlyTotal, annualTotal,
+        blendedPerQuery, setupFee
+    };
+}
+
+// ══════════════════════════════════════════════════════════════
+// 5. FORMATTING
+// ══════════════════════════════════════════════════════════════
+function formatCurrency(n, opts = {}) {
+    const { compact = false, perQuery = false } = opts;
+    if (perQuery) return '$' + n.toFixed(2);
+    if (compact && n >= 1_000_000) return '$' + (n / 1_000_000).toFixed(2) + 'M';
+    if (compact && n >= 100_000)   return '$' + Math.round(n / 1000) + 'k';
+    return '$' + Math.round(n).toLocaleString('en-US');
+}
+function formatVolume(n) { return n.toLocaleString('en-US'); }
+function formatMult(n) { return '×' + n.toFixed(2); }
+
+// ══════════════════════════════════════════════════════════════
+// 6. RENDER
+// ══════════════════════════════════════════════════════════════
+const $ = (id) => document.getElementById(id);
+
+const showLine = (id, show) => { const el = $(id); if (el) el.style.display = show ? 'flex' : 'none'; };
+
+const TAB_NAME = { type1: 'Query Type 1', type2: 'Query Type 2' };
+
+function render() {
+    // Active tab drives the detailed line items; both feed the combined totals.
+    const p = computePrice(state);
+    const p1 = computePrice(forms.type1);
+    const p2 = computePrice(forms.type2);
+    const combinedMonthly = p1.monthlyTotal + p2.monthlyTotal;
+    const combinedAnnual = combinedMonthly * 12;
+    const combinedVolume = p1.totalVolume + p2.totalVolume;
+    const combinedBlended = combinedVolume > 0 ? combinedMonthly / combinedVolume : 0;
+    const activeName = TAB_NAME[activeTab];
+
+    // Big numbers = combined across both query types
+    $('priceMonthly').textContent = formatCurrency(combinedMonthly);
+    $('priceAnnual').textContent = formatCurrency(combinedAnnual);
+    $('priceperQuery').textContent = formatCurrency(combinedBlended, { perQuery: true });
+
+    // Per-type summary (always visible) + per-tab-box amount badges
+    $('lineType1Value').textContent = formatCurrency(p1.monthlyTotal);
+    $('lineType2Value').textContent = formatCurrency(p2.monthlyTotal);
+    $('lineCombinedValue').textContent = formatCurrency(combinedMonthly);
+    $('qtAmount1').textContent = formatCurrency(p1.monthlyTotal) + '/mo';
+    $('qtAmount2').textContent = formatCurrency(p2.monthlyTotal) + '/mo';
+
+    // Form wrapper accent reflects the active tab
+    $('formWrapper').classList.toggle('type2', activeTab === 'type2');
+    $('formWrapper').classList.toggle('tab-left', activeTab === 'type1');
+    $('formWrapper').classList.toggle('tab-right', activeTab === 'type2');
+    // Footer button: "Save and Move…" on Query Type 1, "Request Sample Data…" on Query Type 2
+    $('saveMoveBtn').style.display = activeTab === 'type1' ? '' : 'none';
+    $('requestSampleBtn').style.display = activeTab === 'type2' ? '' : 'none';
+
+    // Query Type 1 hides the 1-month backfill option (3 cols); Type 2 keeps it (4 cols)
+    const showOneMonth = activeTab === 'type2';
+    $('backfill1mo').style.display = showOneMonth ? '' : 'none';
+    $('backfillRow').classList.toggle('cols-4', showOneMonth);
+    $('backfillRow').classList.toggle('cols-3', !showOneMonth);
+
+    // Backfill "best for…" ribbon: Type 1 → Best for Brands (18mo); Type 2 → Best for Research (6mo)
+    $('backfillBadge18').style.display = activeTab === 'type1' ? '' : 'none';
+    $('backfillBadge6').style.display = activeTab === 'type2' ? '' : 'none';
+
+    // Refresh: Monthly option is Type 2 only (3 cols); badges per tab
+    $('refreshMonthly').style.display = showOneMonth ? '' : 'none';
+    $('refreshRow').classList.toggle('cols-3', showOneMonth);
+    $('refreshRow').classList.toggle('cols-2', !showOneMonth);
+    $('refreshBadgeDaily').style.display = activeTab === 'type1' ? '' : 'none';
+    $('refreshBadgeMonthly').style.display = activeTab === 'type2' ? '' : 'none';
+
+    // Search depth: Type 1 keeps Transcripts (Best for Brands, 3 cols); Type 2 drops it,
+    // showing only Titles/TTD with "Best for Research" on Titles (2 cols).
+    $('depthTranscripts').style.display = activeTab === 'type1' ? '' : 'none';
+    $('depthRow').classList.toggle('cols-3', activeTab === 'type1');
+    $('depthRow').classList.toggle('cols-2', activeTab === 'type2');
+    $('depthBadgeTranscripts').style.display = activeTab === 'type1' ? '' : 'none';
+    $('depthBadgeTitles').style.display = activeTab === 'type2' ? '' : 'none';
+
+    // Metrics (D): Type 2 drops "+ Video Sentiment" (3 cols) and flags "+ Video Comments"
+    // as Best for Research; Type 1 keeps all four (4 cols).
+    $('vmSentiment').style.display = activeTab === 'type1' ? '' : 'none';
+    $('videoMetricsRow').classList.toggle('cols-4', activeTab === 'type1');
+    $('videoMetricsRow').classList.toggle('cols-3', activeTab === 'type2');
+    $('vmBadgeComments').style.display = activeTab === 'type2' ? '' : 'none';
+    $('vmBadgeSentiment').style.display = activeTab === 'type1' ? '' : 'none';
+    // Type 2 drops "Video Sentiment" from the Video Comments option copy; Type 1 keeps it.
+    $('vmCommentsText').textContent = activeTab === 'type2'
+        ? 'Basic Video Metrics + Video Comments'
+        : 'Basic Video Metrics + Video Sentiment + Video Comments';
+    $('vmCommentSentText').textContent = activeTab === 'type2'
+        ? "Basic Video Metrics + Video Comments + Comments Sentiment"
+        : 'Basic Video Metrics + Video Sentiment + Comment Sentiment';
+
+    // Query type (F): Type 2 offers Contextual only (1 col); Type 1 keeps both (2 cols)
+    $('qtAdjusted').style.display = activeTab === 'type2' ? 'none' : '';
+    $('brandedQueryTypeRow').classList.toggle('cols-1', activeTab === 'type2');
+    $('brandedQueryTypeRow').classList.toggle('cols-2', activeTab === 'type1');
+
+    // Line-item breakdown reflects the ACTIVE tab
+    $('lineItemsTitle').textContent = `Line items · ${activeName}`;
+    $('lineSubtotalLabel').textContent = `${activeName} monthly`;
+
+    const refreshLabel = state.refresh === 'daily' ? 'Daily'
+                       : state.refresh === 'monthly' ? 'Monthly'
+                       : state.refresh === 'weekly' ? 'Weekly' : '—';
+    const depthLabel = state.depth === 'titles' ? 'Titles only'
+                     : state.depth === 'ttd' ? 'Titles + Tags + Desc'
+                     : state.depth === 'transcripts' ? 'All + Transcripts' : '—';
+    const brandedTypeLabel = state.brandedQueryType === 'contextual' ? 'Contextual'
+                           : state.brandedQueryType === 'improved' ? 'Adjusted' : '—';
+
+    // Shared multiplier lines
+    $('lineMetricsLabel').textContent = state.videoMetrics
+        ? `× Video metrics (${VIDEO_METRICS_LABELS[state.videoMetrics]})`
+        : '× Video metrics (not selected)';
+    $('lineMetricsValue').textContent = state.videoMetrics ? formatMult(p.metricsMult) : '—';
+
+    const lineShorts = $('lineShorts');
+    if (state.shortsDistinction) {
+        lineShorts.style.display = 'flex';
+        $('lineShortsValue').textContent = formatMult(p.shortsMult);
+    } else {
+        lineShorts.style.display = 'none';
+    }
+
+    $('lineVolumeLabel').textContent = `× Volume tier (${formatVolume(p.totalVolume)} total)`;
+    $('lineVolumeValue').textContent = formatMult(p.volumeMult);
+
+    // Branded group line items
+    const hasBranded = p.brandedCount > 0;
+    showLine('lineBrandedHead', hasBranded);
+    showLine('lineBrandedRateRow', hasBranded);
+    showLine('lineBrandedSubRow', hasBranded);
+    const brandedComplete = state.refresh && state.depth && state.brandedQueryType && state.videoMetrics;
+    if (hasBranded) {
+        $('lineBrandedHeadLabel').textContent = `Branded · ${brandedTypeLabel}`;
+        $('lineBrandedRateLabel').textContent = `× ${brandedTypeLabel} rate (${refreshLabel} · ${depthLabel})`;
+        $('lineBrandedRateValue').textContent = brandedComplete ? formatMult(p.brandedComboMult) : '—';
+        $('lineBrandedSubLabel').textContent = `${formatVolume(p.brandedCount)} × ${formatCurrency(p.brandedPerQuery, { perQuery: true })}`;
+        $('lineBrandedSubValue').textContent = formatCurrency(p.brandedMonthly);
+    }
+
+    // Non-branded group line items (always Adjusted)
+    const hasNon = p.nonBrandedCount > 0;
+    showLine('lineNonBrandedHead', hasNon);
+    showLine('lineNonBrandedRateRow', hasNon);
+    showLine('lineNonBrandedSubRow', hasNon);
+    const nonComplete = state.refresh && state.depth && state.videoMetrics;
+    if (hasNon) {
+        $('lineNonBrandedRateLabel').textContent = `× Adjusted rate (${refreshLabel} · ${depthLabel})`;
+        $('lineNonBrandedRateValue').textContent = nonComplete ? formatMult(p.nonBrandedComboMult) : '—';
+        $('lineNonBrandedSubLabel').textContent = `${formatVolume(p.nonBrandedCount)} × ${formatCurrency(p.nonBrandedPerQuery, { perQuery: true })}`;
+        $('lineNonBrandedSubValue').textContent = formatCurrency(p.nonBrandedMonthly);
+    }
+
+    // One-time setup fee — driven by each query type's Adjusted/Contextual choice
+    const setupName = (f) => f.brandedQueryType === 'contextual' ? 'Contextual'
+                           : f.brandedQueryType === 'improved' ? 'Adjusted' : 'not selected';
+    $('lineBackfill1Label').textContent = `Query Type 1 setup (${setupName(forms.type1)})`;
+    $('lineBackfill1Value').textContent = formatCurrency(p1.setupFee);
+    $('lineBackfill2Label').textContent = `Query Type 2 setup (${setupName(forms.type2)})`;
+    $('lineBackfill2Value').textContent = formatCurrency(p2.setupFee);
+    $('lineBackfillTotal').textContent = formatCurrency(p1.setupFee + p2.setupFee);
+
+    $('lineSubtotal').textContent = formatCurrency(p.monthlyTotal);
+
+    // Query section displays
+    $('volumeSliderLabel').textContent = activeTab === 'type2' ? 'Subject Matter Queries' : 'Queries with Brand Name';
+    $('brandedNum').textContent = formatVolume(p.brandedCount);
+
+    // Combined-total tier pill
+    const tierIdx = volumeTierIdx(p.totalVolume);
+    let pill;
+    if (p.totalVolume <= 0) pill = 'no queries';
+    else if (tierIdx === VOLUME_REF_IDX) pill = 'reference tier';
+    else if (tierIdx < VOLUME_REF_IDX) pill = `+${Math.round((p.volumeMult - 1) * 100)}% surcharge`;
+    else pill = `−${Math.round((1 - p.volumeMult) * 100)}% discount`;
+    $('volTierPill').textContent = pill;
+
+    // Slider gradient
+    const lastIdx = QUERY_TIERS.length - 1;
+    $('brandedSlider').style.setProperty('--vol-pct', (state.brandedVolumeIdx / lastIdx) * 100 + '%');
+}
+
+// ══════════════════════════════════════════════════════════════
+// 7. EVENT WIRING
+// ══════════════════════════════════════════════════════════════
+
+// Toggle button groups (refresh, queryType, depth)
+document.querySelectorAll('.toggle-row').forEach(group => {
+    const inputName = group.dataset.input;
+    group.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state[inputName] = btn.dataset.value;
+            clearFieldErrors();
+            render();
+        });
+    });
+});
+
+// Push the active form's stored values back into every DOM control. Called when
+// switching tabs so the single rendered form reflects the tab being edited.
+function syncControls() {
+    document.querySelectorAll('.toggle-row').forEach(group => {
+        const name = group.dataset.input;
+        group.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.value === state[name]);
+        });
+    });
+    $('brandedSlider').value = state.brandedVolumeIdx;
+    shortsCheckbox.checked = state.shortsDistinction;
+    shortsToggle.classList.toggle('checked', state.shortsDistinction);
+    document.querySelectorAll('.addon-cat').forEach(label => {
+        const on = state.inclusions.has(label.dataset.cat);
+        const cb = label.querySelector('input');
+        if (cb) cb.checked = on;
+        label.classList.toggle('checked', on);
+    });
+}
+
+// ── VALIDATION ──────────────────────────────────────────────────
+// A query type must be fully filled out only when its volume > 0.
+const REQUIRED_FIELDS = ['backfill', 'refresh', 'depth', 'videoMetrics', 'creatorMetrics', 'brandedQueryType'];
+const formVolume = (f) => QUERY_TIERS[f.brandedVolumeIdx];
+const missingFields = (f) => formVolume(f) <= 0 ? [] : REQUIRED_FIELDS.filter(k => !f[k]);
+
+function clearFieldErrors() {
+    document.querySelectorAll('.calc-card.field-error').forEach(c => c.classList.remove('field-error'));
+    const err = $('formNavError');
+    err.textContent = '';
+    err.style.display = 'none';
+}
+// Highlights the missing fields for the CURRENTLY VISIBLE tab and shows a message.
+function showFieldErrors(missing, message) {
+    clearFieldErrors();
+    missing.forEach(k => {
+        const row = document.querySelector('.toggle-row[data-input="' + k + '"]');
+        const card = row && row.closest('.calc-card');
+        if (card) card.classList.add('field-error');
+    });
+    const err = $('formNavError');
+    err.textContent = message;
+    err.style.display = 'block';
+    const first = document.querySelector('.calc-card.field-error');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setTab(target) {
+    activeTab = target;
+    state = forms[activeTab];
+    document.querySelectorAll('#queryTypeSelect .query-type-box').forEach(b => {
+        b.classList.toggle('selected', b.dataset.querytype === activeTab);
+    });
+    clearFieldErrors();
+    syncControls();
+    render();
+}
+
+// Tab clicks: moving Type 1 → Type 2 requires Type 1 complete; going back is always allowed.
+document.querySelectorAll('#queryTypeSelect .query-type-box').forEach(box => {
+    box.addEventListener('click', () => {
+        const target = box.dataset.querytype;
+        if (target === activeTab) return;
+        if (activeTab === 'type1' && target === 'type2') {
+            const miss = missingFields(forms.type1);
+            if (miss.length) {
+                showFieldErrors(miss, 'Complete the highlighted fields in Query Type 1 before moving on — or set its query volume to 0.');
+                return;
+            }
+        }
+        setTab(target);
+    });
+});
+
+// "Save and Move to Query Type 2" — same gate as the forward tab click.
+$('saveMoveBtn').addEventListener('click', () => {
+    const miss = missingFields(forms.type1);
+    if (miss.length) {
+        showFieldErrors(miss, 'Complete the highlighted fields in Query Type 1 before moving on — or set its query volume to 0.');
+        return;
+    }
+    setTab('type2');
+    document.querySelector('.tabbed-unit').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// Query volume slider (single per query type)
+$('brandedSlider').addEventListener('input', (e) => {
+    state.brandedVolumeIdx = parseInt(e.target.value, 10);
+    clearFieldErrors();
+    render();
+});
+
+// Shorts vs long-form checkbox
+const shortsToggle = $('shortsToggle');
+const shortsCheckbox = $('shortsCheckbox');
+shortsToggle.addEventListener('click', (e) => {
+    if (e.target.closest('.info-icon')) return;
+    e.preventDefault();
+    state.shortsDistinction = !state.shortsDistinction;
+    shortsCheckbox.checked = state.shortsDistinction;
+    shortsToggle.classList.toggle('checked', state.shortsDistinction);
+    render();
+});
+
+// Query Inclusions — checkboxes
+document.querySelectorAll('.addon-cat').forEach(label => {
+    const cat = label.dataset.cat;
+    const checkbox = label.querySelector('input');
+    label.addEventListener('click', (e) => {
+        if (e.target.closest('.info-icon')) return;
+        e.preventDefault();
+        if (state.inclusions.has(cat)) {
+            state.inclusions.delete(cat);
+            label.classList.remove('checked');
+            checkbox.checked = false;
+        } else {
+            state.inclusions.add(cat);
+            label.classList.add('checked');
+            checkbox.checked = true;
+        }
+        render();
+    });
+});
+
+
+// ══════════════════════════════════════════════════════════════
+// 8. INFO TOOLTIPS (popover-on-click pattern, mobile-friendly)
+// ══════════════════════════════════════════════════════════════
+let openInfoBtn = null;
+document.querySelectorAll('.info-icon').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const key = btn.dataset.info;
+        const content = INFO_COPY[key];
+        if (!content) return;
+        // Close any other open
+        if (openInfoBtn && openInfoBtn !== btn) closeInfo(openInfoBtn);
+        // Toggle this one
+        if (btn.classList.contains('open')) {
+            closeInfo(btn);
+        } else {
+            openInfo(btn, content);
+        }
+    });
+});
+
+function openInfo(btn, content) {
+    let pop = btn.querySelector('.info-popover');
+    if (!pop) {
+        pop = document.createElement('span');
+        pop.className = 'info-popover';
+        pop.innerHTML = content;
+        btn.appendChild(pop);
+    }
+    btn.classList.add('open');
+    openInfoBtn = btn;
+}
+function closeInfo(btn) {
+    btn.classList.remove('open');
+    if (openInfoBtn === btn) openInfoBtn = null;
+}
+document.addEventListener('click', (e) => {
+    if (openInfoBtn && !e.target.closest('.info-icon')) closeInfo(openInfoBtn);
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && openInfoBtn) closeInfo(openInfoBtn);
+});
+
+// ══════════════════════════════════════════════════════════════
+// 9. CONTACT MODAL
+// ══════════════════════════════════════════════════════════════
+const modalOverlay = $('contactModal');
+const modalClose = $('modalClose');
+
+function openModal(configSnapshot) {
+    if (configSnapshot) $('mf-config').value = configSnapshot;
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+}
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
+});
+
+// Configurator CTA
+function summarizeForm(f, p) {
+    return [
+        `Historical backfill: ${f.backfill ? BACKFILL_LABELS[f.backfill] : 'not selected'}`,
+        `Refresh: ${f.refresh || 'not selected'}`,
+        `Search depth: ${f.depth || 'not selected'}`,
+        `Video metrics: ${f.videoMetrics ? VIDEO_METRICS_LABELS[f.videoMetrics] : 'not selected'}`,
+        `Queries: ${p.brandedCount.toLocaleString()}/refresh (${f.brandedQueryType === 'contextual' ? 'Contextual' : f.brandedQueryType === 'improved' ? 'Adjusted' : 'not selected'}, $${p.setupFee.toLocaleString()} one-time setup)`,
+        `Query inclusions: ${f.inclusions.size ? Array.from(f.inclusions).map(c => INCLUSION_LABELS[c]).join(', ') : 'none'}`,
+        `Shorts vs long-form: ${f.shortsDistinction ? 'yes' : 'no'}`,
+        `Monthly: $${Math.round(p.monthlyTotal).toLocaleString()}`
+    ].join('; ');
+}
+function requestSample() {
+    // Need at least one query type with volume, and every non-zero type fully filled out.
+    if (formVolume(forms.type1) <= 0 && formVolume(forms.type2) <= 0) {
+        showFieldErrors([], 'Set a query volume for at least one query type before requesting a sample.');
+        return;
+    }
+    const m2 = missingFields(forms.type2);
+    if (m2.length) {
+        if (activeTab !== 'type2') setTab('type2');
+        showFieldErrors(m2, 'Complete the highlighted fields before requesting a sample.');
+        return;
+    }
+    const m1 = missingFields(forms.type1);
+    if (m1.length) {
+        setTab('type1');
+        showFieldErrors(m1, 'Complete the highlighted fields in Query Type 1 before requesting a sample.');
+        return;
+    }
+    const p1 = computePrice(forms.type1);
+    const p2 = computePrice(forms.type2);
+    const combinedMonthly = p1.monthlyTotal + p2.monthlyTotal;
+    const combinedOneTime = p1.setupFee + p2.setupFee;
+    const snapshot = [
+        `=== QUERY TYPE 1 (contains a brand name) === ${summarizeForm(forms.type1, p1)}`,
+        `=== QUERY TYPE 2 (subject matter, no brand name) === ${summarizeForm(forms.type2, p2)}`,
+        `=== COMBINED === Monthly: $${Math.round(combinedMonthly).toLocaleString()} | Annual: $${Math.round(combinedMonthly * 12).toLocaleString()} | One-time setup: $${combinedOneTime.toLocaleString()}`
+    ].join('\n');
+    openModal(snapshot);
+}
+$('requestSampleBtn').addEventListener('click', requestSample);
+
+// Nav CTA
+document.querySelectorAll('[data-cta]').forEach(el => {
+    el.addEventListener('click', (e) => {
+        if (el.tagName === 'A' && el.getAttribute('href') === '#contact') {
+            e.preventDefault();
+            requestSample();
+        }
+    });
+});
+
+// Form submit — mailto fallback
+$('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = $('mf-name').value.trim();
+    const company = $('mf-company').value.trim();
+    const email = $('mf-email').value.trim();
+    const message = $('mf-message').value.trim();
+    const config = $('mf-config').value || '(none)';
+    const subject = encodeURIComponent('Pricing Calculator — Sample Request');
+    const body = encodeURIComponent(
+        `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nWhat they're building:\n${message}\n\nLocked configuration:\n${config}`
+    );
+    window.location.href = `mailto:data@touchstormdatalabs.com?subject=${subject}&body=${body}`;
+});
+
+// ══════════════════════════════════════════════════════════════
+// 10. INITIAL RENDER
+// ══════════════════════════════════════════════════════════════
+syncControls();
+render();
+</script>
+
+</body>
+</html>

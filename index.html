@@ -8,7 +8,7 @@
     <meta property="og:title" content="Pricing Calculator | Touchstorm DATAlabs">
     <meta property="og:description" content="Five decisions. Real per-query rates. Live monthly + annual totals.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.touchstormdatalabs.com/data/pricing.html">
+    <meta property="og:url" content="https://firehose.touchstormdatalabs.com/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -545,6 +545,8 @@
             border-radius: 10px;
             box-shadow: 0 10px 32px rgba(0,0,0,0.3);
             z-index: 50;
+            max-height: 60vh;
+            overflow-y: auto;
             text-transform: none;
             letter-spacing: normal;
             font-style: normal;
@@ -1490,7 +1492,7 @@
 <!-- ══════════ NAV ══════════ -->
 <nav id="nav">
     <span class="site-logo-img">
-        <a href="/data/" rel="home" aria-label="Touchstorm DATAlabs home">
+        <a href="/" rel="home" aria-label="Touchstorm DATAlabs home">
             <img src="images/logo_TDL.png" alt="Touchstorm DATAlabs" decoding="async">
         </a>
     </span>
@@ -1515,10 +1517,10 @@
             </div>
             <div class="hero-card">
                 <p class="card-lead">Late 2026 will bring disruption to Social Listening.</p>
-                <p class="card-body">Data parity is the industry curse, giving customers few reasons to switch providers. As a result, market shares are pretty stagnant. But now, a breakthrough. Accessing our data, some platforms are about to conquer Video Social Listening. For them, platform switchers will arrive at their door, PO in hand. <span class="hl">Market shares will tilt toward those that solved the video problem.</span> The difference is that dramatic.</p>
+                <p class="card-body">Data parity is the industry curse, giving customers few reasons to switch providers. As a result, market shares are pretty stagnant. But now, a breakthrough. Accessing our data, some platforms are about to conquer Video Social Listening. For them, platform switchers will arrive at their door, PO in hand. <span class="hl">Market share will tilt toward those that solved the video problem.</span> The difference is that dramatic.</p>
             </div>
             <div class="hero-card">
-                <p class="card-lead">Touchstorm DataLabs is the only place on the planet with the data you need to do Video Social Listening right.</p>
+                <p class="card-lead">Finally, true YouTube Social Listening is here.</p>
                 <p class="card-body">Fully YouTube API Compliant, we're ready for your queries.</p>
             </div>
         </div>
@@ -1581,13 +1583,13 @@
                 <div class="query-type-box selected" data-querytype="type1">
                     <span class="query-type-radio"></span>
                     <span class="query-type-badge">Query Type 1</span>
-                    <h3>Use This Section for Queries that Contain at Least One Brand Name</h3>
+                    <h3>Use This Section for Queries that Contain a Brand (limit one Brand per query) <button class="info-icon" data-info="tab1" aria-label="What counts as a brand?"></button></h3>
                     <span class="query-type-amount" id="qtAmount1">$0/mo</span>
                 </div>
                 <div class="query-type-box" data-querytype="type2">
                     <span class="query-type-radio"></span>
                     <span class="query-type-badge">Query Type 2</span>
-                    <h3>Use this Section for Subject-Matter Queries That Do Not Contain a Brand </h3>
+                    <h3>Use this Section for Topical Queries That Do Not Contain a Brand (limit one Topic per query) <button class="info-icon" data-info="tab2" aria-label="What counts as a topic?"></button></h3>
                     <span class="query-type-amount" id="qtAmount2">$0/mo</span>
                 </div>
             </div>
@@ -1604,14 +1606,10 @@
                             Historical Backfill
                             <button class="info-icon" data-info="backfill" aria-label="More info"></button>
                         </h3>
-                        <div class="calc-card-sub">On your first data pull, how far back should we go? With each data refresh you will receive this amount of historical data on a rolling basis. </div>
+                        <div class="calc-card-sub">No waiting to draw trendlines. With each data refresh, you'll receive this much historical data on a rolling basis. How far back should we go?</div>
                     </div>
                 </div>
-                <div class="toggle-row cols-4" data-input="backfill" id="backfillRow">
-                    <button class="toggle-btn" data-value="1mo" id="backfill1mo">
-                        <span class="toggle-btn-label">1 month</span>
-                        
-                    </button>
+                <div class="toggle-row cols-3" data-input="backfill" id="backfillRow">
                     <button class="toggle-btn" data-value="6mo">
                         <span class="toggle-badge" id="backfillBadge6" style="display:none;">Best for Research</span>
                         <span class="toggle-btn-label">6 months</span>
@@ -1644,16 +1642,16 @@
                 <div class="toggle-row cols-2" data-input="refresh" id="refreshRow">
                     <button class="toggle-btn" data-value="monthly" id="refreshMonthly" style="display:none;">
                         <span class="toggle-badge" id="refreshBadgeMonthly" style="display:none;">Best for Research</span>
-                        <span class="toggle-btn-label">Monthly refresh</span>
+                        <span class="toggle-btn-label">Monthly Refresh</span>
                        
                     </button>
                     <button class="toggle-btn" data-value="weekly">
-                        <span class="toggle-btn-label">Weekly refresh</span>
+                        <span class="toggle-btn-label">Weekly Refresh</span>
                         
                     </button>
                     <button class="toggle-btn" data-value="daily">
                         <span class="toggle-badge" id="refreshBadgeDaily">Best for Brands</span>
-                        <span class="toggle-btn-label">Daily refresh</span>
+                        <span class="toggle-btn-label">Daily Refresh</span>
                  
                     </button>
                 </div>
@@ -1698,7 +1696,7 @@
                             Metrics Selection
                             <button class="info-icon" data-info="videoMetrics" aria-label="More info"></button>
                         </h3>
-                        <div class="calc-card-sub">These options apply to queries that mention one or two brands with other terms.</div>
+                        <div class="calc-card-sub">Choose to include the Basic Metrics you believe the majority of your clients will want.</div>
                     </div>
                 </div>
                 
@@ -1723,7 +1721,7 @@
                 <label class="inline-checkbox" id="shortsToggle">
                     <input type="checkbox" id="shortsCheckbox">
                     <span class="checkbox-square"></span>
-                    <span>Add On:  I'd like an extra data point that distinguishes Vertical Videos (#Shorts) from Horizontal Videos (On Demands & Former Live Videos). <button class="info-icon" data-info="shorts" aria-label="More info" tabindex="-1"></button></span>
+                    <span>Add On:  Include an extra data point that distinguishes Vertical Videos (#Shorts) from Horizontal Videos (On Demands & Former Live Videos). <button class="info-icon" data-info="shorts" aria-label="More info" tabindex="-1"></button></span>
                 </label>
             </div>
 
@@ -1736,7 +1734,7 @@
                             Creator Metrics
                             <button class="info-icon" data-info="creatorMetrics" aria-label="More info"></button>
                         </h3>
-                        <div class="calc-card-sub">Placeholder copy for Creator Metrics — describe what these options deliver.</div>
+                        <div class="calc-card-sub">Creator Metrics provide vital information about who made the video.</div>
                     </div>
                 </div>
                 <div class="toggle-row cols-2" data-input="creatorMetrics">
@@ -1947,7 +1945,7 @@
                 </div>
 
                 <div class="price-notes">
-                    <strong>Pricing notes.</strong> Per-query rate is anchored at <strong>$1.11</strong> for our base reference combination at our 15,000-query reference volume. The volume curve runs from a +15% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 15K and 50K. Geography, producer type, and auto-filters do not change the price. All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations. Multi-firehose discounts available — ask us.
+                    <strong>Pricing notes.</strong> Per-query rate is anchored at $1.11 for our base reference combination at our 15,000-query reference volume. The volume curve runs from a +15% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 15K and 50K. Geography, producer type, and auto-filters do not change the price. All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations. Multi-firehose discounts available — ask us.<div><br></div><div>I AM ADDING DISCARDED PARAGRAPHS HERE BECAUSE I HAVEN'T YET FIGURED OUT WHERE THEY GO</div><div><br></div><div><div>Topics for the left</div><div>YouTube is the biggest</div><div>Testing results</div><div>What's wrong with the YouTube API</div><div>List of all the things we fix</div><div>How Social Listening can lead to brand solutions positioning</div><div><br></div><div>Other platforms will go farther, putting our advanced brand and creator analytics to work, connecting Social Listening to Strategy and prescribing next steps...a brand's dream come true. </div><div><br></div><div>We've tested dozens of actual platform queries and compared YouTube Search API results to Touchstorm DataLabs Results. return an average of 400 videos where only 11 actually respond to the Query - an inaccuracy rate of 93%. when submitted to the YouTube Search API prove an average of 93% Noise, 7% Signal. Those s. (Free comparison test below). No more missing videos. No more irrelevant noise. We add Sentiment, Brand &amp; Creator metrics that enable your analyses to go beyond Social Listening to the logical next step - Strategic Action. </div><div><br></div><div>YouTube is the biggest platform for Social Listening Results, <u>by far</u>. Its big content volume is accompanied by engagement deep enough to be persuasive - and that's what enterprise brands love. Consumers spend just 10 seconds reading a Tweet or absorbing an Instagram photo, but they spend an average of 8 minutes with a YouTube video featuring a brand. </div><div><br></div><div><br></div><div><br></div><div>No more Missing Videos. No more Missing Historical Trends. No Results Limitations. Metrics on Evergreen Videos, not just Recent Posts. Sentiment for <i>each brand/product </i>in a video and Overall Comment Opinion Sentiment. Brand Families are separated by division, to coordinate with who your customers work for. For generic brand names like "Dodge," the impossible query-writing burden is removed from your users. Our Geographies that coordinate with Brand Regions, so clients in charge of multi-country regions don't have to combine your platform's results on spreadsheets. Enriched brand data that lets your product people go to town with the types of charts and analyses brands really want. Not Enough Quota, Queries That Can Never Be Complete Enough, and Not Enough Deep Data for Brands To Do The Category &amp; Creator Analyses They Actually Need. We've fixed all that. have barely-there or barely-good-enough YouTube data? The back half of 2026 will see that change. </div><div><br></div><div><br>Welcome to the Touchstorm Video Index, our Marketing Taxonomy. It's built for Brands, Products &amp; Product Categories. This is where your queries go. It's YouTube's database, but completely reformatted, enriched and reconfigured to produce wholly different results than querying the YouTube Search API. We boil the YouTube ocean every night, which means your clients won't be able to point out Missing Videos. Results are always current through yesterday. We've classified all videos featuring brands, products or product categories by Topic, enabling rich analyses for your site that goes beyond listing posts. We've been collecting data since 2007, meaning we caught the data early enough to provide Historical Trends (up to 36 months to comply with YouTube guidelines). Unlimited Results. With our All Signal/No Noises guarantee, you can confidently charge clients for accurate results. Our enhanced Creator Data connects Social Listening data to its logical outcome - the recruitment of Influencers. Finally, true YouTube Social Listening is here. We're ready for your queries.</div></div><div><br></div><div>Social Listening Platforms either have clients write their own queries, and/or, the platform expands them using AI. Our extensive testing reveals that when these queries hit the YouTube search API the results produced are 95% noise and 5% signal on average. That's because YouTube wants other things out of its Search Engine, and therefore, fills results with recommended Videos that don't answer brands' Social Listening Queries. You're unable to publish great results, and in turn, that hurts YouTube, because virtually every brand - also an advertiser - sees their best results coming from Meta and other properties. Touchstorm DataLabs is the only company to have pre-configured YouTube's database so that it can be queried by Social Listening Platforms and brands interested in gathering their own Social Listening Data. Every video ever made about a brand - whether the brand name is in the Video Title or buried deep within a Description, Tag or Transcript - has been classified into our marketing taxonomy, the Touchstorm Video Index. Brands, and each of their divisions, live in precisely the right categories &amp; sub-categories. Videos made about brands by others live precisely inside hundreds of thousands of Topics and Sub-Topics. Product Information has its home as well.</div>
                 </div>
             </div>
         </div>
@@ -2156,11 +2154,13 @@ let state = forms[activeTab];
 // 3. INFO COPY (tooltip content)
 // ══════════════════════════════════════════════════════════════
 const INFO_COPY = {
-    backfill: `For each query, we'll be returning every video that satisfies the query, no matter when the video was made. Then, on the first data pull, you'll receive <strong>historical data</strong> for each video so your charts can immediately offer perspective. To stay in compliance with YouTube, the maximum history we can provide is <strong>18 months</strong>. We may soon offer <strong>36 months</strong> based on the most recent guidelines. Subsequent pulls will refresh the history on a rolling basis, meaning, we drop off the oldest history to maintain the historical period you have selected.<br><br> <em>To remain in compliance with YouTube's latest guidelines, it is important you use this historical data to refresh your front-end at least every 30 days.</em>   Video titles and other meta data are often changed by the user, and YouTube wants all of us to maintain the most recent data.<br><br>`,
+    tab1: `<strong>Brand Queries are Limited to One Brand Per Query. What counts as a brand?</strong></div><div><br></div><div><div>Consumer Goods Manufacturers are Brands, but they come in three flavors, creating helpful rules for all other brands. <br> 1. In a Family of Brands, each brand is distinct and therefore counts as a single brand in a query</div><div> P&amp;G is a family of brands: Tide, Pampers, Gillette, Olay</div><div> LVMH is a family of brands: Dior, Givenchy, Sephora, Dom Pérignon</div><div> Note: The products and line extensions belonging to these brands can be included without adding separate queries. We can search for all of Gillette. You can also focus us on products, as in "Gillette AND (Fusion5 OR Mach3)" to focus the listening. Venus by Gillette, however, is is a separate brand that needs its own query. </div><div><br></div><div> 2. In a Brand Family, also known as a Branded House, the query must indicate the division. </div><div> Samsung is a brand family: Samsung Consumer Electronics, Samsung Phones &amp; Devices, Samsung Appliances</div><div> Google is a brand family: Google Search, Google Drive, Google Maps, Google Meet</div><div> Note: We can't search on Samsung or Google. A Brand Family Query needs search terms that point us to the correct division/sub-brand that your customer works for, such as "Samsung AND (refrigerator OR dishwasher OR oven) </div><div>B2B Manufacturers are Brands: J&amp;J Med Tech, Saint Gobain Construction Materials, Pillsbury Food Service</div><div> B2B manufacturers sometimes follow the Brand Family model where the query should limit itself to one division.</div><div> J&amp;J MedTech Acuvue is a separate brand from J&amp;J MedTech Orthopaedics. </div></div><div><br></div><div>Retailers (Online &amp; Offline) are Brands: Walmart, Primark, Home Depot, Canadian Tire, Sephora, Amazon</div><div> Retailers sometimes follow the Brand Family model where the query should limit itself to one division.<br> Amazon AWS is a separate brand from Amazon Prime Video.</div><div><br></div><div>Service Companies are Brands: MetLife Insurance, Citibank, Hilton Hotels. </div><div> Service Companies sometimes follow the Brand Family model where the query should limit itself to one division.<br> Embassy Suites by Hilton is a separate brand from Hilton Garden Inn, each requiring its own query<br> Bank of America Card Services is a separate brand from Bank of America the retail bank - each need their own query. </div><div><br></div><div>Named Events are Brands: Ted Talks, the 48 Hour Film Festival, the World Economic Forum.</div><div><br></div><div>Non-Profits are Brands: Australian Heart Association, UNICEF or The Gates Foundation. </div><div><br></div><div>Higher Learning Institutions are Brands: Harvard University, the Netherlands Institute of Welding Technology. </div><div><br></div><div>Shows and Performers are Brands: Cirque de Soleil, Blue Man Group, Taylor Swift, Wicked the Musical, Post Malone</div><div><br></div><div>Media Companies are Brands: ABC-TV News New York, The Los Angeles Times, Sky Network</div><div> Networks operate as Brand Families where each sub-network requires its own query. <br> Sky Documentaries, Sky Sports, Sky History and Sky Arts are separate networks each requiring their own query. </div><div><br></div><div>This list is not exhaustive, but no worries: if a query comes in with more than brand, or isn't a brand query at all, we'll make the necessary adjustments on our end. </div><div><strong><br></strong></div>`,
+    tab2: `<strong>Topical Queries are Limited to One Topic Per Query. What counts as a Topic?</strong></div><div><br></div><div>In simple terms, Topics are similar to Product Categories. Skincare is a Topic. Cosmetics is a different Topic. You can't include both Skincare and Cosmetics in one query because results will be in the hundreds of millions.<br><br>If you need some help identifying Topics, use our Marketing Taxonomy. It's called The Touchstorm Video Index (TVi). It covers every aspect of the human experience...and therefore...anything a YouTube video could be about. </div><div><br></div><div>The TVi starts with Level 1, which includes 16 giant Categories like Family Life, Hobbies and Sports. The TVi has 10 levels encompassing hundreds of thousands of Topics, but they're all neatly nested into bigger groups, much like the Biological Kingdom. Topics live at Level 4 in the TVi. </div><div><br>Technically speaking, what is a Topic? It's a Level 4 in the TVi. You can explore the taxonomy (up to Level 4) by clicking on any L1 Category and finding your way to an L4 that matches your query. Or, you can use the search box and the taxonomy will auto-open to areas that match your search. <br><br>The taxonomy is here to help, but you don't need to check every Topical Query to make sure it's limited to one Topic. Just submit the queries, and if there's a problem, we'll resolve it and let you know. </div><div><br><em>[The live Touchstorm Video Index (TVi) taxonomy browser will be embedded here.]</em></div></div>`,
+    backfill: `On the first data pull, you'll receive <strong>historical data</strong> for each video so your charts can immediately offer perspective. We recommend 18 months of history for brands because it gives them two years of data for the most recent two quarters, revealing seasonal trending brands appreciate. YouTube's mid-2026 API Compliance Guidelines allow 36 months of history, which we'll add as an option as soon as we're approved.<br><br>For each brand query you submit, we'll be returning every video that satisfies the query, no matter when the video was made, so long as it has had new views in the past 36 months. Subsequent pulls will refresh the history on a rolling basis, meaning, we drop off the oldest history to maintain the historical period you have selected.<br><br> <em>To remain in compliance with YouTube's latest guidelines, it is important you use this historical data to refresh your front-end at least every 30 days.</em>   Video titles and other meta data are often changed by the user, and YouTube wants all of us to publish anything that's been updated.`,
 
-    refresh: `If you choose <strong>Daily Data Refresh</strong>, your users will always have new data through yesterday, no matter when they visit your platform. New data includes any new Videos or Comments that have appeared since the last pull, as well as fresh Metric counts on older evergreen videos. If you choose Daily refresh, new videos will appear the day after they were published, making Daily Refresh especially important for monitoring Crisis PR and the immediate pick-up of time-sensitive campaigns.  <br><br>If you choose <strong>Weekly Data Refresh</strong> you will save money, but depending on the day your user logs in, there could be a data hole. We pull weekly data on Sunday nights, reflecting the prior Monday to Sunday week. If a user visits on a Monday, the data reflects the prior week and is very current. On Tuesday, the freshest data is from the previous Sunday; Monday is missing. For users logging in on Fridays, the entire current week is missing and won't appear until Monday.`,
+    refresh: `If you choose <strong>Daily Data Refresh</strong>, your users will always have new data through yesterday, no matter when they visit your platform. New data includes any new Videos or Comments that appeared yesterday, as well as fresh metric counts (like new views) on older evergreen videos. If you choose Daily refresh, new videos will appear the day after they were published, making Daily Refresh especially important for monitoring new product rollouts, tracking organic pickup of time-sensitive campaigns like Super Bowl, monitoring media pickup of PR initiatives, tracking Crisis PR situations and closely monitoring consumer complaints.<br><br>If you choose <strong>Weekly Data Refresh</strong> you will save money, but your users will face a data hole that's miniscule on Mondays and awkwardly large on Sundays. We pull weekly data on Sunday nights, collecting the prior week's Monday to Sunday activity. If a user visits on a Monday, the data is completely current - the entire past week is available to them. The user who logs in on a Thursday will notice this week's Monday to Wednesday data is missing. The user who logs in on Sunday will face an entire week of missing data.`,
 
-    videoMetrics: `Each tier <em>adds</em> to the previous tier. Start with <strong>Basic Video Performance Metrics</strong>, then layer on Video Sentiment, Video Comments, and Comment Sentiment Analysis. Each upgrade enriches every record we ship you.`,
+    videoMetrics: `Each tier <em>adds</em> to the previous tier. Start with <strong>Basic Video Performance Metrics</strong>, then layer on Video Sentiment, Video Comments, and Video Comment Sentiment Analysis. Each upgrade enriches every record we ship you.`,
 
     creatorMetrics: `<strong>Creator Metrics (placeholder).</strong> Describe what creator-level data you receive and how Basic vs Advanced differ. Replace this copy when finalized.`,
 
@@ -2168,7 +2168,7 @@ const INFO_COPY = {
 
     'cm-advanced': `<strong>Advanced Creator Metrics (placeholder).</strong> Placeholder description of the advanced creator metrics tier.`,
 
-    shorts: `Tags each video as <strong>short-form</strong> or <strong>long-form</strong> so you can analyze them separately. Useful when shorts behave very differently from long-form in your category — different audience, different engagement curve.<br><br>Adds a small surcharge because we classify and segment on our side.`,
+    shorts: `Tags each video as <strong>vertical</strong> or <strong>horizontal</strong> so your clients can analyze them separately. More and more brands are asking us to separate their analyses by these two radically different video formats.`,
 
     'em-include': `<strong>Exclude Earned Media.</strong> Exclude any and all videos published by the brand itself across all of the brand's YouTube channels regardless of geography.<br><br>This is a filter, not a query change.`,
 
@@ -2178,22 +2178,13 @@ const INFO_COPY = {
 
     'inc-kids': `<strong>Exclude Kids.</strong> Exclude videos flagged as "Made for Kids" under YouTube's COPPA designation. Leave unchecked to keep kids' content out of your results.<br><br>This is a filter, not a query change.`,
 
-    'vm-basic': `<strong>Basic Video Metrics:</strong> You will receive the following Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step 2.<br><br><strong>Basic Video Performance Metrics Include:</strong>  Video Title, Video Title English Translation, Video URL,	Video ID, Thumbnail URL, Video Tags, Video Upload Date, First Data Date, Video Duration, Language (Video's Audio),	Video Creator's Channel Title,	Video's Lifetime Views, Lifetime Likes, Like Rate %,	Number of Comments,	Comment Rate %,	Lifetime Engagement Rate, Latest Period Views plus Rolling Historical View Updates, Latest Period Likes plus Rolling Historical Like Updates, Latest Period Comment Counts plus Rolling Historical Comment Count Updates.<br><br>
-    <strong>Extra Data Point: </strong> If, in Step 3, you chose to have us look inside Descriptions & Tags for your queries, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br>
-    
-    <strong>These basic video metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br>
-    <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.</em><br><br>
-    
-    <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags & Description copy.  To remain compliant with YouTube, we are continuously re-scanning these fields.  When they change, <em>it is important that your platform pick up on the changes and display them to remain in compliance.</em><br><br>`,
+    'vm-basic': `<strong>Basic Video Metrics:</strong> You will receive the following Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step B.<br><br><strong>Basic Video Performance Metrics Include:</strong><div>&bull; Video Title</div><div>&bull; Video Title English Translation</div><div>&bull; Video URL</div><div>&bull; Video ID</div><div>&bull; Thumbnail URL</div><div>&bull; Video Tags</div><div>&bull; Video Upload Date</div><div>&bull; First Data Date</div><div>&bull; Video Duration</div><div>&bull; Language (Video's Audio)</div><div>&bull; Video Creator's Channel Title</div><div>&bull; Video's Lifetime Views</div><div>&bull; Video's Lifetime Likes</div><div>&bull; Video's Like Rate %</div><div>&bull; Number of Comments on Video</div><div>&bull; Video's Comment Rate %</div><div>&bull; Lifetime Engagement Rate</div><div>&bull; Latest Period Views (Yesterday's or Last Week's) plus Rolling Historical Views</div><div>&bull; Latest Period Likes (Yesterday's or Last Week's) plus Rolling Historical Likes</div><div>&bull; Latest Period Comment Counts (Yesterday's or Last Week's) plus Rolling Historical Comment Counts</div><br> <strong>Extra Data Point: </strong> If, in Step C, you chose to have us look inside Descriptions & Tags for your queries, or beyond that into the Transcripts, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags & Description copy.  To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>`,
 
-    'vm-sentiment': `<strong>Sentiment Analysis:</strong> Adding Sentiment adds two new Video Metrics. <strong><br><br>1. Video Sentiment:</strong>  We use a 5-point Sentiment Scale from Very Positive to Very Negative.   For videos that compare multiple brands, TDL produces sentiment by brand.   For a video entitled "Ford Focus vs. Toyota Camry...which should you buy?" the sentiment returned will be associated with the brand submitting the query. This is one of many reasons we need to associate each query with a brand for whom we're returning results. <br><br><strong>2. Video Sentiment Score: </strong> We provide the actual Sentiment Score. It's a gauge of how solid the enthusiasm is vs. being close to the edge.`,
+    'vm-sentiment': `<strong>Sentiment Analysis:</strong> Adding Sentiment adds two new Basic Video Metrics. <strong><br><br>1. Video Sentiment:</strong>  We use a 5-point Sentiment Scale: Very Positive, Positive, Neutral, Negative, Very Negative. For videos that compare multiple brands, TDL produces sentiment by brand.   For a video entitled "Ford Focus vs. Toyota Camry...which should you buy?" the sentiment might be positive for one brand and negative for the other. The sentiment we return is the one associated with the brand submitting the query...a key reason each query may only include one brand.<br><br><strong>2. Video Sentiment Score: </strong> We provide the actual Sentiment Score. It's a gauge of how solid the enthusiasm is vs. being close to the edge.`,
 
-    'vm-comments': `<strong>All Comments:</strong> This upgrade is for platforms wanting to show the <em>actual comments</em> associated with each video. We provide the first 100 comments for every video.  When the video is one week old we add any new comments.  We do that again when the video is one month old. `,
+    'vm-comments': `<strong>Include Comments:</strong> This upgrade is for platforms wanting to show the <em>actual comments</em> associated with each video, not just the comment count. We provide the first 100 comments for every video.  When the video is one week old we add any new comments.  We do that again when the video is one month old.`,
 
-    'vm-commentSent': `<strong>Comment Sentiment Analysis:</strong> Adding Comment Sentiment adds four new Video Metrics. <br><br> <strong>1. Comments Summary: </strong>An AI-generated description of what the comments say, on whole. <br><br> 
-    <strong>2. Comments Themes: </strong>A list of the 4 most common things people are saying.<br><br> 
-    <strong>3. Comments Sentiment: </strong>The mood of the Comments Overall are judged on the 5-point sentiment scale to reveal if people are buying what the video is purporting.<br><br> 
-    <strong>4. Overall Comments Sentiment Score: </strong>We provide the actual Comments Sentiment Score that drove the Sentiment Classification on the 5-point Very Positive to Very Negative scale.<br><br>`,
+    'vm-commentSent': `<strong>Comment Sentiment Analysis:</strong> Adding Comment Sentiment Analysis adds four additional Basic Video Metrics. <br><br> <strong>1. Comments Summary: </strong>An AI-generated description of what the comments say, on whole. <br><br> <strong>2. Comments Themes: </strong>A list of the 4 most common things people are saying.<br><br> <strong>3. Comments Sentiment: </strong>The mood of the Comments Overall are judged on the 5-point sentiment scale to reveal if people are buying what the video is purporting.<br><br> <strong>4. Overall Comments Sentiment Score: </strong>We provide the actual Comments Sentiment Score that drove the Sentiment Classification on the 5-point Sentiment scale.`,
 
 
     query: `<strong>Adjusted queries</strong> use our search expertise to hone in on punctuation, plurals, and alternate/more popular terms — produces substantially more results than running your strings as-is. Comes with the All-Signal-No-Noise guarantee.<br><br><strong>Complete Contextual queries</strong> contain 1,000 to 10,000 terms per string and produce 5–50× more results than Adjusted. Vital for generic-name brands like <em>Orange Telecom, Dodge Cars, Specialized Bicycles, Columbia Sportswear, Liberty Financial</em>. Lets you control specifics: BMW wants car repair videos, not new car videos. L'Oréal wants Hair only — no makeup, no skincare.`,
@@ -2208,12 +2199,11 @@ const INFO_COPY = {
 
     depth: ``,
 
-    'depth-titles': `<strong>Titles Only:</strong> 
-Least expensive.  Likely to miss 20 - 40% of videos where creators included the brand.`,
+    'depth-titles': `<strong>Titles Only:</strong> Least expensive.  Likely to miss 20 - 40% of videos where creators featured a brand but didn't include it in the title. Creators are less likely to include brand names in the title when they aren't being paid to make the video.`,
 
-    'depth-ttd': `<strong>Titles + Tags + Descriptions:</strong>  Mid-price. Catches more relevant videos that don't surface the brand in the title.`,
+    'depth-ttd': `<strong>Titles + Tags + Descriptions:</strong> Catches more relevant videos that don't include the brand in the title.`,
 
-    'depth-transcripts': `<strong>All + Category Transcripts: </strong> Strongly recommended. Turns up <em>hidden review gems in big-view listicle videos</em> like "Top 5 Blenders for 2026" or "The Least Safe SUVs on the road today." <br><br>This option also includes snippets.  <br><br>Snippets enable your brand clients to see exactly what was said about them in the video. Snippets are short transcript excerpts surrounding a brand mention — the exact words a creator said before and after referencing your client's product. We include up to 3 snippets per video.<br>`,
+    'depth-transcripts': `<strong>All + Category Transcripts: </strong> Strongly recommended. Turns up <em>hidden review gems in big-view listicle videos</em> like "Top 5 Blenders for 2026" and "The Least Safe SUVs on the road today." <br><br>This option also includes Snippets. Snippets are short transcript excerpts surrounding a brand mention in the video — the exact words the creator said before and after referencing your client's brand or product. If the brand is mentioned repeatedly, as is often the case, we provide the first three snippets delivered live on demand.<br><br>Note:  Most companies measuring video sentiment and/or offering transcript-level searches scrape the transcripts off YouTube's site. We do not scrape YouTube. Doing so would put us out of compliance and in turn, you'd be out of compliance. We buy our transcripts from Google, explaining the jump in price.`,
 
     volume: `One <em>query</em> = one search string. Each query returns 100% of matching videos in your selected refresh window — no result caps. Volume tiers below 30,000 carry a slight per-query surcharge; tiers above 30,000 receive a slight discount. The curve is gentle (±15%) because our engineering cost scales mostly linearly per query — we won't promise discounts we can't honor.`,
 
@@ -2342,11 +2332,8 @@ function render() {
     $('saveMoveBtn').style.display = activeTab === 'type1' ? '' : 'none';
     $('requestSampleBtn').style.display = activeTab === 'type2' ? '' : 'none';
 
-    // Query Type 1 hides the 1-month backfill option (3 cols); Type 2 keeps it (4 cols)
+    // 1-month backfill removed; backfill is always 6/12/18 months (3 cols).
     const showOneMonth = activeTab === 'type2';
-    $('backfill1mo').style.display = showOneMonth ? '' : 'none';
-    $('backfillRow').classList.toggle('cols-4', showOneMonth);
-    $('backfillRow').classList.toggle('cols-3', !showOneMonth);
 
     // Backfill "best for…" ribbon: Type 1 → Best for Brands (18mo); Type 2 → Best for Research (6mo)
     $('backfillBadge18').style.display = activeTab === 'type1' ? '' : 'none';
@@ -2456,7 +2443,7 @@ function render() {
     $('lineSubtotal').textContent = formatCurrency(p.monthlyTotal);
 
     // Query section displays
-    $('volumeSliderLabel').textContent = activeTab === 'type2' ? 'Subject Matter Queries' : 'Queries with Brand Name';
+    $('volumeSliderLabel').textContent = activeTab === 'type2' ? 'Topical Queries' : 'Queries with Brand Name';
     $('brandedNum').textContent = formatVolume(p.brandedCount);
 
     // Combined-total tier pill

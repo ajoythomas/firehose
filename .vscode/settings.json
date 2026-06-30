@@ -2,5 +2,6 @@
     "chat.tools.terminal.autoApprove": {
         "true": true,
         "printf": true
-    }
+    },
+    "liveServer.settings.port": 5501
 }

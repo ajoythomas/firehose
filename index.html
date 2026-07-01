@@ -664,6 +664,11 @@
         }
         .info-popover strong { color: var(--cyan); font-weight: 700; }
         .info-popover em { color: var(--pink); font-style: normal; }
+        /* Query Type 2 remaps --pink to dark purple, so italic emphasis went
+           purple-on-purple. Use a light lavender: legible on the dark popover,
+           on-theme with QT2's purple, and distinct from the cyan <strong>. */
+        .form-wrapper.type2 .info-popover em,
+        .query-type-box[data-querytype="type2"] .info-popover em { color: #C9A9FF; }
         .info-popover ul { margin: 8px 0 0 18px; padding: 0; }
         .info-popover li { margin-bottom: 4px; }
         .info-icon.open .info-popover { display: block; }

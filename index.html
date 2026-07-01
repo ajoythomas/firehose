@@ -144,7 +144,7 @@
             pointer-events: none;
             opacity: 0.9;
         }
-        .hero-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 1; }
+        .hero-inner { max-width: 1220px; margin: 0 auto; position: relative; z-index: 1; }
         .hero-eyebrow {
             font-size: 13px;
             font-weight: 700;
@@ -169,27 +169,34 @@
             max-width: 640px;
             margin: 0 auto 28px;
         }
-        /* Hero — header, then a 2×2 grid of icon cards, then a bordered
-           "breakout" box holding the closing statement + stat pills. */
+        /* Intro paragraph under the H1 — spans the full width of the card row below. */
+        .hero-problem {
+            max-width: 1180px;
+            margin: 4px auto 60px;
+            text-align: center;
+            color: rgba(255,255,255,0.82);
+            font-size: clamp(16px, 1.6vw, 19px);
+            line-height: 1.6;
+        }
+        .hero-problem strong { color: #ffffff; font-weight: 700; }
+        /* Hero — header, intro paragraph, then a 3-across row of icon cards, then a
+           bordered "breakout" box holding the closing statement + stat pills. */
         .hero-story {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px 44px;
-            max-width: 1040px;
+            max-width: 1180px;
             margin: 8px auto 0;
             text-align: left;
         }
-        /* Borderless card: icon tile on the left, text on the right. */
+        /* Borderless card: icon floats top-left so the copy wraps around it. */
         .hero-card {
-            display: flex;
-            gap: 18px;
-            align-items: flex-start;
             background: none;
             border: none;
             padding: 0;
         }
         .card-icon {
-            flex-shrink: 0;
+            float: left;
             width: 54px;
             height: 54px;
             display: inline-flex;
@@ -199,8 +206,11 @@
             border: 1px solid rgba(255,255,255,0.14);
             background: rgba(8,9,28,0.55);
             color: var(--pink);
+            margin: 3px 16px 6px 0;
         }
         .card-icon svg, .card-icon img { width: 26px; height: 26px; display: block; }
+        /* No BFC here (no overflow) so the copy wraps around the floated icon;
+           the grid item (.hero-card) already contains the float. */
         .card-text { min-width: 0; }
         .card-kicker {
             display: block;
@@ -264,42 +274,20 @@
         }
 
         /* ── HERO BREAKOUT (bordered closing box + stat pills) ── */
+        /* Closing statement — plain centered text like .hero-problem, no box. */
         .hero-breakout {
-            max-width: 1040px;
-            margin: 44px auto 0;
-            border: 1px solid rgba(248,87,166,0.34);
-            border-radius: 16px;
-            background: rgba(248,87,166,0.06);
-            box-shadow: inset 0 0 60px rgba(248,87,166,0.08), 0 10px 34px rgba(248,87,166,0.07);
-            padding: 22px 26px;
-            text-align: left;
+            max-width: 1180px;
+            margin: 40px auto 0;
+            text-align: center;
         }
-        .breakout-statement {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
-        .breakout-icon {
-            flex-shrink: 0;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(248,87,166,0.40);
-            background: rgba(248,87,166,0.10);
-            color: var(--pink);
-        }
-        .breakout-icon svg, .breakout-icon img { width: 22px; height: 22px; display: block; }
         .breakout-statement p {
-            margin: 0;
-            align-self: center;
-            font-size: 15px;
-            line-height: 1.55;
-            color: rgba(255,255,255,0.80);
+            margin: 0 auto;
+            max-width: 900px;
+            font-size: clamp(16px, 1.6vw, 19px);
+            line-height: 1.6;
+            color: rgba(255,255,255,0.82);
         }
-        .breakout-statement strong { color: var(--pink); font-weight: 700; }
+        .breakout-statement strong { color: #ffffff; font-weight: 700; }
         .hero-pills {
             display: flex;
             flex-wrap: wrap;
@@ -1624,36 +1612,26 @@
     <div class="hero-inner">
         <div class="hero-eyebrow">YouTube Social Listening Firehose · Pricing Calculator</div>
         <h1>YouTube Social Listening Data</h1>
+        <p class="hero-problem">After two decades of trying, Social Listening Platforms still cannot report YouTube results. Noisy, inaccurate and incomplete, <strong>today's video results are simply not good enough.</strong> People blame YouTube Quota Limitations. <strong>Actually, that's not the problem.</strong></p>
         <div class="hero-story">
-            <!-- 01 THE PROBLEM -->
-            <div class="hero-card hero-card--divider">
-                <span class="card-icon" aria-hidden="true">
-                    <img src="images/search.png" alt="" decoding="async">
-                </span>
-                <div class="card-text">
-                    <span class="card-kicker"><span class="num">01</span>The Problem</span>
-                    <p class="card-lead">After two decades of trying, Social Listening Platforms still cannot report YouTube results.</p>
-                    <p class="card-body">Noisy, inaccurate and incomplete, <strong>today's video results are simply not good enough.</strong> People blame YouTube Quota Limitations. <strong>Actually, that's not the problem.</strong></p>
-                </div>
-            </div>
-            <!-- 02 THE BREAKTHROUGH -->
-            <div class="hero-card hero-card--divider">
+            <!-- 01 THE BREAKTHROUGH -->
+            <div class="hero-card">
                 <span class="card-icon" aria-hidden="true">
                     <img src="images/chemistry.png" alt="" decoding="async">
                 </span>
                 <div class="card-text">
-                    <span class="card-kicker"><span class="num">02</span>The Breakthrough</span>
+                    <span class="card-kicker"><span class="num">01</span>The Breakthrough</span>
                     <p class="card-lead">Introducing Touchstorm DataLabs. We're the only company to solve the most vexing Big Data Problem in marketing - YouTube Social Listening.</p>
                     <p class="card-body">We've expanded, appended, enriched, transformed and classified YouTube's data so it can be accurately queried. It took us 15 years to do it, but <span class="hl">your results come back in a few short days.</span></p>
                 </div>
             </div>
-            <!-- 03 WHAT YOU GET -->
+            <!-- 02 WHAT YOU GET -->
             <div class="hero-card">
                 <span class="card-icon" aria-hidden="true">
                     <img src="images/graph.png" alt="" decoding="async">
                 </span>
                 <div class="card-text">
-                    <span class="card-kicker"><span class="num">03</span>What You Get</span>
+                    <span class="card-kicker"><span class="num">02</span>What You Get</span>
                     <p class="card-lead">No more missing videos. No more results where Noise outweighs Signal.</p>
                     <ul class="card-checks">
                         <li>Your users' queries for Brands, Brand Divisions, Products, Product Categories and Topics return shockingly better results.</li>
@@ -1661,13 +1639,13 @@
                     </ul>
                 </div>
             </div>
-            <!-- 04 WHY IT MATTERS -->
+            <!-- 03 WHY IT MATTERS -->
             <div class="hero-card">
                 <span class="card-icon" aria-hidden="true">
                     <img src="images/thunder.png" alt="" decoding="async">
                 </span>
                 <div class="card-text">
-                    <span class="card-kicker"><span class="num">04</span>Why It Matters</span>
+                    <span class="card-kicker"><span class="num">03</span>Why It Matters</span>
                     <p class="card-lead">Late 2026 will bring disruption to Social Listening. Data parity is the industry curse, giving customers few reasons to switch providers.</p>
                     <p class="card-body">As a result, market shares are pretty stagnant. But now, a breakthrough. Accessing our data, some platforms are about to conquer Video Social Listening. For them, platform switchers will arrive at their door, PO in hand. <span class="hl">Market share will tilt toward those that solved the video problem.</span></p>
                 </div>
@@ -1677,9 +1655,6 @@
         <!-- BREAKOUT: closing statement + stat pills -->
         <div class="hero-breakout">
             <div class="breakout-statement">
-                <span class="breakout-icon" aria-hidden="true">
-                    <img src="images/Flag.png" alt="" decoding="async">
-                </span>
                 <p><strong>Touchstorm DataLabs is the only place on the planet with the data you need to do Video Social Listening right.</strong><br>Fully YouTube API Compliant, We're Ready For Your Queries.</p>
             </div>
             <div class="hero-pills">
@@ -1722,7 +1697,8 @@
                 </div>
                 <div class="calc-explainer-item">
                     <h3>YOUTUBE API QUOTA ISSUE</h3>
-                    <div class="exp-body"><b>"Why won't YouTube give us enough API quota to report accurately on their medium?"</b> Everyone asks.&nbsp;&nbsp;<div><br></div><div><i>Let's be clear:&nbsp; more YouTube quota won't help the platforms extract better Social Listening Results.</i> The problem is two-fold: database structure on YouTube's end, and blind query-writing on the platforms' end.&nbsp;&nbsp;</div><div><br></div><div>YouTube Search is a recommendation engine, not a search engine in the classic sense.&nbsp; YouTube Search aims to expose users to new content that will enhance how much time people spend on the platform.&nbsp; That's why query-ing the YouTube Search API brings back more noise than signal.&nbsp; &nbsp;Part One of one of Touchstorm DataLabs' solution is technical.&nbsp; We boil the entire YouTube ocean for all content, parse out the brands, and classify them in a structure that can accurately respond to Social Listening queries.&nbsp;&nbsp;</div><div><br></div><div>The second part of our solution is query improvement.&nbsp; This component is human, although AI is speeding up human production.&nbsp; Query-writing without a content database is a blind exercise.&nbsp; Previewing query results against real-life data takes the blinders off.&nbsp; That advantage belongs solely to Touchstorm DataLabs.<br><i><br></i></div><i>See our Test Results under Adjusted &amp; Contextual Queries.</i></div>
+                    <div class="exp-body"><b>"Why won't YouTube give us enough API quota to report accurately on their medium?"</b> Everyone asks.&nbsp;&nbsp;<div><br></div><div><i>Let's be clear:&nbsp; more YouTube quota won't help the platforms extract better Social Listening Results.</i> The problem is two-fold: database structure on YouTube's end, and blind query-writing on the platforms' end.&nbsp;&nbsp;</div><div><br></div>
+                    <div>Touchstorm Datalabs fixes both.</div><i>See our Test Results under Adjusted &amp; Contextual Queries.</i></div>
                 </div>
                 <div class="calc-explainer-item">
                     <h3>THE TOUCHSTORM VIDEO INDEX</h3>
@@ -1746,13 +1722,13 @@
                 <div class="query-type-box selected" data-querytype="type1" role="radio" aria-checked="true" tabindex="0">
                     <span class="query-type-radio"></span>
                     <span class="query-type-badge">Query Type 1</span>
-                    <h3>Use This Section for Queries that Contain a Brand (limit one Brand per query) <button class="info-icon" data-info="tab1" aria-label="What counts as a brand?"></button></h3>
+                    <h3>For Queries that Contain a Brand <br><small>(limit one Brand per query) </small><button class="info-icon" data-info="tab1" aria-label="What counts as a brand?"></button></h3>
                     <span class="query-type-amount" id="qtAmount1">$0/mo</span>
                 </div>
                 <div class="query-type-box" data-querytype="type2" role="radio" aria-checked="false" tabindex="0">
                     <span class="query-type-radio"></span>
                     <span class="query-type-badge">Query Type 2</span>
-                    <h3>Use this Section for Topical Queries That Do Not Contain a Brand (limit one Topic per query) <button class="info-icon" data-info="tab2" aria-label="What counts as a topic?"></button></h3>
+                    <h3>For Topical Queries That Do Not Contain a Brand <br><small>(limit one Topic per query) </small><button class="info-icon" data-info="tab2" aria-label="What counts as a topic?"></button></h3>
                     <span class="query-type-amount" id="qtAmount2">$0/mo</span>
                 </div>
             </div>

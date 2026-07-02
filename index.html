@@ -7,7 +7,9 @@
     <meta name="description" content="Touchstorm DATAlabs — Configure your YouTube Social Listening Firehose. Five decisions, eighteen pricing combinations, transparent volume curve. No surprises on your invoice.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://firehose.touchstormdatalabs.com/">
-    <link rel="icon" href="images/logo_TDL.png" type="image/png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <meta property="og:title" content="Pricing Calculator | Touchstorm DATAlabs">
     <meta property="og:description" content="Five decisions. Real per-query rates. Live monthly + annual totals.">
     <meta property="og:type" content="website">
@@ -175,7 +177,7 @@
             margin: 4px auto 60px;
             text-align: center;
             color: rgba(255,255,255,0.82);
-            font-size: clamp(16px, 1.6vw, 19px);
+            font-size: clamp(22px, 1.6vw, 19px);
             line-height: 1.6;
         }
         .hero-problem strong { color: #ffffff; font-weight: 700; }
@@ -282,10 +284,13 @@
         }
         .breakout-statement p {
             margin: 0 auto;
-            max-width: 900px;
-            font-size: clamp(16px, 1.6vw, 19px);
+            max-width: 1200px;
+            font-size: clamp(22px, 1.6vw, 19px);
             line-height: 1.6;
             color: rgba(255,255,255,0.82);
+        }
+        .breakout-statement p .callout-footer{
+            font-size:27px;
         }
         .breakout-statement strong { color: #ffffff; font-weight: 700; }
         .hero-pills {
@@ -918,7 +923,7 @@
         .price-line.group-head { margin-top: 8px; }
         .price-line.group-head .price-line-label {
             font-weight: 700;
-            color: var(--text-dark);
+            color: #ffffff;
         }
 
         /* ── VOLUME SLIDER ── */
@@ -999,6 +1004,9 @@
             margin-left: 8px;
             font-weight: 600;
         }
+        /* Volume-tier feedback: red while in surcharge, green while in discount. */
+        .volume-tier-pill.surcharge { background: #d1344e; }
+        .volume-tier-pill.discount  { background: #1a8a6e; }
 
         /* ── CHECKBOX GROUP (data types) ── */
         .checkbox-grid {
@@ -1215,11 +1223,17 @@
         .price-annual-row {
             display: flex;
             align-items: baseline;
-            gap: 10px;
+            flex-wrap: wrap;
+            gap: 4px 10px;
             border-top: 1px solid rgba(255,255,255,0.12);
             padding-top: 14px;
             margin-top: 6px;
         }
+        .price-annual-setup {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+        .price-annual-setup strong { color: rgba(255,255,255,0.88); font-weight: 700; }
         .price-annual-num {
             font-size: 22px;
             font-weight: 700;
@@ -1283,6 +1297,15 @@
             gap: 10px;
         }
         .price-line:last-of-type { border-bottom: none; }
+        /* Line items fade + slide in as the user selects options on the left. */
+        @keyframes priceLineReveal {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .price-line.reveal { animation: priceLineReveal 0.32s ease; }
+        @media (prefers-reduced-motion: reduce) {
+            .price-line.reveal { animation: none; }
+        }
         .price-line-label { flex: 1; min-width: 0; }
         .price-line-value {
             font-variant-numeric: tabular-nums;
@@ -1387,9 +1410,12 @@
         }
         .calc-explainer h3 {
             font-size: 18px;
-            color: var(--text-dark);
+            color: var(--pink);
             margin-bottom: 16px;
         }
+        /* Key phrases in the explainer copy — a deeper shade of the tooltip blue so
+           it stays readable on the white rail (the light --cyan washes out here). */
+        .exp-hl { color: #1187c7; font-weight: 700; }
         .calc-explainer-grid {
             display: flex;
             flex-direction: column;
@@ -1488,6 +1514,25 @@
         }
         .modal-close:hover { background: rgba(11,12,35,0.12); }
         .modal-close svg { width: 16px; height: 16px; }
+        /* Image lightbox variant — the image fills as much of the viewport as it can
+           (constrained by both width and height) so the stats stay readable. */
+        .modal.modal-image {
+            max-width: 96vw;
+            max-height: 96vh;
+            width: auto;
+            padding: 12px;
+        }
+        .modal-image img {
+            display: block;
+            max-width: 100%;
+            max-height: calc(96vh - 24px);
+            width: auto;
+            height: auto;
+            border-radius: 10px;
+        }
+        /* "Get the Stats." inline link that opens the lightbox. */
+        .stats-link { color: #1187c7; font-weight: 700; text-decoration: underline; cursor: pointer; }
+        .stats-link:hover { color: #0e6ea3; }
         .modal h3 {
             font-size: 26px;
             color: var(--text-dark);
@@ -1550,6 +1595,29 @@
             margin-top: 10px;
         }
         .modal-submit:hover { box-shadow: 0 8px 24px rgba(248,87,166,0.35); }
+        .modal-confirm {
+            margin-top: 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+        .modal-confirm strong { color: var(--text-dark); }
+        /* Selected-configuration summary shown in the schedule modal. */
+        .config-summary {
+            background: #f3f5f8;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin: 4px 0 20px;
+            font-size: 12.5px;
+            line-height: 1.65;
+            color: var(--text-dark);
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 260px;
+            overflow-y: auto;
+            font-variant-numeric: tabular-nums;
+        }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
@@ -1612,42 +1680,32 @@
     <div class="hero-inner">
         <div class="hero-eyebrow">YouTube Social Listening Firehose · Pricing Calculator</div>
         <h1>YouTube Social Listening Data</h1>
-        <p class="hero-problem">After two decades of trying, Social Listening Platforms still cannot report YouTube results. Noisy, inaccurate and incomplete, <strong>today's video results are simply not good enough.</strong> People blame YouTube Quota Limitations. <strong>Actually, that's not the problem.</strong></p>
+        <p class="hero-problem">After two decades of trying, Social Listening Platforms still cannot report YouTube results.<br> Noisy, inaccurate and incomplete, <strong>today's video results are simply not good enough.</strong> <br>People blame YouTube Quota Limitations. <strong>Actually, that's not the problem.</strong></p>
         <div class="hero-story">
             <!-- 01 THE BREAKTHROUGH -->
             <div class="hero-card">
-                <span class="card-icon" aria-hidden="true">
-                    <img src="images/chemistry.png" alt="" decoding="async">
-                </span>
+               
                 <div class="card-text">
-                    <span class="card-kicker"><span class="num">01</span>The Breakthrough</span>
-                    <p class="card-lead">Introducing Touchstorm DataLabs. We're the only company to solve the most vexing Big Data Problem in marketing - YouTube Social Listening.</p>
-                    <p class="card-body">We've expanded, appended, enriched, transformed and classified YouTube's data so it can be accurately queried. It took us 15 years to do it, but <span class="hl">your results come back in a few short days.</span></p>
+                    
+                    <p class="card-lead">Touchstorm DataLabs has solved the most vexing Big Data Problem in marketing - YouTube Social Listening.</p>
+                    <p class="card-body">We've expanded, appended, enriched, transformed and classified YouTube's data so it can be accurately queried for brands and topical information. It took us 15 years to do it, but <span class="hl">your results come back in a few short days.</span></p>
                 </div>
             </div>
             <!-- 02 WHAT YOU GET -->
             <div class="hero-card">
-                <span class="card-icon" aria-hidden="true">
-                    <img src="images/graph.png" alt="" decoding="async">
-                </span>
+                
                 <div class="card-text">
-                    <span class="card-kicker"><span class="num">02</span>What You Get</span>
-                    <p class="card-lead">No more missing videos. No more results where Noise outweighs Signal.</p>
-                    <ul class="card-checks">
-                        <li>Your users' queries for Brands, Brand Divisions, Products, Product Categories and Topics return shockingly better results.</li>
-                        <li>Once we process your queries against our database, you can dramatically improve results from <span class="hl">Reels &amp; TikTok</span>, too. Most creators post on all three sites, so at a certain spending threshold, we return your queries, fully fixed up and ready to improve results elsewhere.</li>
-                    </ul>
+                    <p class="card-lead">No more missing videos. No more results where Noise outweighs Signal. Historical Trends. Sentiment. Expansive Creator Data.</p>
+                    <p class="card-body">Get shockingly better YouTube results. Then, dramatically improve results from <span class="hl">Reels &amp; TikTok</span>, too. Most creators post on all three sites, so at a certain spending threshold, we return your queries, fully fixed up and ready to improve results elsewhere.
+                    </p>
+                    
                 </div>
             </div>
             <!-- 03 WHY IT MATTERS -->
             <div class="hero-card">
-                <span class="card-icon" aria-hidden="true">
-                    <img src="images/thunder.png" alt="" decoding="async">
-                </span>
                 <div class="card-text">
-                    <span class="card-kicker"><span class="num">03</span>Why It Matters</span>
-                    <p class="card-lead">Late 2026 will bring disruption to Social Listening. Data parity is the industry curse, giving customers few reasons to switch providers.</p>
-                    <p class="card-body">As a result, market shares are pretty stagnant. But now, a breakthrough. Accessing our data, some platforms are about to conquer Video Social Listening. For them, platform switchers will arrive at their door, PO in hand. <span class="hl">Market share will tilt toward those that solved the video problem.</span></p>
+                    <p class="card-lead">Late 2026 will bring Social Listening disruption. Certain platforms are about to escape Data&nbsp;Parity.</p>
+                    <p class="card-body">Customers have had few reasons to switch. But now, some platforms are about to conquer Video Social Listening. Those accessing our data will see market shares shift in their direction as <span class="hl">platform-switchers arrive, POs in hand.</span></p>
                 </div>
             </div>
         </div>
@@ -1655,7 +1713,7 @@
         <!-- BREAKOUT: closing statement + stat pills -->
         <div class="hero-breakout">
             <div class="breakout-statement">
-                <p><strong>Touchstorm DataLabs is the only place on the planet with the data you need to do Video Social Listening right.</strong><br>Fully YouTube API Compliant, We're Ready For Your Queries.</p>
+                <p><strong>Touchstorm DataLabs is the only place on the planet with the data to do Video Social Listening right.</strong><br><span class="callout-footer">Fully YouTube API Compliant, We're Ready For Your Queries.</span></p>
             </div>
             <div class="hero-pills">
                 <div class="hero-pill">
@@ -1693,21 +1751,18 @@
             <div class="calc-explainer-grid">
                 <div class="calc-explainer-item">
                     <h3>HOW DOMINANT IS YOUTUBE?</h3>
-                    <div class="exp-body">YouTube is the biggest platform for Social Listening Results, by far. Its big content volume is accompanied by engagement deep enough to be persuasive - and that's what enterprise brands love. Consumers spend just 10 seconds reading a Tweet or absorbing an Instagram photo, but they spend an average of 8 minutes with a YouTube video featuring a brand. <u>Get the Stats.</u></div>
+                    <div class="exp-body">YouTube is the <span class="exp-hl">biggest platform for Social Listening Results</span>, by far. Its big content volume is accompanied by engagement deep enough to be persuasive - and that's what enterprise brands love. Consumers spend just 10 seconds reading a Tweet or absorbing an Instagram photo, but they spend an average of <span class="exp-hl">8 minutes</span> with a YouTube video featuring a brand. <a href="images/how-big.png" class="stats-link" id="getStatsLink">Get the Stats.</a></div>
                 </div>
                 <div class="calc-explainer-item">
                     <h3>YOUTUBE API QUOTA ISSUE</h3>
-                    <div class="exp-body"><b>"Why won't YouTube give us enough API quota to report accurately on their medium?"</b> Everyone asks.&nbsp;&nbsp;<div><br></div><div><i>Let's be clear:&nbsp; more YouTube quota won't help the platforms extract better Social Listening Results.</i> The problem is two-fold: database structure on YouTube's end, and blind query-writing on the platforms' end.&nbsp;&nbsp;</div><div><br></div>
+                    <div class="exp-body"><b>"Why won't YouTube give us enough API quota to report accurately on their medium?"</b> Everyone asks.&nbsp;&nbsp;<div><br></div><div><i>Let's be clear:&nbsp; more YouTube quota won't help the platforms extract better Social Listening Results.</i> The problem is two-fold: <span class="exp-hl">database structure</span> on YouTube's end, and <span class="exp-hl">blind query-writing</span> on the platforms' end.&nbsp;&nbsp;</div><div><br></div>
                     <div>Touchstorm Datalabs fixes both.</div><i>See our Test Results under Adjusted &amp; Contextual Queries.</i></div>
                 </div>
                 <div class="calc-explainer-item">
                     <h3>THE TOUCHSTORM VIDEO INDEX</h3>
-                    <div class="exp-body"><div><b>Welcome to the Touchstorm Video Index, our Marketing Taxonomy.&nbsp; <br></b>It's our database structure that's been built for Brands, Products &amp; Product Categories, but its Topics cover every aspect of the human experience.&nbsp; No matter what a YouTube video is about, it has a place to live in the TVi - and it's ready for you to study. This is where your queries go. It's YouTube's database, but completely reformatted, enriched and reconfigured to produce wholly different results than querying the YouTube Search API. <br>•&nbsp; We boil the YouTube ocean every night, which means your clients won't be able to point out Missing Videos. <br>•&nbsp; Results are always current through yesterday. <br>•&nbsp; We've classified all videos featuring brands, products or product categories by Topic, enabling rich analyses for your site that goes beyond listing posts. <br>•&nbsp; We've been collecting data since 2007, meaning we caught the data early enough to provide Historical Trends in compliance with YouTube guidelines. <br>•&nbsp; We've appended all the data with other data and metrics important to brands, enabling deeper strategic analyses.&nbsp;&nbsp;</div><div>•&nbsp; Our grandfathered quota status means we don't need to limit your results.&nbsp;&nbsp;</div><div>•&nbsp; Our All Signal/No Noise guarantee means you can confidently charge clients by result.&nbsp;</div><div>•&nbsp; Our enhanced Creator Data connects Social Listening data to its logical outcome - the recruitment of Influencers. <br><br>Finally, true YouTube Social Listening is here. We're ready for your queries.<b></b></div><b><div><b><br></b></div><br></b></div>
+                    <div class="exp-body"><div><b>Welcome to the Touchstorm Video Index, our Marketing Taxonomy.&nbsp; <br></b>It's our database structure that's been built for Brands, Products &amp; Product Categories, but its Topics cover every aspect of the human experience.&nbsp; No matter what a YouTube video is about, it has a place to live in the TVi - and it's ready for you to study. This is where your queries go. It's YouTube's database, but completely reformatted, enriched and reconfigured to produce wholly different results than querying the YouTube Search API. <br>•&nbsp; We boil the YouTube ocean every night, which means your clients won't be able to point out <span class="exp-hl">Missing Videos</span>.<br>•&nbsp; Results are always current through yesterday. <br>•&nbsp; We've classified all videos featuring brands, products or product categories by Topic, enabling rich analyses for your site that goes beyond listing posts. <br>•&nbsp; We've been collecting data since 2007, meaning we caught the data early enough to provide <span class="exp-hl">Historical Trends</span> in compliance with YouTube guidelines. <br>•&nbsp; We've appended all the data with other data and metrics important to brands, enabling deeper strategic analyses.&nbsp;&nbsp;</div><div>•&nbsp; Our grandfathered quota status means we don't need to limit your results.&nbsp;&nbsp;</div><div>•&nbsp; Our <span class="exp-hl">All Signal/No Noise guarantee</span> means you can confidently charge clients by result.&nbsp;</div><div>•&nbsp; Our enhanced Creator Data connects Social Listening data to its logical outcome - the recruitment of Influencers. <br><br>Finally, true YouTube Social Listening is here. We're ready for your queries.<b></b></div><b><div><b><br></b></div><br></b></div>
                 </div>
-                <div class="calc-explainer-item">
-                    <h3>GOODBYE VIDEO LIMITATIONS</h3>
-                    <div class="exp-body"><b>Touchstorm DataLabs isn't a partial solution.&nbsp; We've fixed </b><b><i>every problem </i>Platforms &amp; Brands have with Video Social Listening.&nbsp;&nbsp;</b><br><br><b>Concern:</b> Missing Videos<div><b>TDL Fix:</b> Our Contextual Queries collect 100% of videos made about the brand</div><div><br></div><div><b>Concern:</b> No Historical Trends, Waiting for Trends</div><div><b>TDL </b><b>Fix: </b>We provide the History so you can show trends on Day One</div><div><br></div><div><b>Concern:</b> A Focus on Post Volume instead of Audience Volume</div><div><b>TDL </b><b>Fix:</b> We give you all Videos - even old ones - with View data so you can finally track audience</div><div><br></div><div><b>Concern:</b> Results Limitations<br><b>TDL </b><b>Fix:</b> No cap on results....all the Videos Fit for the query<br><br><b>Concern: </b>Too much junk, especially with usage-based platform fees</div><div><b>TDL </b><b>Fix:</b> Numerous tools for limiting noise, plus the ultimate solution - Contextual Queries</div><div><br></div><div><b>Concern:</b> Confusing/unreliable/unverifiable Sentiment</div><div><b>TDL </b><b>Fix:</b> Sentiment for <i>each brand/product </i>in a video, Overall Comment Opinion Sentiment, and Snippet Quotes</div><div><br></div><div><b>Concern: </b>Inability to Focus Results "I want New Car info but Repair Info keeps showing up"</div><div><b>TDL </b><b>Fix:</b> Our Taxonomy with pre-classifications by Topic gives us fast, focused query terms and channels to add</div><div><br></div><div><b>Concern:</b> Can't combine countries into the region where I work; need spreadsheets</div><div><b>TDL </b><b>Fix:</b> Brand region geography structure that rolls up individual countries into regional results</div><div><br></div><div><b>Concern:</b> Lots of posting data, but too few charts and graphs to analyze results and strategize action steps</div><div><b>TDL </b><b>Fix:</b> Enriched brand data that lets your product people go to town with the types of charts and analyses brands really want, along with the BI models to do so.</div><div><br></div><div><b>Concern:</b> Results from other divisions where I don't work make analysis difficult</div><div><b>TDL </b><b>Fix:</b> We've pre-configured and pre-classified YouTube's data to solve this problem</div><div><br></div><div><b>Concern:</b> The burden of query-writing never seems to pay off with better results</div><div><b>TDL </b><b>Fix:</b> The perfection of Contextual Queries...turn in enough to specify your intention and we'll deliver</div><div><br></div><div><b>Concern:</b> Video posts don't evaporate like text &amp; photo posts...but I can't see new data on evergreen videos</div><div><b>TDL </b><b>Fix:</b> We deliver all videos that have had views in the past three years, no matter when they were published.</div><div><br></div><div>No more barely-good-enough results. At Touchstorm DataLabs, we've fixed all that.</div></div>
-                </div>
+               
             </div>
         </div>
 
@@ -1736,10 +1791,39 @@
             <!-- FORM WRAPPER — encloses the entire form for the active query type -->
             <div class="form-wrapper" id="formWrapper">
 
-            <!-- DECISION 1: HISTORICAL BACKFILL -->
+            <!-- DECISION A: QUERY VOLUME -->
             <div class="calc-card">
                 <div class="calc-card-head">
                     <span class="calc-card-num">a</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Query Volume
+                            <button class="info-icon" data-info="volume" aria-label="More info"></button>
+                        </h3>
+                        <div class="calc-card-sub" id="cardGsub">Estimate Your Data Costs by Entering the Number of Brand Queries You'll Submit</div>
+                    </div>
+                </div>
+                <div class="volume-display">
+                    <span class="volume-num" id="brandedNum">0</span>
+                    <span class="volume-label" id="volumeSliderLabel">Queries with Brand Name</span>
+                </div>
+                <input type="range" min="0" max="20" value="0" class="volume-slider" id="brandedSlider" aria-labelledby="volumeSliderLabel" aria-valuetext="0 queries">
+                <div class="volume-ticks" id="volumeTicks">
+                    <span style="left:0%">0</span>
+                    <span style="left:20%">2.5K</span>
+                    <span style="left:35%">10K</span>
+                    <span style="left:55%">30K</span>
+                    <span style="left:100%">100K</span>
+                </div>
+                <div class="query-total-readout" style="justify-content:flex-end;">
+                    <span class="volume-tier-pill" id="volTierPill">no queries</span>
+                </div>
+            </div>
+
+            <!-- DECISION B: HISTORICAL BACKFILL -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">b</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Historical Backfill
@@ -1766,10 +1850,10 @@
                 </div>
             </div>
 
-            <!-- DECISION 2: DATA REFRESH FREQUENCY -->
+            <!-- DECISION C: DATA REFRESH FREQUENCY -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">b</span>
+                    <span class="calc-card-num">c</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Data Refresh Frequency
@@ -1796,10 +1880,10 @@
                 </div>
             </div>
 
-            <!-- DECISION 3: SEARCH DEPTH -->
+            <!-- DECISION D: SEARCH DEPTH -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">c</span>
+                    <span class="calc-card-num">d</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Search Depth
@@ -1826,10 +1910,10 @@
                 </div>
             </div>
 
-            <!-- DECISION 4: VIDEO METRICS -->
+            <!-- DECISION E: VIDEO METRICS -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">d</span>
+                    <span class="calc-card-num">e</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Metrics Selection
@@ -1865,10 +1949,10 @@
                 </label>
             </div>
 
-            <!-- DECISION E: CREATOR METRICS -->
+            <!-- DECISION F: CREATOR METRICS -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">e</span>
+                    <span class="calc-card-num">f</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Creator Metrics
@@ -1877,20 +1961,25 @@
                         <div class="calc-card-sub">Creator Metrics provide vital information about who made the video.</div>
                     </div>
                 </div>
-                <div class="toggle-row cols-2" data-input="creatorMetrics">
+                <div class="toggle-row cols-3" data-input="creatorMetrics">
+                    <button class="toggle-btn" data-value="none">
+                        <span class="toggle-btn-label">No Creator Metrics</span>
+                    </button>
                     <button class="toggle-btn" data-value="basic">
+                        <span class="toggle-badge" id="cmBadgeBasic">Best for Brands</span>
                         <span class="toggle-btn-label">Basic Creator Metrics <span class="info-icon" data-info="cm-basic" role="button" tabindex="0" aria-label="More info"></span></span>
                     </button>
                     <button class="toggle-btn" data-value="advanced">
+                        <span class="toggle-badge" id="cmBadgeAdvanced" style="display:none;">Best for Research</span>
                         <span class="toggle-btn-label">Advanced Creator Metrics <span class="info-icon" data-info="cm-advanced" role="button" tabindex="0" aria-label="More info"></span></span>
                     </button>
                 </div>
             </div>
 
-            <!-- DECISION F: QUERIES (query type + volume, branded vs non-branded) -->
+            <!-- DECISION G: QUERY MANAGEMENT -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">f</span>
+                    <span class="calc-card-num">g</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Query Management
@@ -1908,12 +1997,13 @@
                             <span class="toggle-btn-label">Adjusted <span class="info-icon" data-info="qt-adjusted" role="button" tabindex="0" aria-label="More info"></span></span>
                         </button>
                         <button class="toggle-btn" data-value="contextual">
+                            <span class="toggle-badge" id="qtBadgeContextual">Best for Brands</span>
                             <span class="toggle-btn-label">Contextual <span class="info-icon" data-info="qt-contextual" id="qtContextualInfo" role="button" tabindex="0" aria-label="More info"></span></span>
                         </button>
                     </div>
                 </div>
 
-                <div class="addon-block">
+                <div class="addon-block" id="queryExclusionsBlock">
                     <div class="addon-block-title">Query Exclusions</div>
                     <div class="addon-checkbox-row">
                         <label class="inline-checkbox addon-cat checked" data-cat="earned">
@@ -1940,35 +2030,6 @@
                 </div>
             </div>
 
-            <!-- DECISION G: QUERY VOLUME -->
-            <div class="calc-card">
-                <div class="calc-card-head">
-                    <span class="calc-card-num">g</span>
-                    <div class="calc-card-head-text">
-                        <h3>
-                            Query Volume
-                            <button class="info-icon" data-info="volume" aria-label="More info"></button>
-                        </h3>
-                        <div class="calc-card-sub" id="cardGsub">Estimate Your Data Costs by Entering the Number of Brand Queries You'll Submit</div>
-                    </div>
-                </div>
-                <div class="volume-display">
-                    <span class="volume-num" id="brandedNum">0</span>
-                    <span class="volume-label" id="volumeSliderLabel">Queries with Brand Name</span>
-                </div>
-                <input type="range" min="0" max="21" value="0" class="volume-slider" id="brandedSlider" aria-labelledby="volumeSliderLabel" aria-valuetext="0 queries">
-                <div class="volume-ticks">
-                    <span style="left:0%">0</span>
-                    <span style="left:23.8%">2.5K</span>
-                    <span style="left:38.1%">10K</span>
-                    <span style="left:57.1%">30K</span>
-                    <span style="left:100%">100K</span>
-                </div>
-                <div class="query-total-readout" style="justify-content:flex-end;">
-                    <span class="volume-tier-pill" id="volTierPill">no queries</span>
-                </div>
-            </div>
-
             <div class="form-nav" id="formNav">
                 <span class="form-nav-error" id="formNavError" style="display:none;"></span>
                 <button class="form-nav-btn" id="saveMoveBtn" type="button">Save and Move to Query Type 2 →</button>
@@ -1992,6 +2053,7 @@
                     <div class="price-annual-row">
                         <span class="price-annual-num" id="priceAnnual">$0</span>
                         <span class="price-annual-label">/ year</span>
+                        <span class="price-annual-setup" id="priceAnnualSetup"></span>
                     </div>
                     <div class="price-perquery">
                         Per-query rate · <strong id="priceperQuery">$0.00</strong>
@@ -2003,45 +2065,52 @@
 
                     <div class="price-line">
                         <span class="price-line-label">Base per-query rate</span>
-                        <span class="price-line-value">$1.11</span>
+                        <span class="price-line-value" id="lineBaseRate">$1.11</span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label" id="lineBackfillLabel">× Backfill</span>
+                        <span class="price-line-value" id="lineBackfillValue">—</span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label" id="lineRefreshLabel">× Refresh</span>
+                        <span class="price-line-value" id="lineRefreshValue">—</span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label" id="lineDepthLabel">× Search depth</span>
+                        <span class="price-line-value" id="lineDepthValue">—</span>
                     </div>
                     <div class="price-line">
                         <span class="price-line-label" id="lineMetricsLabel">× Video metrics</span>
-                        <span class="price-line-value" id="lineMetricsValue">×1.00</span>
+                        <span class="price-line-value" id="lineMetricsValue">—</span>
                     </div>
                     <div class="price-line" id="lineShorts" style="display:none;">
-                        <span class="price-line-label">× Shorts vs long-form</span>
-                        <span class="price-line-value" id="lineShortsValue">×1.05</span>
+                        <span class="price-line-label">× Shorts add-on</span>
+                        <span class="price-line-value" id="lineShortsValue">×1.03</span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label" id="lineCreatorLabel">× Creator metrics</span>
+                        <span class="price-line-value" id="lineCreatorValue">—</span>
+                    </div>
+                    <div class="price-line">
+                        <span class="price-line-label" id="lineQueryTypeLabel">× Query type</span>
+                        <span class="price-line-value" id="lineQueryTypeValue">—</span>
+                    </div>
+                    <div class="price-line" id="lineExclusions" style="display:none;">
+                        <span class="price-line-label" id="lineExclusionsLabel">× Query exclusions</span>
+                        <span class="price-line-value" id="lineExclusionsValue">×1.03</span>
                     </div>
                     <div class="price-line">
                         <span class="price-line-label" id="lineVolumeLabel">× Volume tier</span>
                         <span class="price-line-value" id="lineVolumeValue">×1.00</span>
                     </div>
 
-                    <div class="price-line group-head" id="lineBrandedHead">
-                        <span class="price-line-label" id="lineBrandedHeadLabel">Branded · Adjusted</span>
-                        <span class="price-line-value"></span>
+                    <div class="price-line group-head" id="linePerQueryRow">
+                        <span class="price-line-label">Per-query rate</span>
+                        <span class="price-line-value" id="linePerQueryValue">$0.00</span>
                     </div>
-                    <div class="price-line" id="lineBrandedRateRow">
-                        <span class="price-line-label" id="lineBrandedRateLabel">× Query rate</span>
-                        <span class="price-line-value" id="lineBrandedRateValue">×0.00</span>
-                    </div>
-                    <div class="price-line" id="lineBrandedSubRow">
-                        <span class="price-line-label" id="lineBrandedSubLabel">2,500 × $0.00</span>
-                        <span class="price-line-value" id="lineBrandedSubValue">$0</span>
-                    </div>
-
-                    <div class="price-line group-head" id="lineNonBrandedHead">
-                        <span class="price-line-label" id="lineNonBrandedHeadLabel">Non-branded · Adjusted</span>
-                        <span class="price-line-value"></span>
-                    </div>
-                    <div class="price-line" id="lineNonBrandedRateRow">
-                        <span class="price-line-label" id="lineNonBrandedRateLabel">× Query rate</span>
-                        <span class="price-line-value" id="lineNonBrandedRateValue">×0.00</span>
-                    </div>
-                    <div class="price-line" id="lineNonBrandedSubRow">
-                        <span class="price-line-label" id="lineNonBrandedSubLabel">0 × $0.00</span>
-                        <span class="price-line-value" id="lineNonBrandedSubValue">$0</span>
+                    <div class="price-line" id="lineQtySubRow">
+                        <span class="price-line-label" id="lineQtySubLabel">0 queries × $0.00</span>
+                        <span class="price-line-value" id="lineQtySubValue">$0</span>
                     </div>
 
                     <div class="price-line subtotal">
@@ -2081,11 +2150,11 @@
                         <span class="price-line-label">Combined one-time</span>
                         <span class="price-line-value" id="lineBackfillTotal">$0</span>
                     </div>
-                    <div class="price-onetime-note">Billed once on initial pull. Does not recur.</div>
+                    <div class="price-onetime-note">Billed once on initial pull — $2,500 (Adjusted) or $5,000 (Contextual) minimum, then scaled by volume. Does not recur.</div>
                 </div>
 
                 <div class="price-notes">
-                    <strong>Pricing notes.</strong> Per-query rate is anchored at $1.11 for our base reference combination at our 15,000-query reference volume. The volume curve runs from a +15% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 15K and 50K. Geography, producer type, and auto-filters do not change the price. All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations. Multi-firehose discounts available — ask us.
+                    <strong>Pricing notes.</strong> The per-query rate starts at $1.11 (Query Type 1) or $3.33 (Query Type 2, which is Contextual-only) for the base configuration — 6-month backfill, weekly refresh, titles-only depth, basic video metrics, no creator metrics, and adjusted queries — and each selection above adjusts it multiplicatively. The volume curve runs from a +25% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 20K and 50K. Geography and producer type do not change the price. All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations. Multi-firehose discounts available — ask us.
                 </div>
             </div>
         </div>
@@ -2116,30 +2185,22 @@
         <button class="modal-close" aria-label="Close modal" id="modalClose">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
-        <h3 id="modalTitle">Lock this config. <em>Get sample data.</em></h3>
-        <p class="modal-sub">We'll send a sample extract within 48 hours and schedule a call to walk through your exact configuration, pricing, and delivery options.</p>
-        <form id="contactForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="mf-name">Your name</label>
-                    <input id="mf-name" name="name" type="text" required placeholder="Jane Doe">
-                </div>
-                <div class="form-group">
-                    <label for="mf-company">Company</label>
-                    <input id="mf-company" name="company" type="text" required placeholder="Acme Platforms">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="mf-email">Work email</label>
-                <input id="mf-email" name="email" type="email" required placeholder="jane@acme.com">
-            </div>
-            <div class="form-group">
-                <label for="mf-message">What are you building? (optional)</label>
-                <textarea id="mf-message" name="message" placeholder="Brief description of your platform and use case..."></textarea>
-            </div>
-            <input type="hidden" id="mf-config" name="config">
-            <button type="submit" class="modal-submit">Request Sample Data</button>
-        </form>
+        <h3 id="modalTitle">Book a call with <em>Charlotte</em></h3>
+        <p class="modal-sub">Here's the firehose configuration you built. Grab a time on Charlotte's calendar and we'll walk through your exact setup, pricing, and delivery options.</p>
+        <div class="config-summary" id="configSummary" aria-label="Your selected configuration"></div>
+        <button type="button" class="modal-submit" id="scheduleBtn">Schedule a call with Charlotte →</button>
+        <p class="modal-confirm" id="scheduleConfirm" style="display:none;">Your configuration is <strong>copied to your clipboard</strong> — paste it into the booking notes so Charlotte can review it before your call.</p>
+    </div>
+</div>
+
+
+<!-- ══════════ "GET THE STATS" IMAGE LIGHTBOX ══════════ -->
+<div class="modal-overlay" id="statsModal" role="dialog" aria-modal="true" aria-label="How big is YouTube?">
+    <div class="modal modal-image">
+        <button class="modal-close" aria-label="Close" id="statsModalClose">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <img src="images/how-big.png" alt="How big is YouTube — audience and engagement statistics" decoding="async">
     </div>
 </div>
 
@@ -2149,30 +2210,40 @@
 // 1. PRICING MODEL
 // ══════════════════════════════════════════════════════════════
 
-// Volume tiers — 500 → 100K queries/refresh (fine-grained at the low end so small accounts like 1,500 are selectable)
+// Volume tiers — 1K → 100K queries/refresh (fine-grained at the low end so small accounts like 1,500 are selectable)
 const VOLUME_TIERS = [
-    500, 1000, 1500, 2000, 2500, 5000, 7500, 10000,
-    15000, // index 8 = reference (1.00x)
+    1000, 1500, 2000, 2500, 5000, 7500, 10000,
+    15000, // index 7 = reference (1.00x)
     20000, 25000, 30000, 35000, 40000, 45000, 50000, 60000, 70000, 80000, 90000, 100000
 ];
 // Index of the reference tier (15K = 1.00x). Surcharge below, discount above.
-const VOLUME_REF_IDX = 8;
+const VOLUME_REF_IDX = 7;
 
-// Volume multiplier — normalized so 15K = 1.00. Surcharge under 15K (up to +15%),
-// discount over (down to −25% at 100K). Steepest through 15K-50K where most accounts land.
+// Volume multiplier — normalized so 15K = 1.00. Surcharge under 15K (up to +25% at 1K),
+// discount over (down to −25% at 100K). Steepest through 20K-50K where most accounts land.
 const VOLUME_MULT = [
-    1.15, 1.13, 1.11, 1.10, 1.08, 1.06, 1.04, 1.02, // 500-10K (surcharge, below ref)
+    1.25, 1.21, 1.17, 1.13, 1.09, 1.05, 1.02,        // 1K-10K (surcharge, below ref)
     1.00,                                            // 15K reference
     0.96, 0.93, 0.91, 0.89, 0.87, 0.86, 0.85,        // 20K-50K (-4% → -15%)
     0.82, 0.80, 0.78, 0.76, 0.75                     // 60K-100K (-18% → -25%)
 ];
 
-// Per-group query-count slider scale — starts at 0, goes to 100K. One slider each
-// for branded and non-branded queries. The discount tier is set by the COMBINED total.
-const QUERY_TIERS = [
-    0, 500, 1000, 1500, 2000, 2500, 5000, 7500, 10000, 15000, 20000, 25000,
-    30000, 35000, 40000, 45000, 50000, 60000, 70000, 80000, 90000, 100000
-];
+// Per-query-type slider scale — starts at 0, goes to 100K. Query Type 2 can start as low
+// as 500; Query Type 1 starts at 1,000. (The discount curve treats any volume below the
+// 1,000 tier as the smallest bracket, so 500 prices at the +25% floor.)
+const QUERY_TIERS_BY_TYPE = {
+    type1: [
+        0, 1000, 1500, 2000, 2500, 5000, 7500, 10000, 15000, 20000, 25000,
+        30000, 35000, 40000, 45000, 50000, 60000, 70000, 80000, 90000, 100000
+    ],
+    type2: [
+        0, 500, 1000, 1500, 2000, 2500, 5000, 7500, 10000, 15000, 20000, 25000,
+        30000, 35000, 40000, 45000, 50000, 60000, 70000, 80000, 90000, 100000
+    ]
+};
+const qTiers = (qt) => QUERY_TIERS_BY_TYPE[qt] || QUERY_TIERS_BY_TYPE.type1;
+// Tick marks under the slider (value → label); positions are computed per scale in render().
+const VOLUME_TICK_MARKS = [[0, '0'], [2500, '2.5K'], [10000, '10K'], [30000, '30K'], [100000, '100K']];
 
 // Map a combined query total to the staircase tier index (last tier ≤ total).
 function volumeTierIdx(total) {
@@ -2188,47 +2259,38 @@ function volumeMultForTotal(total) {
     return VOLUME_MULT[volumeTierIdx(total)];
 }
 
-// Combo multiplier table — 18 cells from Sheet 2 (rows 38-110, col D / D42).
-// Indexed by COMBO_MULT[refresh][queryType][depth].
-// Base $1.11/query × multiplier = per-query rate (at 30K reference volume).
-const COMBO_MULT = {
-    // Monthly refresh (Query Type 2 only) — least frequent, lowest price (~0.85× weekly).
-    monthly: {
-        exact:      { titles: 0.85, ttd: 0.98, transcripts: 3.40 },
-        improved:   { titles: 1.35, ttd: 1.50, transcripts: 4.25 },
-        contextual: { titles: 6.80, ttd:  7.65, transcripts: 8.50 }
-    },
-    weekly: {
-        exact:      { titles: 1.00, ttd: 1.15, transcripts: 4.00 },
-        improved:   { titles: 1.60, ttd: 1.75, transcripts: 5.00 },
-        contextual: { titles: 8.00, ttd:  9.00, transcripts: 10.00 }
-    },
-    daily: {
-        exact:      { titles: 2.20, ttd: 2.35, transcripts: 6.00 },
-        improved:   { titles: 2.50, ttd: 2.75, transcripts: 7.00 },
-        contextual: { titles: 11.00, ttd: 12.00, transcripts: 13.00 }
-    }
+// ── Per-dimension multipliers (multiplicative). Base rate × each selected option's
+//    multiplier = per-query rate (before the volume-tier adjustment). ──
+// A. Historical backfill — 6 months is the base; 12mo +10%, 18mo +20%.
+const BACKFILL_MULT   = { '6mo': 1.00, '12mo': 1.10, '18mo': 1.20 };
+// C. Data refresh — query-type-dependent. Type 1: Weekly base, Daily +25%.
+//    Type 2 (Monthly/Weekly/Daily): Monthly base, Weekly +15%, Daily +25%.
+const REFRESH_MULT    = {
+    type1: { weekly: 1.00, daily: 1.25, monthly: 1.00 },
+    type2: { monthly: 1.00, weekly: 1.15, daily: 1.25 }
 };
+// C. Search depth — Titles only is the base; +Tags/Desc +20%; +Transcripts +35%.
+const DEPTH_MULT      = { titles: 1.00, ttd: 1.20, transcripts: 1.35 };
+// E. Creator metrics — None is the base; Basic +10%; Advanced +15%.
+const CREATOR_MULT    = { none: 1.00, basic: 1.10, advanced: 1.15 };
+// G. Query type — Adjusted is the base; Contextual +45%.
+const QUERY_TYPE_MULT = { improved: 1.00, contextual: 1.45 };
+// F. Query exclusions — each selected exclusion compounds +5%.
+const EXCLUSION_SURCHARGE = 1.03;
 
-// Base per-query rate (Sheet 2 D42 = $1.11)
-const BASE_RATE = 1.11;
+// Base per-query rate — differs by query type (1 = brand queries, 2 = topical queries).
+// Type 2 is Contextual-only, so its higher base already bakes in Contextual (no G surcharge).
+const BASE_RATE = { type1: 1.11, type2: 3.33 };
 
-// Data type weights (additive multi-select). Sum of selected = factor applied to rate.
-// Calibration values — proportional to data point coverage in Sheet 1 cols T-V for Option 4.
-// Category, Brand, Creator, and Actionable are included and locked on. Product is optional.
-// All five selected = 1.00; without Product Data = 0.85.
-const DATA_TYPE_WEIGHTS = {
-    category:   0.15,  // ~7 data points (T16-T22)
-    brand:      0.30,  // ~14 data points (T24-T37) — most extensive
-    product:    0.15,  // ~8 data points (T39-T46)
-    creator:    0.20,  // ~9+ data points (T48-T56 + V48-V56)
-    actionable: 0.20   // premium analytics (S57+)
+// One-time setup fee — a floor per query type, then per-query above it. Billed once as
+// max(floor, rate × volume): Adjusted $2,500 / 10¢/query, Contextual $5,000 / 45¢/query.
+const SETUP_FEE_MIN = {
+    improved:   2500,  // Adjusted floor
+    contextual: 5000   // Contextual floor
 };
-
-// One-time setup fee (USD) — driven by query type (Query Management).
-const SETUP_FEES = {
-    improved:   2500,  // Adjusted
-    contextual: 4000   // Contextual
+const SETUP_FEE_PER_QUERY = {
+    improved:   0.10,  // Adjusted
+    contextual: 0.45   // Contextual
 };
 const BACKFILL_LABELS = {
     '1mo':  '1 month',
@@ -2237,12 +2299,12 @@ const BACKFILL_LABELS = {
     '18mo': '18 months'
 };
 
-// Video metrics — per-query rate multiplier by tier.
+// D. Video metrics — Basic is the base; +Sentiment +15%; +Comments +25%; +Comment Sentiment +30%.
 const VIDEO_METRICS_MULT = {
     basic:       1.00,
     sentiment:   1.15,
-    comments:    1.35,
-    commentSent: 1.55
+    comments:    1.25,
+    commentSent: 1.30
 };
 const VIDEO_METRICS_LABELS = {
     basic:       'Basic',
@@ -2250,6 +2312,12 @@ const VIDEO_METRICS_LABELS = {
     comments:    '+ Sent. + Comments',
     commentSent: '+ Comment Sentiment'
 };
+
+// Display names for the price-panel line items.
+const REFRESH_DISPLAY = { weekly: 'Weekly', daily: 'Daily', monthly: 'Monthly' };
+const DEPTH_DISPLAY   = { titles: 'Titles only', ttd: 'Titles + Tags + Desc', transcripts: 'All + Transcripts' };
+const CREATOR_LABELS  = { none: 'No Creator Metrics', basic: 'Basic', advanced: 'Advanced' };
+const QT_DISPLAY      = { improved: 'Adjusted', contextual: 'Contextual' };
 
 // Brand-published video filter — selectable, no price effect (a filter, not a query change).
 const INCLUSION_LABELS = {
@@ -2260,28 +2328,32 @@ const INCLUSION_LABELS = {
 };
 
 // Shorts vs long-form distinction — surcharge applied when enabled.
-const SHORTS_SURCHARGE = 1.05;
+const SHORTS_SURCHARGE = 1.03;
 
 // ══════════════════════════════════════════════════════════════
 // 2. STATE
 // ══════════════════════════════════════════════════════════════
 // Each query type (1 = contains a brand name, 2 = subject-matter only) gets its own
 // fully independent copy of the entire form. Tabs switch which copy is being edited.
-function makeForm() {
+function makeForm(qt) {
+    // Nothing is pre-selected. Any unselected option card prices at its BASE value
+    // (×1.00) in computePrice, so moving the volume slider (card A) shows the base
+    // price immediately; picking any card then adjusts the price from there.
     return {
-        backfill: null,          // no preselection — user must choose (A)
-        refresh: null,           // B
-        videoMetrics: null,      // D
-        creatorMetrics: null,    // E — 'basic' or 'advanced' (placeholder; no price effect yet)
+        qt,                      // 'type1' | 'type2' — selects the base per-query rate
+        brandedVolumeIdx: 0,     // A — volume starts at 0 ⇒ price is $0 on load
+        backfill: null,          // B
+        refresh: null,           // C
+        depth: null,             // D
+        videoMetrics: null,      // E
+        creatorMetrics: null,    // F
+        brandedQueryType: null,  // G
         shortsDistinction: false,
-        inclusions: new Set(['earned']),
-        brandedQueryType: null,  // E — 'improved' (Adjusted) or 'contextual'
-        depth: null,             // C
-        brandedVolumeIdx: 0,            // QUERY_TIERS index → 0 (cost is $0 on load)
-        nonBrandedVolumeIdx: 0          // QUERY_TIERS index → 0
+        inclusions: new Set(),
+        nonBrandedVolumeIdx: 0
     };
 }
-const forms = { type1: makeForm(), type2: makeForm() };
+const forms = { type1: makeForm('type1'), type2: makeForm('type2') };
 let activeTab = 'type1';
 // `state` always points at the form for the active tab. All event handlers read/write
 // through it, so they automatically operate on whichever tab is being edited.
@@ -2315,7 +2387,7 @@ const INFO_COPY = {
 
     'inc-kids': `<strong>Exclude Kids.</strong> The Video Gaming, Popular Music and Kids' Media Topics produce more than half of all Social Listening Noise. No matter the query, it's highly likely a gamer, a cartoon, a song or a band uses those words. <br><br>If you're opting for Contextual Queries, we take care of the noise whether or not you check these boxes.&nbsp; If you're saving money by using Adjusted Searches, it's wise to check the Kids box.`,
 
-    'vm-basic': { t1: `<strong>Basic Video Metrics:</strong> You will receive the following Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step B.<br><br><strong>Basic Video Performance Metrics Include:</strong><div>&bull; Video Title</div><div>&bull; Video Title English Translation</div><div>&bull; Video URL</div><div>&bull; Video ID</div><div>&bull; Thumbnail URL</div><div>&bull; Video Tags</div><div>&bull; Video Upload Date</div><div>&bull; First Data Date</div><div>&bull; Video Duration</div><div>&bull; Language (Video's Audio)</div><div>&bull; Video Creator's Channel Title</div><div>&bull; Video's Lifetime Views</div><div>&bull; Video's Lifetime Likes</div><div>&bull; Video's Like Rate %</div><div>&bull; Number of Comments on Video</div><div>&bull; Video's Comment Rate %</div><div>&bull; Lifetime Engagement Rate</div><div>&bull; Latest Period Views (Yesterday's or Last Week's) plus Rolling Historical Views</div><div>&bull; Latest Period Likes (Yesterday's or Last Week's) plus Rolling Historical Likes</div><div>&bull; Latest Period Comment Counts (Yesterday's or Last Week's) plus Rolling Historical Comment Counts</div><br> <strong>Extra Data Point: </strong> If, in Step C, you chose to have us look inside Descriptions & Tags for your queries, or beyond that into the Transcripts, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags & Description copy.  To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>`, t2: `<div>We recommend Basic Video Metrics for Topical Queries. Topical Query results are so voluminous that including Comments and their Sentiment creates front end challenges for presenting all the data cleanly. Having said that, some platforms really believe in showing the Comments. </div><div><br></div><strong>Basic Video Metrics:</strong> You will receive the following Basic Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step B.<br><br><strong>Basic Video Performance Metrics Include:</strong><div>• Video Title</div><div>• Video Title English Translation</div><div>• Video URL</div><div>• Video ID</div><div>• Thumbnail URL</div><div>• Video Tags</div><div>• Video Upload Date</div><div>• First Data Date</div><div>• Video Duration</div><div>• Language (Video's Audio)</div><div>• Video Creator's Channel Title</div><div>• Video's Lifetime Views</div><div>• Video's Lifetime Likes</div><div>• Video's Like Rate %</div><div>• Number of Comments on Video</div><div>• Video's Comment Rate %</div><div>• Lifetime Engagement Rate</div><div>• Latest Period Views (Yesterday's or Last Week's) plus Rolling Historical Views</div><div>• Latest Period Likes (Yesterday's or Last Week's) plus Rolling Historical Likes</div><div>• Latest Period Comment Counts (Yesterday's or Last Week's) plus Rolling Historical Comment Counts</div><br> <strong>Extra Data Point: </strong> If, in Step C, you chose to have us look inside Descriptions &amp; Tags for your queries, or beyond that into the Transcripts, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags &amp; Description copy. To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>` },
+    'vm-basic': { t1: `<strong>Basic Video Metrics:</strong> You will receive the following Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step C.<br><br><strong>Basic Video Performance Metrics Include:</strong><div>&bull; Video Title</div><div>&bull; Video Title English Translation</div><div>&bull; Video URL</div><div>&bull; Video ID</div><div>&bull; Thumbnail URL</div><div>&bull; Video Tags</div><div>&bull; Video Upload Date</div><div>&bull; First Data Date</div><div>&bull; Video Duration</div><div>&bull; Language (Video's Audio)</div><div>&bull; Video Creator's Channel Title</div><div>&bull; Video's Lifetime Views</div><div>&bull; Video's Lifetime Likes</div><div>&bull; Video's Like Rate %</div><div>&bull; Number of Comments on Video</div><div>&bull; Video's Comment Rate %</div><div>&bull; Lifetime Engagement Rate</div><div>&bull; Latest Period Views (Yesterday's or Last Week's) plus Rolling Historical Views</div><div>&bull; Latest Period Likes (Yesterday's or Last Week's) plus Rolling Historical Likes</div><div>&bull; Latest Period Comment Counts (Yesterday's or Last Week's) plus Rolling Historical Comment Counts</div><br> <strong>Extra Data Point: </strong> If, in Step D, you chose to have us look inside Descriptions & Tags for your queries, or beyond that into the Transcripts, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags & Description copy.  To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>`, t2: `<div>We recommend Basic Video Metrics for Topical Queries. Topical Query results are so voluminous that including Comments and their Sentiment creates front end challenges for presenting all the data cleanly. Having said that, some platforms really believe in showing the Comments. </div><div><br></div><strong>Basic Video Metrics:</strong> You will receive the following Basic Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step C.<br><br><strong>Basic Video Performance Metrics Include:</strong><div>• Video Title</div><div>• Video Title English Translation</div><div>• Video URL</div><div>• Video ID</div><div>• Thumbnail URL</div><div>• Video Tags</div><div>• Video Upload Date</div><div>• First Data Date</div><div>• Video Duration</div><div>• Language (Video's Audio)</div><div>• Video Creator's Channel Title</div><div>• Video's Lifetime Views</div><div>• Video's Lifetime Likes</div><div>• Video's Like Rate %</div><div>• Number of Comments on Video</div><div>• Video's Comment Rate %</div><div>• Lifetime Engagement Rate</div><div>• Latest Period Views (Yesterday's or Last Week's) plus Rolling Historical Views</div><div>• Latest Period Likes (Yesterday's or Last Week's) plus Rolling Historical Likes</div><div>• Latest Period Comment Counts (Yesterday's or Last Week's) plus Rolling Historical Comment Counts</div><br> <strong>Extra Data Point: </strong> If, in Step D, you chose to have us look inside Descriptions &amp; Tags for your queries, or beyond that into the Transcripts, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags &amp; Description copy. To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>` },
 
     'vm-sentiment': `<strong>Sentiment Analysis:</strong> Adding Sentiment adds two new Basic Video Metrics. <strong><br><br>1. Video Sentiment:</strong>  We use a 5-point Sentiment Scale: Very Positive, Positive, Neutral, Negative, Very Negative. For videos that compare multiple brands, TDL produces sentiment by brand.   For a video entitled "Ford Focus vs. Toyota Camry...which should you buy?" the sentiment might be positive for one brand and negative for the other. The sentiment we return is the one associated with the brand submitting the query...a key reason each query may only include one brand.<br><br><strong>2. Video Sentiment Score: </strong> We provide the actual Sentiment Score. It's a gauge of how solid the enthusiasm is vs. being close to the edge.`,
 
@@ -2369,50 +2441,48 @@ const INFO_COPY = {
 // 4. PRICING COMPUTATION
 // ══════════════════════════════════════════════════════════════
 function computePrice(f) {
-    const brandedCount = QUERY_TIERS[f.brandedVolumeIdx];
-    const nonBrandedCount = QUERY_TIERS[f.nonBrandedVolumeIdx];
+    const tiers = qTiers(f.qt);
+    const brandedCount = tiers[f.brandedVolumeIdx];
+    const nonBrandedCount = tiers[f.nonBrandedVolumeIdx];   // vestigial (single slider)
     const totalVolume = brandedCount + nonBrandedCount;
 
-    // Discount tier is driven by the COMBINED total.
+    // Volume discount tier is driven by the total.
     const volumeMult = volumeMultForTotal(totalVolume);
-    // Required selections (B/C/D/E) start unselected — missing ones zero out the price.
-    const metricsMult = f.videoMetrics ? VIDEO_METRICS_MULT[f.videoMetrics] : 0;
-    const shortsMult = f.shortsDistinction ? SHORTS_SURCHARGE : 1;
 
-    // All data types are included by default — rate is anchored to the full bundle.
-    const dataTypeFactor = 1.00;
+    // Per-dimension multipliers (multiplicative). An unselected card falls back to
+    // its BASE value (×1.00) so the price reflects the base config until a choice is made.
+    const backfillMult   = f.backfill ? BACKFILL_MULT[f.backfill] : 1;
+    const refreshMult    = f.refresh ? ((REFRESH_MULT[f.qt] || REFRESH_MULT.type1)[f.refresh] ?? 1) : 1;
+    const depthMult      = f.depth ? DEPTH_MULT[f.depth] : 1;
+    const metricsMult    = f.videoMetrics ? VIDEO_METRICS_MULT[f.videoMetrics] : 1;
+    const shortsMult     = f.shortsDistinction ? SHORTS_SURCHARGE : 1;
+    const creatorMult    = f.creatorMetrics ? CREATOR_MULT[f.creatorMetrics] : 1;
+    // Type 2 is Contextual-only and its base rate already includes it, so no G surcharge there.
+    const queryTypeMult  = f.qt === 'type2' ? 1
+                         : (f.brandedQueryType ? QUERY_TYPE_MULT[f.brandedQueryType] : 1);
+    const exclusionCount = f.inclusions.size;
+    const exclusionMult  = Math.pow(EXCLUSION_SURCHARGE, exclusionCount);
 
-    // Shared factor applies to both groups; only the combo (refresh·queryType·depth) differs.
-    const sharedFactor = BASE_RATE * volumeMult * metricsMult * shortsMult * dataTypeFactor;
+    // Full per-query rate (folds in the volume tier). Base config = $1.11 (Type 1) / $3.33 (Type 2).
+    const baseRate = BASE_RATE[f.qt] || BASE_RATE.type1;
+    const perQuery = baseRate
+        * backfillMult * refreshMult * depthMult * metricsMult
+        * shortsMult * creatorMult * queryTypeMult * exclusionMult * volumeMult;
 
-    // Branded can be Adjusted or Contextual; non-branded is always Adjusted (improved).
-    // Combo lookups need refresh + depth (+ query type for branded); otherwise 0 (incomplete).
-    const brandedComboMult = (f.refresh && f.depth && f.brandedQueryType)
-        ? COMBO_MULT[f.refresh][f.brandedQueryType][f.depth] : 0;
-    const nonBrandedComboMult = (f.refresh && f.depth)
-        ? COMBO_MULT[f.refresh].improved[f.depth] : 0;
-
-    const brandedPerQuery = sharedFactor * brandedComboMult;
-    const nonBrandedPerQuery = sharedFactor * nonBrandedComboMult;
-
-    const brandedMonthly = brandedPerQuery * brandedCount;
-    const nonBrandedMonthly = nonBrandedPerQuery * nonBrandedCount;
-
-    const monthlyBase = brandedMonthly + nonBrandedMonthly;
-    const monthlyTotal = monthlyBase;
+    const monthlyTotal = perQuery * brandedCount;
     const annualTotal = monthlyTotal * 12;
-    const blendedPerQuery = totalVolume > 0 ? monthlyBase / totalVolume : 0;
-    // One-time setup fee is driven by query type (Adjusted vs Contextual).
-    const setupFee = f.brandedQueryType ? SETUP_FEES[f.brandedQueryType] : 0;
+    // One-time setup fee = max(per-type floor, per-query setup rate × query volume).
+    // Only applies when the query type is used (volume > 0). Unselected type falls
+    // back to Adjusted (the base), like the monthly rate.
+    const setupPerQuery = SETUP_FEE_PER_QUERY[f.brandedQueryType] || SETUP_FEE_PER_QUERY.improved;
+    const setupMin = SETUP_FEE_MIN[f.brandedQueryType] || SETUP_FEE_MIN.improved;
+    const setupFee = brandedCount > 0 ? Math.max(setupMin, setupPerQuery * brandedCount) : 0;
 
     return {
         brandedCount, nonBrandedCount, totalVolume,
-        volumeMult, metricsMult, shortsMult, dataTypeFactor,
-        brandedComboMult, nonBrandedComboMult,
-        brandedPerQuery, nonBrandedPerQuery,
-        brandedMonthly, nonBrandedMonthly,
-        monthlyBase, monthlyTotal, annualTotal,
-        blendedPerQuery, setupFee
+        volumeMult, backfillMult, refreshMult, depthMult, metricsMult,
+        shortsMult, creatorMult, queryTypeMult, exclusionMult, exclusionCount, setupPerQuery,
+        perQuery, monthlyTotal, annualTotal, setupFee
     };
 }
 
@@ -2453,6 +2523,12 @@ function render() {
     $('priceMonthly').textContent = formatCurrency(combinedMonthly);
     $('priceAnnual').textContent = formatCurrency(combinedAnnual);
     $('priceperQuery').textContent = formatCurrency(combinedBlended, { perQuery: true });
+
+    // Surface the one-time setup fee next to the yearly total (full detail stays below).
+    const combinedSetup = p1.setupFee + p2.setupFee;
+    $('priceAnnualSetup').innerHTML = combinedSetup > 0
+        ? `+ one-time setup fee (<strong>${formatCurrency(combinedSetup)}</strong>)`
+        : '';
 
     // Per-type summary (always visible) + per-tab-box amount badges
     $('lineType1Value').textContent = formatCurrency(p1.monthlyTotal);
@@ -2513,69 +2589,86 @@ function render() {
     $('brandedQueryTypeRow').classList.toggle('cols-1', activeTab === 'type2');
     $('brandedQueryTypeRow').classList.toggle('cols-2', activeTab === 'type1');
 
+    // "Best for Brands" badges (Query Type 1 only): Basic Creator Metrics + Contextual
+    $('cmBadgeBasic').style.display = activeTab === 'type1' ? '' : 'none';
+    $('qtBadgeContextual').style.display = activeTab === 'type1' ? '' : 'none';
+    // "Best for Research" badge (Query Type 2 only): Advanced Creator Metrics
+    $('cmBadgeAdvanced').style.display = activeTab === 'type2' ? '' : 'none';
+
     // Line-item breakdown reflects the ACTIVE tab
     $('lineItemsTitle').textContent = `Line items · ${activeName}`;
     $('lineSubtotalLabel').textContent = `${activeName} monthly`;
+    $('lineBaseRate').textContent = formatCurrency(BASE_RATE[activeTab], { perQuery: true });
 
-    const refreshLabel = state.refresh === 'daily' ? 'Daily'
-                       : state.refresh === 'monthly' ? 'Monthly'
-                       : state.refresh === 'weekly' ? 'Weekly' : '—';
-    const depthLabel = state.depth === 'titles' ? 'Titles only'
-                     : state.depth === 'ttd' ? 'Titles + Tags + Desc'
-                     : state.depth === 'transcripts' ? 'All + Transcripts' : '—';
-    const brandedTypeLabel = state.brandedQueryType === 'contextual' ? 'Contextual'
-                           : state.brandedQueryType === 'improved' ? 'Adjusted' : '—';
+    // ── Progressive line items (active tab) ──
+    // Each line stays hidden until it's relevant, then animates in on first reveal.
+    // Nothing is "empty" on load — options and multipliers appear as the user picks them.
+    const revealRow = (row, show) => {
+        if (show) {
+            if (row.style.display !== 'flex') {
+                row.style.display = 'flex';
+                row.classList.remove('reveal');
+                void row.offsetWidth;            // restart the reveal animation
+                row.classList.add('reveal');
+            }
+        } else {
+            row.style.display = 'none';
+            row.classList.remove('reveal');
+        }
+    };
 
-    // Shared multiplier lines
-    $('lineMetricsLabel').textContent = state.videoMetrics
-        ? `× Video metrics (${VIDEO_METRICS_LABELS[state.videoMetrics]})`
-        : '× Video metrics (not selected)';
-    $('lineMetricsValue').textContent = state.videoMetrics ? formatMult(p.metricsMult) : '—';
+    // Per-dimension multiplier lines — shown once that option is selected.
+    const dimLine = (labelId, valueId, prefix, optLabel, mult) => {
+        revealRow($(labelId).parentElement, !!optLabel);
+        if (optLabel) {
+            $(labelId).textContent = `× ${prefix} (${optLabel})`;
+            $(valueId).textContent = formatMult(mult);
+        }
+    };
+    dimLine('lineBackfillLabel', 'lineBackfillValue', 'Backfill',
+            state.backfill && BACKFILL_LABELS[state.backfill], p.backfillMult);
+    dimLine('lineRefreshLabel', 'lineRefreshValue', 'Refresh',
+            state.refresh && REFRESH_DISPLAY[state.refresh], p.refreshMult);
+    dimLine('lineDepthLabel', 'lineDepthValue', 'Search depth',
+            state.depth && DEPTH_DISPLAY[state.depth], p.depthMult);
+    dimLine('lineMetricsLabel', 'lineMetricsValue', 'Video metrics',
+            state.videoMetrics && VIDEO_METRICS_LABELS[state.videoMetrics], p.metricsMult);
+    dimLine('lineCreatorLabel', 'lineCreatorValue', 'Creator metrics',
+            state.creatorMetrics && CREATOR_LABELS[state.creatorMetrics], p.creatorMult);
+    dimLine('lineQueryTypeLabel', 'lineQueryTypeValue', 'Query type',
+            state.brandedQueryType && QT_DISPLAY[state.brandedQueryType], p.queryTypeMult);
 
-    const lineShorts = $('lineShorts');
-    if (state.shortsDistinction) {
-        lineShorts.style.display = 'flex';
-        $('lineShortsValue').textContent = formatMult(p.shortsMult);
-    } else {
-        lineShorts.style.display = 'none';
+    // Shorts add-on line (only when enabled)
+    revealRow($('lineShorts'), state.shortsDistinction);
+    if (state.shortsDistinction) $('lineShortsValue').textContent = formatMult(p.shortsMult);
+
+    // Query-exclusions line (only when one or more are selected)
+    revealRow($('lineExclusions'), p.exclusionCount > 0);
+    if (p.exclusionCount > 0) {
+        $('lineExclusionsLabel').textContent = `× Query exclusions (${p.exclusionCount})`;
+        $('lineExclusionsValue').textContent = formatMult(p.exclusionMult);
     }
 
-    $('lineVolumeLabel').textContent = `× Volume tier (${formatVolume(p.totalVolume)} total)`;
-    $('lineVolumeValue').textContent = formatMult(p.volumeMult);
-
-    // Branded group line items
-    const hasBranded = p.brandedCount > 0;
-    showLine('lineBrandedHead', hasBranded);
-    showLine('lineBrandedRateRow', hasBranded);
-    showLine('lineBrandedSubRow', hasBranded);
-    const brandedComplete = state.refresh && state.depth && state.brandedQueryType && state.videoMetrics;
-    if (hasBranded) {
-        $('lineBrandedHeadLabel').textContent = `Branded · ${brandedTypeLabel}`;
-        $('lineBrandedRateLabel').textContent = `× ${brandedTypeLabel} rate (${refreshLabel} · ${depthLabel})`;
-        $('lineBrandedRateValue').textContent = brandedComplete ? formatMult(p.brandedComboMult) : '—';
-        $('lineBrandedSubLabel').textContent = `${formatVolume(p.brandedCount)} × ${formatCurrency(p.brandedPerQuery, { perQuery: true })}`;
-        $('lineBrandedSubValue').textContent = formatCurrency(p.brandedMonthly);
+    // Volume tier, per-query rate, and quantity appear once the slider is moved (volume > 0).
+    const hasVolume = p.brandedCount > 0;
+    revealRow($('lineVolumeLabel').parentElement, hasVolume);
+    revealRow($('linePerQueryRow'), hasVolume);
+    revealRow($('lineQtySubRow'), hasVolume);
+    if (hasVolume) {
+        $('lineVolumeLabel').textContent = `× Volume tier (${formatVolume(p.totalVolume)} total)`;
+        $('lineVolumeValue').textContent = formatMult(p.volumeMult);
+        $('linePerQueryValue').textContent = formatCurrency(p.perQuery, { perQuery: true });
+        $('lineQtySubLabel').textContent = `${formatVolume(p.brandedCount)} queries × ${formatCurrency(p.perQuery, { perQuery: true })}`;
+        $('lineQtySubValue').textContent = formatCurrency(p.monthlyTotal);
     }
 
-    // Non-branded group line items (always Adjusted)
-    const hasNon = p.nonBrandedCount > 0;
-    showLine('lineNonBrandedHead', hasNon);
-    showLine('lineNonBrandedRateRow', hasNon);
-    showLine('lineNonBrandedSubRow', hasNon);
-    const nonComplete = state.refresh && state.depth && state.videoMetrics;
-    if (hasNon) {
-        $('lineNonBrandedRateLabel').textContent = `× Adjusted rate (${refreshLabel} · ${depthLabel})`;
-        $('lineNonBrandedRateValue').textContent = nonComplete ? formatMult(p.nonBrandedComboMult) : '—';
-        $('lineNonBrandedSubLabel').textContent = `${formatVolume(p.nonBrandedCount)} × ${formatCurrency(p.nonBrandedPerQuery, { perQuery: true })}`;
-        $('lineNonBrandedSubValue').textContent = formatCurrency(p.nonBrandedMonthly);
-    }
-
-    // One-time setup fee — driven by each query type's Adjusted/Contextual choice
+    // One-time setup fee — per-query rate (by query type) × volume. Unselected → base (Adjusted).
     const setupName = (f) => f.brandedQueryType === 'contextual' ? 'Contextual'
-                           : f.brandedQueryType === 'improved' ? 'Adjusted' : 'not selected';
-    $('lineBackfill1Label').textContent = `Query Type 1 setup (${setupName(forms.type1)})`;
+                           : f.brandedQueryType === 'improved' ? 'Adjusted' : 'base';
+    const setupLabel = (f, p) => `${setupName(f)} · ${formatCurrency(p.setupPerQuery, { perQuery: true })}/query`;
+    $('lineBackfill1Label').textContent = `Query Type 1 setup (${setupLabel(forms.type1, p1)})`;
     $('lineBackfill1Value').textContent = formatCurrency(p1.setupFee);
-    $('lineBackfill2Label').textContent = `Query Type 2 setup (${setupName(forms.type2)})`;
+    $('lineBackfill2Label').textContent = `Query Type 2 setup (${setupLabel(forms.type2, p2)})`;
     $('lineBackfill2Value').textContent = formatCurrency(p2.setupFee);
     $('lineBackfillTotal').textContent = formatCurrency(p1.setupFee + p2.setupFee);
 
@@ -2589,10 +2682,9 @@ function render() {
     $('cardGsub').textContent = activeTab === 'type2'
         ? "Estimate Your Data Costs by Entering the Number of Topical Queries You'll Submit"
         : "Estimate Your Data Costs by Entering the Number of Brand Queries You'll Submit";
-    ['gaming','music','kids'].forEach(cat => {
-        const lbl = document.querySelector('.addon-cat[data-cat="' + cat + '"]');
-        if (lbl) lbl.style.display = activeTab === 'type2' ? 'none' : '';
-    });
+    // Query Exclusions (Owned Media etc.) don't apply to topical queries — hide the whole
+    // block for Query Type 2. Query Type 1 shows all four exclusion options.
+    $('queryExclusionsBlock').style.display = activeTab === 'type2' ? 'none' : '';
     $('qtContextualInfo').style.display = activeTab === 'type2' ? 'none' : '';
     $('brandedNum').textContent = formatVolume(p.brandedCount);
     $('brandedSlider').setAttribute('aria-valuetext', `${formatVolume(p.brandedCount)} queries`);
@@ -2600,15 +2692,25 @@ function render() {
     // Combined-total tier pill
     const tierIdx = volumeTierIdx(p.totalVolume);
     let pill;
+    const inSurcharge = p.totalVolume > 0 && tierIdx < VOLUME_REF_IDX;
+    const inDiscount  = p.totalVolume > 0 && tierIdx > VOLUME_REF_IDX;
     if (p.totalVolume <= 0) pill = 'no queries';
     else if (tierIdx === VOLUME_REF_IDX) pill = 'reference tier';
-    else if (tierIdx < VOLUME_REF_IDX) pill = `+${Math.round((p.volumeMult - 1) * 100)}% surcharge`;
+    else if (inSurcharge) pill = `+${Math.round((p.volumeMult - 1) * 100)}% surcharge`;
     else pill = `−${Math.round((1 - p.volumeMult) * 100)}% discount`;
-    $('volTierPill').textContent = pill;
+    const pillEl = $('volTierPill');
+    pillEl.textContent = pill;
+    pillEl.classList.toggle('surcharge', inSurcharge);
+    pillEl.classList.toggle('discount', inDiscount);
 
-    // Slider gradient
-    const lastIdx = QUERY_TIERS.length - 1;
+    // Slider scale (active tab): max index, fill gradient, and tick positions.
+    const tiers = qTiers(state.qt);
+    const lastIdx = tiers.length - 1;
     $('brandedSlider').style.setProperty('--vol-pct', (state.brandedVolumeIdx / lastIdx) * 100 + '%');
+    $('volumeTicks').innerHTML = VOLUME_TICK_MARKS.map(([v, label]) => {
+        const pct = (tiers.indexOf(v) / lastIdx) * 100;
+        return `<span style="left:${pct}%">${label}</span>`;
+    }).join('');
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -2644,6 +2746,9 @@ function syncControls() {
             btn.setAttribute('aria-pressed', String(isActive));
         });
     });
+    // Set the slider's max for the active tab's scale BEFORE its value, so a Type 2
+    // index (which can reach 500's extra step) isn't clamped when switching tabs.
+    $('brandedSlider').max = qTiers(state.qt).length - 1;
     $('brandedSlider').value = state.brandedVolumeIdx;
     shortsCheckbox.checked = state.shortsDistinction;
     shortsToggle.classList.toggle('checked', state.shortsDistinction);
@@ -2658,7 +2763,7 @@ function syncControls() {
 // ── VALIDATION ──────────────────────────────────────────────────
 // A query type must be fully filled out only when its volume > 0.
 const REQUIRED_FIELDS = ['backfill', 'refresh', 'depth', 'videoMetrics', 'creatorMetrics', 'brandedQueryType'];
-const formVolume = (f) => QUERY_TIERS[f.brandedVolumeIdx];
+const formVolume = (f) => qTiers(f.qt)[f.brandedVolumeIdx];
 const missingFields = (f) => formVolume(f) <= 0 ? [] : REQUIRED_FIELDS.filter(k => !f[k]);
 
 function clearFieldErrors() {
@@ -2730,7 +2835,12 @@ $('saveMoveBtn').addEventListener('click', () => {
         return;
     }
     setTab('type2');
-    document.querySelector('.tabbed-unit').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll to the top of the Query Type 2 form (the query-type tabs) so the user starts
+    // at the beginning of the form, not stranded at the bottom where the Save button was.
+    // Target the tabs (a real box) — .tabbed-unit is display:contents and can't be scrolled to.
+    requestAnimationFrame(() => {
+        $('queryTypeSelect').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 });
 
 // Query volume slider (single per query type)
@@ -2831,18 +2941,22 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ══════════════════════════════════════════════════════════════
-// 9. CONTACT MODAL
+// 9. SCHEDULE MODAL — review config, then book Charlotte's calendar
 // ══════════════════════════════════════════════════════════════
+const CHARLOTTE_CALENDAR = 'https://calendar.app.google/HjQuHuoh3YszAAFk8';
 const modalOverlay = $('contactModal');
 const modalClose = $('modalClose');
 
 let modalTrigger = null;
+let currentConfig = '';
 function openModal(configSnapshot) {
-    if (configSnapshot) $('mf-config').value = configSnapshot;
+    currentConfig = configSnapshot || '';
+    $('configSummary').textContent = currentConfig || 'No configuration selected yet.';
+    $('scheduleConfirm').style.display = 'none';
     modalTrigger = document.activeElement;
     modalOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    $('mf-name').focus();
+    $('scheduleBtn').focus();
 }
 function closeModal() {
     modalOverlay.classList.remove('open');
@@ -2855,6 +2969,39 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
 });
 
+// Copy the selected configuration to the clipboard, then open Charlotte's calendar
+// in a new tab. Google's appointment page can't be pre-filled, so the visitor pastes
+// the config into the booking notes (hint shown after clicking).
+$('scheduleBtn').addEventListener('click', async () => {
+    if (currentConfig) {
+        try { await navigator.clipboard.writeText(currentConfig); } catch (e) { /* fall through — config is still visible above to copy manually */ }
+    }
+    window.open(CHARLOTTE_CALENDAR, '_blank', 'noopener');
+    $('scheduleConfirm').style.display = 'block';
+});
+
+// "Get the Stats." → how-big.png image lightbox
+const statsModal = $('statsModal');
+let statsTrigger = null;
+function openStats(e) {
+    if (e) e.preventDefault();
+    statsTrigger = document.activeElement;
+    statsModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    $('statsModalClose').focus();
+}
+function closeStats() {
+    statsModal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (statsTrigger) { statsTrigger.focus(); statsTrigger = null; }
+}
+$('getStatsLink').addEventListener('click', openStats);
+$('statsModalClose').addEventListener('click', closeStats);
+statsModal.addEventListener('click', (e) => { if (e.target === statsModal) closeStats(); });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && statsModal.classList.contains('open')) closeStats();
+});
+
 // Configurator CTA
 function summarizeForm(f, p) {
     return [
@@ -2862,8 +3009,9 @@ function summarizeForm(f, p) {
         `Refresh: ${f.refresh || 'not selected'}`,
         `Search depth: ${f.depth || 'not selected'}`,
         `Video metrics: ${f.videoMetrics ? VIDEO_METRICS_LABELS[f.videoMetrics] : 'not selected'}`,
+        `Creator metrics: ${f.creatorMetrics ? CREATOR_LABELS[f.creatorMetrics] : 'not selected'}`,
         `Queries: ${p.brandedCount.toLocaleString()}/refresh (${f.brandedQueryType === 'contextual' ? 'Contextual' : f.brandedQueryType === 'improved' ? 'Adjusted' : 'not selected'}, $${p.setupFee.toLocaleString()} one-time setup)`,
-        `Query inclusions: ${f.inclusions.size ? Array.from(f.inclusions).map(c => INCLUSION_LABELS[c]).join(', ') : 'none'}`,
+        `Query exclusions: ${f.inclusions.size ? Array.from(f.inclusions).map(c => INCLUSION_LABELS[c]).join(', ') : 'none'}`,
         `Shorts vs long-form: ${f.shortsDistinction ? 'yes' : 'no'}`,
         `Monthly: $${Math.round(p.monthlyTotal).toLocaleString()}`
     ].join('; ');
@@ -2907,21 +3055,6 @@ document.querySelectorAll('[data-cta]').forEach(el => {
             requestSample();
         }
     });
-});
-
-// Form submit — mailto fallback
-$('contactForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = $('mf-name').value.trim();
-    const company = $('mf-company').value.trim();
-    const email = $('mf-email').value.trim();
-    const message = $('mf-message').value.trim();
-    const config = $('mf-config').value || '(none)';
-    const subject = encodeURIComponent('Pricing Calculator — Sample Request');
-    const body = encodeURIComponent(
-        `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nWhat they're building:\n${message}\n\nLocked configuration:\n${config}`
-    );
-    window.location.href = `mailto:data@touchstormdatalabs.com?subject=${subject}&body=${body}`;
 });
 
 // ══════════════════════════════════════════════════════════════

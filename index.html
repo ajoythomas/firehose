@@ -753,6 +753,13 @@
             line-height: 1.4;
         }
         .toggle-btn.active .toggle-btn-label { color: var(--pink-dark); }
+        /* An option disabled by an upstream constraint (e.g. backfill beyond the
+           chosen Publishing Recency window). Not selectable; visually muted. */
+        .toggle-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
         .toggle-badge {
             position: absolute;
             top: 0;
@@ -1820,10 +1827,44 @@
                 </div>
             </div>
 
-            <!-- DECISION B: HISTORICAL BACKFILL -->
+            <!-- DECISION B: PUBLISHING RECENCY -->
             <div class="calc-card">
                 <div class="calc-card-head">
                     <span class="calc-card-num">b</span>
+                    <div class="calc-card-head-text">
+                        <h3>
+                            Publishing Recency
+                            <button class="info-icon" data-info="recency" aria-label="More info"></button>
+                        </h3>
+                        <div class="calc-card-sub">YouTube is the only social where older content continues to attract new and repeat viewing, which is very attractive to brands. We will run your query against the time boundary you choose here.</div>
+                    </div>
+                </div>
+                <div class="toggle-row cols-3" data-input="publishingRecency" id="publishingRecencyRow">
+                    <button class="toggle-btn" data-value="6mo">
+                        <span class="toggle-btn-label">6 Months</span>
+                    </button>
+                    <button class="toggle-btn" data-value="12mo">
+                        <span class="toggle-btn-label">12 Months</span>
+                    </button>
+                    <button class="toggle-btn" data-value="18mo">
+                        <span class="toggle-btn-label">18 Months</span>
+                    </button>
+                    <button class="toggle-btn" data-value="3yr">
+                        <span class="toggle-btn-label">3 Years</span>
+                    </button>
+                    <button class="toggle-btn" data-value="5yr">
+                        <span class="toggle-btn-label">5 Years</span>
+                    </button>
+                    <button class="toggle-btn" data-value="lifetime">
+                        <span class="toggle-btn-label">Lifetime</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DECISION C: HISTORICAL BACKFILL -->
+            <div class="calc-card">
+                <div class="calc-card-head">
+                    <span class="calc-card-num">c</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Historical Backfill
@@ -1850,10 +1891,10 @@
                 </div>
             </div>
 
-            <!-- DECISION C: DATA REFRESH FREQUENCY -->
+            <!-- DECISION D: DATA REFRESH FREQUENCY -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">c</span>
+                    <span class="calc-card-num">d</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Data Refresh Frequency
@@ -1880,10 +1921,10 @@
                 </div>
             </div>
 
-            <!-- DECISION D: SEARCH DEPTH -->
+            <!-- DECISION E: SEARCH DEPTH -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">d</span>
+                    <span class="calc-card-num">e</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Search Depth
@@ -1910,13 +1951,13 @@
                 </div>
             </div>
 
-            <!-- DECISION E: VIDEO METRICS -->
+            <!-- DECISION F: VIDEO METRICS -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">e</span>
+                    <span class="calc-card-num">f</span>
                     <div class="calc-card-head-text">
                         <h3>
-                            Metrics Selection
+                            Video Metrics
                             <button class="info-icon" data-info="videoMetrics" aria-label="More info"></button>
                         </h3>
                         <div class="calc-card-sub">Choose to include the Basic Metrics you believe the majority of your clients will want.</div>
@@ -1945,14 +1986,14 @@
                 <label class="inline-checkbox" id="shortsToggle">
                     <input type="checkbox" id="shortsCheckbox">
                     <span class="checkbox-square"></span>
-                    <span>Add On:  Include an extra data point that distinguishes Vertical Videos (#Shorts) from Horizontal Videos (On Demands & Former Live Videos). <button class="info-icon" data-info="shorts" aria-label="More info" tabindex="-1"></button></span>
+                    <span>Add On:  Include an <em style="color: var(--pink); font-style: normal;">extra data point</em> that distinguishes Vertical Videos (#Shorts) from Horizontal Videos (On Demands & Former Live Videos). <button class="info-icon" data-info="shorts" aria-label="More info" tabindex="-1"></button></span>
                 </label>
             </div>
 
-            <!-- DECISION F: CREATOR METRICS -->
+            <!-- DECISION G: CREATOR METRICS -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">f</span>
+                    <span class="calc-card-num">g</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Creator Metrics
@@ -1963,42 +2004,45 @@
                 </div>
                 <div class="toggle-row cols-3" data-input="creatorMetrics">
                     <button class="toggle-btn" data-value="none">
-                        <span class="toggle-btn-label">No Creator Metrics</span>
+                        <span class="toggle-btn-label">Basic Creator Metrics <span class="info-icon" data-info="cm-basic" role="button" tabindex="0" aria-label="More info"></span></span>
                     </button>
                     <button class="toggle-btn" data-value="basic">
                         <span class="toggle-badge" id="cmBadgeBasic">Best for Brands</span>
-                        <span class="toggle-btn-label">Basic Creator Metrics <span class="info-icon" data-info="cm-basic" role="button" tabindex="0" aria-label="More info"></span></span>
+                        <span class="toggle-btn-label">Expanded Creator Metrics <span class="info-icon" data-info="cm-expanded" role="button" tabindex="0" aria-label="More info"></span></span>
                     </button>
                     <button class="toggle-btn" data-value="advanced">
                         <span class="toggle-badge" id="cmBadgeAdvanced" style="display:none;">Best for Research</span>
-                        <span class="toggle-btn-label">Advanced Creator Metrics <span class="info-icon" data-info="cm-advanced" role="button" tabindex="0" aria-label="More info"></span></span>
+                        <span class="toggle-btn-label">Influencer Marketing Metrics <span class="info-icon" data-info="cm-advanced" role="button" tabindex="0" aria-label="More info"></span></span>
                     </button>
                 </div>
             </div>
 
-            <!-- DECISION G: QUERY MANAGEMENT -->
+            <!-- DECISION H: QUERY MANAGEMENT -->
             <div class="calc-card">
                 <div class="calc-card-head">
-                    <span class="calc-card-num">g</span>
+                    <span class="calc-card-num">h</span>
                     <div class="calc-card-head-text">
                         <h3>
                             Query Management
                             <button class="info-icon" data-info="query" aria-label="More info"></button>
                         </h3>
-                        <div class="calc-card-sub" id="cardFsub">Brand Queries can run as Adjusted or Contextual — choose below.</div>
+                        <div class="calc-card-sub" id="cardFsub">Brand Queries can run as Exact, Adjusted, or Contextual — choose below.</div>
                     </div>
                 </div>
 
                 <!-- Branded queries -->
                 <div class="query-group">
                     
-                    <div class="toggle-row cols-2" data-input="brandedQueryType" id="brandedQueryTypeRow">
+                    <div class="toggle-row cols-3" data-input="brandedQueryType" id="brandedQueryTypeRow">
                         <button class="toggle-btn" data-value="improved" id="qtAdjusted">
                             <span class="toggle-btn-label">Adjusted <span class="info-icon" data-info="qt-adjusted" role="button" tabindex="0" aria-label="More info"></span></span>
                         </button>
                         <button class="toggle-btn" data-value="contextual">
                             <span class="toggle-badge" id="qtBadgeContextual">Best for Brands</span>
                             <span class="toggle-btn-label">Contextual <span class="info-icon" data-info="qt-contextual" id="qtContextualInfo" role="button" tabindex="0" aria-label="More info"></span></span>
+                        </button>
+                        <button class="toggle-btn" data-value="exact" id="qtExact">
+                            <span class="toggle-btn-label">Exact (Single Word) <span class="info-icon" data-info="qt-exact" role="button" tabindex="0" aria-label="More info"></span></span>
                         </button>
                     </div>
                 </div>
@@ -2112,7 +2156,6 @@
                         <span class="price-line-label" id="lineQtySubLabel">0 queries × $0.00</span>
                         <span class="price-line-value" id="lineQtySubValue">$0</span>
                     </div>
-
                     <div class="price-line subtotal">
                         <span class="price-line-label" id="lineSubtotalLabel">Query Type 1 monthly</span>
                         <span class="price-line-value" id="lineSubtotal">$0</span>
@@ -2150,11 +2193,11 @@
                         <span class="price-line-label">Combined one-time</span>
                         <span class="price-line-value" id="lineBackfillTotal">$0</span>
                     </div>
-                    <div class="price-onetime-note">Billed once on initial pull — $2,500 (Adjusted) or $5,000 (Contextual) minimum, then scaled by volume. Does not recur.</div>
+                    <div class="price-onetime-note">Billed once on initial pull — $2,500 (Exact or Adjusted) or $5,000 (Contextual) minimum, then scaled by volume. Does not recur.</div>
                 </div>
 
                 <div class="price-notes">
-                    <strong>Pricing notes.</strong> The per-query rate starts at $1.11 (Query Type 1) or $3.33 (Query Type 2, which is Contextual-only) for the base configuration — 6-month backfill, weekly refresh, titles-only depth, basic video metrics, no creator metrics, and adjusted queries — and each selection above adjusts it multiplicatively. The volume curve runs from a +25% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 20K and 50K. Geography and producer type do not change the price. All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations. Multi-firehose discounts available — ask us.
+                    <strong>Pricing notes.</strong> The per-query rate starts at $1.11 (Query Type 1) or $3.33 (Query Type 2, which is Contextual-only) for the base configuration — 6-month backfill, weekly refresh, titles-only depth, basic video metrics, no creator metrics, and exact queries — and each selection above adjusts it multiplicatively. The volume curve runs from a +25% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 20K and 50K. Geography and producer type do not change the price. All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations. Multi-firehose discounts available — ask us.
                 </div>
             </div>
         </div>
@@ -2274,7 +2317,7 @@ const DEPTH_MULT      = { titles: 1.00, ttd: 1.20, transcripts: 1.35 };
 // E. Creator metrics — None is the base; Basic +10%; Advanced +15%.
 const CREATOR_MULT    = { none: 1.00, basic: 1.10, advanced: 1.15 };
 // G. Query type — Adjusted is the base; Contextual +45%.
-const QUERY_TYPE_MULT = { improved: 1.00, contextual: 1.45 };
+const QUERY_TYPE_MULT = { exact: 1.00, improved: 1.20, contextual: 1.45 };
 // F. Query exclusions — each selected exclusion compounds +5%.
 const EXCLUSION_SURCHARGE = 1.03;
 
@@ -2285,10 +2328,12 @@ const BASE_RATE = { type1: 1.11, type2: 3.33 };
 // One-time setup fee — a floor per query type, then per-query above it. Billed once as
 // max(floor, rate × volume): Adjusted $2,500 / 10¢/query, Contextual $5,000 / 45¢/query.
 const SETUP_FEE_MIN = {
+    exact:      2500,  // Exact floor (same as Adjusted)
     improved:   2500,  // Adjusted floor
     contextual: 5000   // Contextual floor
 };
 const SETUP_FEE_PER_QUERY = {
+    exact:      0.10,  // Exact (same as Adjusted)
     improved:   0.10,  // Adjusted
     contextual: 0.45   // Contextual
 };
@@ -2298,6 +2343,20 @@ const BACKFILL_LABELS = {
     '12mo': '12 months',
     '18mo': '18 months'
 };
+// B. Publishing Recency — the time boundary the query runs against. No price impact.
+const RECENCY_LABELS = {
+    '6mo':  '6 months',
+    '12mo': '12 months',
+    '18mo': '18 months',
+    '3yr':  '3 years',
+    '5yr':  '5 years',
+    'lifetime': 'Lifetime'
+};
+// Recency ↔ Backfill linkage (durations in months; lifetime is unbounded). Historical
+// backfill (C) can't reach past the publishing window chosen in Publishing Recency (B),
+// so any backfill option longer than the selected recency is disabled/cleared.
+const RECENCY_MONTHS  = { '6mo': 6, '12mo': 12, '18mo': 18, '3yr': 36, '5yr': 60, 'lifetime': Infinity };
+const BACKFILL_MONTHS = { '6mo': 6, '12mo': 12, '18mo': 18 };
 
 // D. Video metrics — Basic is the base; +Sentiment +15%; +Comments +25%; +Comment Sentiment +30%.
 const VIDEO_METRICS_MULT = {
@@ -2316,8 +2375,8 @@ const VIDEO_METRICS_LABELS = {
 // Display names for the price-panel line items.
 const REFRESH_DISPLAY = { weekly: 'Weekly', daily: 'Daily', monthly: 'Monthly' };
 const DEPTH_DISPLAY   = { titles: 'Titles only', ttd: 'Titles + Tags + Desc', transcripts: 'All + Transcripts' };
-const CREATOR_LABELS  = { none: 'No Creator Metrics', basic: 'Basic', advanced: 'Advanced' };
-const QT_DISPLAY      = { improved: 'Adjusted', contextual: 'Contextual' };
+const CREATOR_LABELS  = { none: 'Basic', basic: 'Expanded', advanced: 'Influencer Marketing' };
+const QT_DISPLAY      = { exact: 'Exact', improved: 'Adjusted', contextual: 'Contextual' };
 
 // Brand-published video filter — selectable, no price effect (a filter, not a query change).
 const INCLUSION_LABELS = {
@@ -2342,12 +2401,13 @@ function makeForm(qt) {
     return {
         qt,                      // 'type1' | 'type2' — selects the base per-query rate
         brandedVolumeIdx: 0,     // A — volume starts at 0 ⇒ price is $0 on load
-        backfill: null,          // B
-        refresh: null,           // C
-        depth: null,             // D
-        videoMetrics: null,      // E
-        creatorMetrics: null,    // F
-        brandedQueryType: null,  // G
+        publishingRecency: null, // B
+        backfill: null,          // C
+        refresh: null,           // D
+        depth: null,             // E
+        videoMetrics: null,      // F
+        creatorMetrics: null,    // G
+        brandedQueryType: null,  // H
         shortsDistinction: false,
         inclusions: new Set(),
         nonBrandedVolumeIdx: 0
@@ -2365,6 +2425,8 @@ let state = forms[activeTab];
 const INFO_COPY = {
     tab1: `<strong>Brand Queries are Limited to One Brand Per Query. What counts as a brand?</strong></div><div><br></div><div><div>Consumer Goods Manufacturers are Brands, but they come in three flavors, creating helpful rules for all other brands. <br> 1. In a Family of Brands, each brand is distinct and therefore counts as a single brand in a query</div><div> P&amp;G is a family of brands: Tide, Pampers, Gillette, Olay</div><div> LVMH is a family of brands: Dior, Givenchy, Sephora, Dom Pérignon</div><div> Note: The products and line extensions belonging to these brands can be included without adding separate queries. We can search for all of Gillette. You can also focus us on products, as in "Gillette AND (Fusion5 OR Mach3)" to focus the listening. Venus by Gillette, however, is a separate brand that needs its own query. </div><div><br></div><div> 2. In a Brand Family, also known as a Branded House, the query must indicate the division. </div><div> Samsung is a brand family: Samsung Consumer Electronics, Samsung Phones &amp; Devices, Samsung Appliances</div><div> Google is a brand family: Google Search, Google Drive, Google Maps, Google Meet</div><div> Note: We can't search on Samsung or Google. A Brand Family Query needs search terms that point us to the correct division/sub-brand that your customer works for, such as "Samsung AND (refrigerator OR dishwasher OR oven) </div><div>B2B Manufacturers are Brands: J&amp;J Med Tech, Saint Gobain Construction Materials, Pillsbury Food Service</div><div> B2B manufacturers sometimes follow the Brand Family model where the query should limit itself to one division.</div><div> J&amp;J MedTech Acuvue is a separate brand from J&amp;J MedTech Orthopaedics. </div></div><div><br></div><div>Retailers (Online &amp; Offline) are Brands: Walmart, Primark, Home Depot, Canadian Tire, Sephora, Amazon</div><div> Retailers sometimes follow the Brand Family model where the query should limit itself to one division.<br> Amazon AWS is a separate brand from Amazon Prime Video.</div><div><br></div><div>Service Companies are Brands: MetLife Insurance, Citibank, Hilton Hotels. </div><div> Service Companies sometimes follow the Brand Family model where the query should limit itself to one division.<br> Embassy Suites by Hilton is a separate brand from Hilton Garden Inn, each requiring its own query<br> Bank of America Card Services is a separate brand from Bank of America the retail bank - each need their own query. </div><div><br></div><div>Named Events are Brands: Ted Talks, the 48 Hour Film Festival, the World Economic Forum.</div><div><br></div><div>Non-Profits are Brands: Australian Heart Association, UNICEF or The Gates Foundation. </div><div><br></div><div>Higher Learning Institutions are Brands: Harvard University, the Netherlands Institute of Welding Technology. </div><div><br></div><div>Shows and Performers are Brands: Cirque de Soleil, Blue Man Group, Taylor Swift, Wicked the Musical, Post Malone</div><div><br></div><div>Media Companies are Brands: ABC-TV News New York, The Los Angeles Times, Sky Network</div><div> Networks operate as Brand Families where each sub-network requires its own query. <br> Sky Documentaries, Sky Sports, Sky History and Sky Arts are separate networks each requiring their own query. </div><div><br></div><div>This list is not exhaustive, but no worries: if a query comes in with more than brand, or isn't a brand query at all, we'll make the necessary adjustments on our end. </div><div><strong><br></strong></div>`,
     tab2: `<strong>Topical Queries are Limited to One Topic Per Query. What counts as a Topic?</strong></div><div><br></div><div>In simple terms, Topics are similar to Product Categories. Skincare is a Topic. Cosmetics is a different Topic. You can't include both Skincare and Cosmetics in one query because results will be in the hundreds of millions.<br><br>If you need some help identifying Topics, use our Marketing Taxonomy. It's called The Touchstorm Video Index (TVi). It covers every aspect of the human experience...and therefore...anything a YouTube video could be about. </div><div><br></div><div>The TVi starts with Level 1, which includes 16 giant Categories like Family Life, Hobbies and Sports. The TVi has 10 levels encompassing hundreds of thousands of Topics, but they're all neatly nested into bigger groups, much like the Biological Kingdom. Topics live at Level 4 in the TVi. </div><div><br>Technically speaking, what is a Topic? It's a Level 4 in the TVi. You can explore the taxonomy (up to Level 4) by clicking on any L1 Category and finding your way to an L4 that matches your query. Or, you can use the search box and the taxonomy will auto-open to areas that match your search. <br><br>The taxonomy is here to help, but you don't need to check every Topical Query to make sure it's limited to one Topic. Just submit the queries, and if there's a problem, we'll resolve it and let you know. </div></div>`,
+    recency: `YouTube is the only social where older content continues to attract new and repeat viewing, which is very attractive to brands. We will run your query against the time boundary you choose here.<br><br>Your choice also sets the ceiling for <strong>Historical Backfill</strong> — you can't backfill history further than your publishing window, so backfill options longer than the recency you pick are disabled.`,
+
     backfill: { t1: `On the first data pull, you'll receive <strong>historical data</strong> for each video so your charts can immediately offer perspective. We recommend 18 months of history for brands because it gives them two years of data for the most recent two quarters, revealing seasonal trending brands appreciate. YouTube's mid-2026 API Compliance Guidelines allow 36 months of history, which we'll add as an option as soon as we're approved.<br><br>For each brand query you submit, we'll be returning every video that satisfies the query, no matter when the video was published, so long as it has had new views in the past 36 months. Subsequent pulls will refresh the history on a rolling basis, meaning, we drop off the oldest history to maintain the historical period you have selected.<br><br> <em>To remain in compliance with YouTube's latest guidelines, it is important you use this historical data to refresh your front-end at least every 30 days.</em> Video titles and other meta data are often changed by the user, and YouTube wants all of us to publish anything that's been updated.`, t2: `<div>Topical queries produce videos at huge volume. We recommend six months of history to cut down on that volume, but also, to cut costs. By their nature, Topical Queries require human query intervention, making them more expensive. To hedge those costs we're recommending the least expensive options for all other selections. </div><div><br></div>On the first data pull, you'll receive <strong>historical data</strong> for each video so your charts can immediately offer perspective. Choose 6, 12 or 18 months. YouTube's mid-2026 API Compliance Guidelines allow 36 months of history, which we'll add as an option as soon as we're approved.<br><br>For each topical query you submit, we'll be returning every video that satisfies the query, no matter when the video was made, so long as it has had new views in the past 36 months. Subsequent pulls will refresh the history on a rolling basis, meaning, we drop off the oldest history to maintain the historical period you have selected.<br><br> <em>To remain in compliance with YouTube's latest guidelines, it is important you use this rolling historical data to refresh your front-end at least every 30 days.</em> Video titles and other meta data are often changed by the user, and YouTube wants all of us to publish anything that's been updated.` },
 
     refresh: { t1: `We recommend Daily Data Refresh for Branded Queries. <br><br><strong>Daily Data Refresh:&nbsp; </strong>Your users will always have new data through yesterday, no matter when they visit your platform. New data includes any new Videos or Comments that appeared yesterday, as well as fresh metric counts (like new views) on older evergreen videos. If you choose Daily refresh, new videos will appear the day after they were published, making Daily Refresh especially important for brands monitoring new product rollouts, tracking organic pickup of time-sensitive campaigns like Super Bowl, monitoring media pickup of PR initiatives, tracking Crisis PR situations and closely monitoring consumer complaints.<br><br><strong>Weekly Data Refresh:</strong>&nbsp;Saves money, but your users will face a data hole that's miniscule on Mondays and awkwardly large on Sundays. We pull weekly data on Sunday nights, collecting the prior week's Monday to Sunday activity. If a user visits on a Monday, the data is completely current - the entire past week is available to them. The user who logs in on a Thursday will notice this week's Monday to Wednesday data is missing. The user who logs in on Sunday will face an entire week of missing data.`, t2: `We recommend Monthly or Weekly Data Refresh for Topical Queries. Both save money yet are adequate for studying big categorical changes. Brands studying category trends are typically studying the bigger picture as opposed to what happened yesterday or even last week. <br><br><strong>Monthly Refresh:&nbsp; </strong>We pull data on the 2nd of every month, re-augment the searches based on new content that's appeared since the last query, and send you back the month's videos by the 5th. Any time your clients visit your platform from the 6th through the last day of the month, their data is fresh through the end of the prior month. For brands studying big picture category shifts and trends, Monthly Refresh is perfectly acceptable. We've discounted it to deal with the high cost of Contextual Topic Queries. <br><br><strong>Weekly Data Refresh:</strong>&nbsp;We pull weekly data on Sunday nights, collecting the prior week's Monday to Sunday activity. If a user visits on a Monday, the data is completely current - the entire past week is available to them. The user who logs in on Sunday will face an entire week of missing data. Generally speaking, the week-long data gap is less-than-ideal for brand queries but acceptable for topical queries.<br><br><strong>Daily Data Refresh:&nbsp;</strong>&nbsp;Your users will always have new data through yesterday, no matter when they visit your platform. This is not typically important for topical searches.` },
@@ -2373,9 +2435,16 @@ const INFO_COPY = {
 
     creatorMetrics: { t1: `<strong>Creator Metrics.</strong> Influencer Marketing is now mainstream media. Creator Metrics enable your platform to connect Social Listening to its next logical step – Influencer Marketing. Creator Metrics enables you to show who's talking about the brand, how big they are, and whether they're hurting or helping the brand's reputation. Across videos, Creator Data enables you to summarize who's harming the brand with repetitive, negative content. And the inverse....who's promoting the brand out of genuine loyalty and could use some free product love? Who should the brand hire next?`, t2: `<strong>Creator Metrics.</strong> Influencer Marketing is now mainstream media. Creator Metrics enable your platform to connect Social Listening to its next logical step – Influencer Marketing.&nbsp; Creator Metrics are particularly important for Topical Queries; finding the category's Influencers is often the underlying reason for users to submit this type of query.&nbsp; Enable your platform to show who's talking about the brand, how big they are, and whether they're hurting or helping the brand's reputation. Across videos, Creator Data enables you to summarize who's harming the brand with repetitive, negative content. And the inverse....who's promoting the brand out of genuine loyalty and could use some free product love? Who should the brand hire next?` },
 
-    'cm-basic': `<strong>Basic Creator Metrics:</strong> <div>Basic Creator Metrics include the following data points associated with each video and delivered with each pull.<br>• Creator Channel YouTube ID<br>• Creator Channel UC Address</div><div>• Video Creator's Channel Handle<br>• Creator's Avatar<br>• Creator's Home Geography<br>• Creator's Lifetime Subscribers<br>• Creator's Lifetime Views<br>• Creator's Average Views Per Video<br>• Creator Channel's Library Size<br></div>`,
+    'cm-basic': `<strong>Basic Creator Metrics:</strong> <div>You will receive the following Creator Metrics Daily or Weekly depending on the Pull Frequency you chose in Step C.<br><br><strong>Basic Creator Channel Metrics Include</strong> <em>(Entries in Pink are exclusive to TDL)</em>:<br><br>• Creator's Channel Title<br>• Creator's Channel YouTube ID/UC Address</div><div>• Creator's Channel Handle<br>• Creator's Avatar<br>• Creator's About page copy<br>• Creator's Channel Tags<br>• Channel Creation Date<br>• Channel Library Size<br><div>&bull; Channel's Lifetime Views</div>&bull; Channel's Lifetime Subscribers</div>
+  
+  
+    <div>&bull; Channel's Lifetime Likes</div><div><em>&bull; Creator's Like Rate %</em></div><div><em>&bull; Channel's Lifetime Comment Count</em></div><div><em>&bull; Creator's Comment Rate %</em></div><div><em>&bull; Channel's Lifetime Engagement Rate</em></div>
+    
+   <br><strong>All Basic Creator Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Older evergreen videos submitted in prior data pulls.<br><br> </div>`,
 
-    'cm-advanced': `<strong>Advanced Creator Metrics:</strong> <br>Advanced Creator Metrics adds three data points that explain what kind of creator made the video, and what kind of video they made. <br>1. Primary Producer Type (Creator, Entertainer/Event, Expert, Institution, Manufacturer, Media Company, Retailer, Service Provider)<br>2. Secondary Producer Type (each of Primary Producer Types has five to 10 sub-producer types) <div>3. Video Type (Review, Head to Head Comparison, Ad/Brand Film, Sponsorship, Retail Issue, Fixing/Repairing, Using/Installing, Incidental Mention, etc) </div>`,
+    'cm-expanded': `<strong>Expanded Creator Metrics:</strong> You will receive everything in the basic creator metrics plus the following metrics:<br><br><div>&bull; Latest Period Views (Yesterday's or Last Week's) <em>plus Rolling Historical Views</em></div><div>&bull; Latest Period Likes (Yesterday's or Last Week's) <em>plus Rolling Historical Likes</em></div><div>&bull; Latest Period Comment Counts (Yesterday's or Last Week's) <em>plus Rolling Historical Comment Counts</em></div><br>`,
+
+    'cm-advanced': `<strong>Influencer Marketing Metrics:</strong> <br>Influencer Marketing Metrics adds three data points that explain what kind of creator made the video, and what kind of video they made. <br>1. Primary Producer Type (Creator, Entertainer/Event, Expert, Institution, Manufacturer, Media Company, Retailer, Service Provider)<br>2. Secondary Producer Type (each of Primary Producer Types has five to 10 sub-producer types) <div>3. Video Type (Review, Head to Head Comparison, Ad/Brand Film, Sponsorship, Retail Issue, Fixing/Repairing, Using/Installing, Incidental Mention, etc) </div>`,
 
     shorts: { t1: `Tags each video as <strong>vertical</strong> or <strong>horizontal</strong> so your clients can analyze them separately. More and more brands are asking us to separate their analyses by these two radically different video formats.`, t2: `Tags each video as <strong>vertical</strong> or <strong>horizontal</strong> so your clients can analyze them separately. More and more brands are asking us to separate their analyses by these two radically different video formats. For brands studying Topical Trends, this is an important option to add.` },
 
@@ -2387,20 +2456,26 @@ const INFO_COPY = {
 
     'inc-kids': `<strong>Exclude Kids.</strong> The Video Gaming, Popular Music and Kids' Media Topics produce more than half of all Social Listening Noise. No matter the query, it's highly likely a gamer, a cartoon, a song or a band uses those words. <br><br>If you're opting for Contextual Queries, we take care of the noise whether or not you check these boxes.&nbsp; If you're saving money by using Adjusted Searches, it's wise to check the Kids box.`,
 
-    'vm-basic': { t1: `<strong>Basic Video Metrics:</strong> You will receive the following Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step C.<br><br><strong>Basic Video Performance Metrics Include:</strong><div>&bull; Video Title</div><div>&bull; Video Title English Translation</div><div>&bull; Video URL</div><div>&bull; Video ID</div><div>&bull; Thumbnail URL</div><div>&bull; Video Tags</div><div>&bull; Video Upload Date</div><div>&bull; First Data Date</div><div>&bull; Video Duration</div><div>&bull; Language (Video's Audio)</div><div>&bull; Video Creator's Channel Title</div><div>&bull; Video's Lifetime Views</div><div>&bull; Video's Lifetime Likes</div><div>&bull; Video's Like Rate %</div><div>&bull; Number of Comments on Video</div><div>&bull; Video's Comment Rate %</div><div>&bull; Lifetime Engagement Rate</div><div>&bull; Latest Period Views (Yesterday's or Last Week's) plus Rolling Historical Views</div><div>&bull; Latest Period Likes (Yesterday's or Last Week's) plus Rolling Historical Likes</div><div>&bull; Latest Period Comment Counts (Yesterday's or Last Week's) plus Rolling Historical Comment Counts</div><br> <strong>Extra Data Point: </strong> If, in Step D, you chose to have us look inside Descriptions & Tags for your queries, or beyond that into the Transcripts, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags & Description copy.  To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>`, t2: `<div>We recommend Basic Video Metrics for Topical Queries. Topical Query results are so voluminous that including Comments and their Sentiment creates front end challenges for presenting all the data cleanly. Having said that, some platforms really believe in showing the Comments. </div><div><br></div><strong>Basic Video Metrics:</strong> You will receive the following Basic Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step C.<br><br><strong>Basic Video Performance Metrics Include:</strong><div>• Video Title</div><div>• Video Title English Translation</div><div>• Video URL</div><div>• Video ID</div><div>• Thumbnail URL</div><div>• Video Tags</div><div>• Video Upload Date</div><div>• First Data Date</div><div>• Video Duration</div><div>• Language (Video's Audio)</div><div>• Video Creator's Channel Title</div><div>• Video's Lifetime Views</div><div>• Video's Lifetime Likes</div><div>• Video's Like Rate %</div><div>• Number of Comments on Video</div><div>• Video's Comment Rate %</div><div>• Lifetime Engagement Rate</div><div>• Latest Period Views (Yesterday's or Last Week's) plus Rolling Historical Views</div><div>• Latest Period Likes (Yesterday's or Last Week's) plus Rolling Historical Likes</div><div>• Latest Period Comment Counts (Yesterday's or Last Week's) plus Rolling Historical Comment Counts</div><br> <strong>Extra Data Point: </strong> If, in Step D, you chose to have us look inside Descriptions &amp; Tags for your queries, or beyond that into the Transcripts, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags &amp; Description copy. To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>` },
+    'vm-basic': { t1: `<strong>Basic Video Metrics:</strong> You will receive the following Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step C.<br><br><strong>Basic Video Performance Metrics Include <em>(Entries in Pink are exclusive to TDL)</em>:</strong><div>&bull; Video Title</div><div><em>&bull; Video Title English Translation</em></div><div>&bull; Video ID</div><div>&bull; Thumbnail URL</div><div>&bull; Video Tags</div><div><em>&bull; Full</em> Video Description***</div><div>&bull; Video Upload Date</div><div><em>&bull; First Data Date</em></div><div>&bull; Video Duration</div>
+          <div><em>&bull; Live Stream Designation</em></div><div><em>&bull; Country of Origin (TDL appended)</em></div><div>&bull; <em>Language (TDL appended)</em></div><div>&bull; Video's Lifetime Views</div>
+    <div><em>&bull; Video's Like Rate %</em></div>
+  
+    <div>&bull; Video's Lifetime Likes</div><div><em>&bull; Video's Like Rate %</em></div><div><em>&bull; Number of Comments</em></div><div><em>&bull; Comment Rate %</em></div><div><em>&bull; Lifetime Engagement Rate</em></div><div>&bull; Latest Period Views (Yesterday's or Last Week's) <em>plus Rolling Historical Views</em></div><div>&bull; Latest Period Likes (Yesterday's or Last Week's) <em>plus Rolling Historical Likes</em></div><div>&bull; Latest Period Comment Counts (Yesterday's or Last Week's) <em>plus Rolling Historical Comment Counts</em></div><br> <strong>***Extra Data Point: </strong> Video Descriptions are available only to those who chose to have us search beyond "Titles Only" in Section D.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags & Description copy.  To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>`, t2: `<div>We recommend Basic Video Metrics for Topical Queries. Topical Query results are so voluminous that including Comments and their Sentiment creates front end challenges for presenting all the data cleanly. Having said that, some platforms really believe in showing the Comments. </div><div><br></div><strong>Basic Video Metrics:</strong> You will receive the following Basic Video Metrics Daily or Weekly depending on the Pull Frequency you chose in Step C.<br><br><strong>Basic Video Performance Metrics Include:</strong><div>• Video Title</div><div>• Video Title English Translation</div><div>• Video URL</div><div>• Video ID</div><div>• Thumbnail URL</div><div>• Video Tags</div><div>• Video Upload Date</div><div>• First Data Date</div><div>• Video Duration</div><div>• Language (Video's Audio)</div><div>• Video Creator's Channel Title</div><div>• Video's Lifetime Views</div><div>• Video's Lifetime Likes</div><div>• Video's Like Rate %</div><div>• Number of Comments on Video</div><div>• Video's Comment Rate %</div><div>• Lifetime Engagement Rate</div><div>• Latest Period Views (Yesterday's or Last Week's) plus Rolling Historical Views</div><div>• Latest Period Likes (Yesterday's or Last Week's) plus Rolling Historical Likes</div><div>• Latest Period Comment Counts (Yesterday's or Last Week's) plus Rolling Historical Comment Counts</div><br> <strong>Extra Data Point: </strong> If, in Step D, you chose to have us look inside Descriptions &amp; Tags for your queries, or beyond that into the Transcripts, you will also receive the first 200 characters of each description as a Basic Video Metric.<br><br> <strong>All Basic Video Metrics will be applied to the following:</strong> <br><br><strong>1)</strong> All new videos that respond to the query and were published since the last data pull. <br><br> <strong>2)</strong> Updated metrics on older evergreen videos submitted in prior data pulls.<br><br> <strong>Note:</strong> Standard Reference Data Fields occasionally change, including Title, Tags &amp; Description copy. To remain compliant with YouTube, we are continuously re-scanning these fields. <em>It is important that your platform remain in compliance by refreshing history at least every 30 days, and by picking up and displaying the updates we provide.</em>` },
 
-    'vm-sentiment': `<strong>Sentiment Analysis:</strong> Adding Sentiment adds two new Basic Video Metrics. <strong><br><br>1. Video Sentiment:</strong>  We use a 5-point Sentiment Scale: Very Positive, Positive, Neutral, Negative, Very Negative. For videos that compare multiple brands, TDL produces sentiment by brand.   For a video entitled "Ford Focus vs. Toyota Camry...which should you buy?" the sentiment might be positive for one brand and negative for the other. The sentiment we return is the one associated with the brand submitting the query...a key reason each query may only include one brand.<br><br><strong>2. Video Sentiment Score: </strong> We provide the actual Sentiment Score. It's a gauge of how solid the enthusiasm is vs. being close to the edge.`,
+    'vm-sentiment': `<strong>Sentiment Analysis:</strong> Adding Sentiment adds two new Basic Video Metrics. <em>Pink type indicates TDL metrics</em> <em><br><br><b>1. Video Sentiment:</b></em>  We use a 5-point Sentiment Scale: Very Positive, Positive, Neutral, Negative, Very Negative. For videos that compare multiple brands, TDL produces sentiment by brand.   For a video entitled "Ford Focus vs. Toyota Camry...which should you buy?" the sentiment might be positive for one brand and negative for the other. The sentiment we return is the one associated with the brand submitting the query...a key reason each query may only include one brand.<br><br><em><b>2. Video Sentiment Score: </b></em> We provide the actual Sentiment Score. It's a gauge of how solid the enthusiasm is vs. being close to the edge.`,
 
-    'vm-comments': `<strong>Include Comments:</strong> This upgrade is for platforms wanting to show the <em>actual comments</em> associated with each video, not just the comment count. We provide the first 100 comments for every video.  When the video is one week old we add any new comments.  We do that again when the video is one month old.`,
+    'vm-comments': `<strong>Include Comments:</strong> This upgrade is for platforms wanting to show the <strong>actual comments</strong> associated with each video, not just the comment count. We provide the first 100 comments for every video.  When the video is one week old we add any new comments.  We do that again when the video is one month old.`,
 
-    'vm-commentSent': `<strong>Comment Sentiment Analysis:</strong> Adding Comment Sentiment Analysis adds four additional Basic Video Metrics. <br><br> <strong>1. Comments Summary: </strong>An AI-generated description of what the comments say, on whole. <br><br> <strong>2. Comments Themes: </strong>A list of the 4 most common things people are saying.<br><br> <strong>3. Comments Sentiment: </strong>The mood of the Comments Overall are judged on the 5-point sentiment scale to reveal if people are buying what the video is purporting.<br><br> <strong>4. Overall Comments Sentiment Score: </strong>We provide the actual Comments Sentiment Score that drove the Sentiment Classification on the 5-point Sentiment scale.`,
+    'vm-commentSent': `<strong>Comment Sentiment Analysis:</strong> Adding Comment Sentiment Analysis adds four additional Basic Video Metrics. <em>Pink type indicates TDL metrics</em><br><br> <em><b>1. Comments Summary: </b></em>An AI-generated description of what the comments say, on whole. <br><br> <em><b>2. Comments Themes: </b></em>A list of the 4 most common things people are saying.<br><br> <em><b>3. Comments Sentiment: </b></em>The mood of the Comments Overall are judged on the 5-point sentiment scale to reveal if people are buying what the video is purporting.<br><br> <em><b>4. Overall Comments Sentiment Score: </b></em>We provide the actual Comments Sentiment Score that drove the Sentiment Classification on the 5-point Sentiment scale.`,
 
 
     query: { t1: `<div><b>Testing Platform-provided Queries revealed that 0% could be accepted "as is" and return acceptable results.&nbsp;</b>&nbsp;<br><br><div><b>Our Test Results:</b>&nbsp; These results represent a broadly rounded average of 12 different Brand Queries provided at random by multiple Social Listening Platforms.<br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Videos Found</b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<b>Signal Videos&nbsp;</b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<b>Noise Videos</b>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<b>Accuracy Rate</b><br>YouTube API&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;300&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;9&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;291&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3%<br>Touchstorm DataLabs, Adjusted Query&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2500&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1500&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1000&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 60%</div><div>Touchstorm DataLabs, Contextual Query&nbsp; &nbsp; &nbsp; &nbsp;10,000&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;10,000&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 100%</div></div><strong><div><strong><br></strong></div>Adjusted Queries: </strong> We perform basic but impactful changes to the submitted query. Programmatically, as the query comes in, we change apostrophes and quotations to our universal format, and we remove punctuation (except apostrophes) and hashtags. Manually, we combine terms that aren't combined and we split terms that are combined. For example, if the query asks for "Glassskin" we add "Glass Skin," catching significantly more videos. Where OR strings are connected by the wrong operator, we fix it. We add all the possessives and plurals. If the user has submitted more than one brand in the query we remove the second brand and submit a second query for your approval. If there are obvious, easy things we can to do improve the catch or discard the noise in the few minutes allowed per query, we do it. <div><br><strong>Contextual Queries</strong> are 100% Accurate and Complete, and we guarantee it. It's the Mercedes of Social Listening. If you can afford this option, Contextual is the way to go. Your clients will immediately notice your mastery - the difference is dramatic. To achieve perfection, we combine our big data engineering with People Power - the same people who've classified every YouTube brand video into hundreds of thousands of topical homes. Our people aren't guessing at terms. They're looking at the entire database of videos that responds to the query. They can see - and are aided by AI to see - the thousands of Boolean operators needed to NOT OUT the NOISE and CATCH all the SIGNAL. <br><br>Some platforms have expressed nervousness around this, concerned we might make judgment calls the brand wouldn't support. Things are much more black and white than you might think. Example: Orange Telecom submits "Orange AND Phone." A video entitled "Get your newest phone at the local Orange store" is Signal. A kids' cartoon with the knock knock joke, "Orange you glad I didn't call you on the phone?" is Noise. The lines are easy to draw, but to get good results, someone needs to draw them. Without the actual database of content to work with, that's impossible to do.</div><div><br></div><div>Incoming queries very clearly state the brands' intentions. The problem is that users never achieve their stated intention. There are never enough NOTs, ANDs and ORs to get the job done.&nbsp; Our Contextual Queries contain 1,000 to 10,000 operators per query and produce 5–50× more results than Adjusted Queries. Contextual queries are the only way to go for generic-name brands like <em>Orange Telecom, Dodge Cars, Specialized Bicycles, Columbia Sportswear, Liberty Financial</em>. Contextual Queries are perfected by Day 30, but they're also never done. The endless stream of new content exposes new combinations of words that beg for more NOTs, ANDs and ORs to be added.</div><div><br></div><div><i style="">At a $2mm spending level, our Contextual Queries become your property so you can use them to improve results on TikTok, Reels and elsewhere. </i></div>`, t2: `Due to the outcome of multiple tests,&nbsp;<strong>Contextual Queries</strong> are the only option for Topical (Unbranded) Queries.&nbsp; On our Topical tests, simple Adjustments weren't enough to produce good-enough results:&nbsp; each query was extracting more than 100mm videos from our database, the vast majority of which was noise.&nbsp; The queries need to be rewritten, augmented and limited to protect our database as well as our reputation for quality.&nbsp; At a $2mm spending level, our Contextual Queries become your property so you can use them to improve results on TikTok, Reels and elsewhere.` },
 
-    branded: `<strong>Branded queries</strong> target a specific brand, product, or campaign. They can run as <strong>Adjusted</strong> or <strong>Contextual</strong> — Contextual is essential for generic-name brands (Orange, Dodge, Specialized) where 1,000–10,000 terms per string are needed to separate signal from everyday-English noise.`,
+    branded: `<strong>Branded queries</strong> target a specific brand, product, or campaign. They can run as <strong>Exact</strong>, <strong>Adjusted</strong>, or <strong>Contextual</strong> — Contextual is essential for generic-name brands (Orange, Dodge, Specialized) where 1,000–10,000 terms per string are needed to separate signal from everyday-English noise.`,
 
     nonbranded: `<strong>Non-branded queries</strong> cover topics, categories, or themes rather than a named brand. These run as <strong>Adjusted</strong> only — Contextual is not offered for non-branded queries.`,
+
+    'qt-exact': `We run your queries exactly as submitted, with no changes. Fastest to launch and lowest cost, but expect to miss videos and pick up noise that Adjusted or Contextual would resolve.`,
 
     'qt-adjusted': `Without changing the meaning of your queries, we adjust them to work in our system and to improve first-line results.`,
 
@@ -2469,7 +2544,9 @@ function computePrice(f) {
         * backfillMult * refreshMult * depthMult * metricsMult
         * shortsMult * creatorMult * queryTypeMult * exclusionMult * volumeMult;
 
-    const monthlyTotal = perQuery * brandedCount;
+    // Subscription = per-query rate × query count (the multiplicative part).
+    const subscriptionMonthly = perQuery * brandedCount;
+    const monthlyTotal = subscriptionMonthly;
     const annualTotal = monthlyTotal * 12;
     // One-time setup fee = max(per-type floor, per-query setup rate × query volume).
     // Only applies when the query type is used (volume > 0). Unselected type falls
@@ -2482,7 +2559,7 @@ function computePrice(f) {
         brandedCount, nonBrandedCount, totalVolume,
         volumeMult, backfillMult, refreshMult, depthMult, metricsMult,
         shortsMult, creatorMult, queryTypeMult, exclusionMult, exclusionCount, setupPerQuery,
-        perQuery, monthlyTotal, annualTotal, setupFee
+        perQuery, subscriptionMonthly, monthlyTotal, annualTotal, setupFee
     };
 }
 
@@ -2509,6 +2586,14 @@ const showLine = (id, show) => { const el = $(id); if (el) el.style.display = sh
 const TAB_NAME = { type1: 'Query Type 1', type2: 'Query Type 2' };
 
 function render() {
+    // Publishing Recency (B) caps Historical Backfill (C): drop any backfill longer than
+    // the chosen publishing window (on either tab) before pricing, so the estimate and the
+    // disabled UI never lag a frame behind a recency change.
+    [forms.type1, forms.type2].forEach(f => {
+        const max = f.publishingRecency ? RECENCY_MONTHS[f.publishingRecency] : Infinity;
+        if (f.backfill && BACKFILL_MONTHS[f.backfill] > max) f.backfill = null;
+    });
+
     // Active tab drives the detailed line items; both feed the combined totals.
     const p = computePrice(state);
     const p1 = computePrice(forms.type1);
@@ -2552,6 +2637,18 @@ function render() {
     $('backfillBadge18').style.display = activeTab === 'type1' ? '' : 'none';
     $('backfillBadge6').style.display = activeTab === 'type2' ? '' : 'none';
 
+    // Disable backfill options that exceed the active tab's Publishing Recency window,
+    // and re-sync the active state (which may have just been cleared by the clamp above).
+    const recencyMax = state.publishingRecency ? RECENCY_MONTHS[state.publishingRecency] : Infinity;
+    document.querySelectorAll('#backfillRow .toggle-btn').forEach(btn => {
+        const tooLong = BACKFILL_MONTHS[btn.dataset.value] > recencyMax;
+        btn.classList.toggle('disabled', tooLong);
+        btn.setAttribute('aria-disabled', String(tooLong));
+        const isActive = btn.dataset.value === state.backfill;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+    });
+
     // Refresh: Monthly option is Type 2 only (3 cols); badges per tab
     $('refreshMonthly').style.display = showOneMonth ? '' : 'none';
     $('refreshRow').classList.toggle('cols-3', showOneMonth);
@@ -2584,10 +2681,12 @@ function render() {
         ? "Basic Video Metrics + Video Comments + Comments Sentiment"
         : 'Basic Video Metrics + Video Sentiment + Comment Sentiment';
 
-    // Query type (F): Type 2 offers Contextual only (1 col); Type 1 keeps both (2 cols)
+    // Query type (F): Type 2 offers Contextual only (1 col); Type 1 offers Exact,
+    // Adjusted, and Contextual (3 cols)
+    $('qtExact').style.display = activeTab === 'type2' ? 'none' : '';
     $('qtAdjusted').style.display = activeTab === 'type2' ? 'none' : '';
     $('brandedQueryTypeRow').classList.toggle('cols-1', activeTab === 'type2');
-    $('brandedQueryTypeRow').classList.toggle('cols-2', activeTab === 'type1');
+    $('brandedQueryTypeRow').classList.toggle('cols-3', activeTab === 'type1');
 
     // "Best for Brands" badges (Query Type 1 only): Basic Creator Metrics + Contextual
     $('cmBadgeBasic').style.display = activeTab === 'type1' ? '' : 'none';
@@ -2659,12 +2758,13 @@ function render() {
         $('lineVolumeValue').textContent = formatMult(p.volumeMult);
         $('linePerQueryValue').textContent = formatCurrency(p.perQuery, { perQuery: true });
         $('lineQtySubLabel').textContent = `${formatVolume(p.brandedCount)} queries × ${formatCurrency(p.perQuery, { perQuery: true })}`;
-        $('lineQtySubValue').textContent = formatCurrency(p.monthlyTotal);
+        $('lineQtySubValue').textContent = formatCurrency(p.subscriptionMonthly);
     }
 
     // One-time setup fee — per-query rate (by query type) × volume. Unselected → base (Adjusted).
     const setupName = (f) => f.brandedQueryType === 'contextual' ? 'Contextual'
-                           : f.brandedQueryType === 'improved' ? 'Adjusted' : 'base';
+                           : f.brandedQueryType === 'improved' ? 'Adjusted'
+                           : f.brandedQueryType === 'exact' ? 'Exact' : 'base';
     const setupLabel = (f, p) => `${setupName(f)} · ${formatCurrency(p.setupPerQuery, { perQuery: true })}/query`;
     $('lineBackfill1Label').textContent = `Query Type 1 setup (${setupLabel(forms.type1, p1)})`;
     $('lineBackfill1Value').textContent = formatCurrency(p1.setupFee);
@@ -2678,7 +2778,7 @@ function render() {
     $('volumeSliderLabel').textContent = activeTab === 'type2' ? 'Topical Queries' : 'Queries with Brand Name';
     $('cardFsub').textContent = activeTab === 'type2'
         ? 'Topical Queries must use our Contextual Query Option'
-        : 'Brand Queries can run as Adjusted or Contextual — choose below.';
+        : 'Brand Queries can run as Exact, Adjusted, or Contextual — choose below.';
     $('cardGsub').textContent = activeTab === 'type2'
         ? "Estimate Your Data Costs by Entering the Number of Topical Queries You'll Submit"
         : "Estimate Your Data Costs by Entering the Number of Brand Queries You'll Submit";
@@ -2722,6 +2822,9 @@ document.querySelectorAll('.toggle-row').forEach(group => {
     const inputName = group.dataset.input;
     group.querySelectorAll('.toggle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
+            // Options disabled by an upstream constraint (e.g. backfill beyond the chosen
+            // Publishing Recency) are not selectable.
+            if (btn.classList.contains('disabled')) return;
             group.querySelectorAll('.toggle-btn').forEach(b => {
                 b.classList.remove('active');
                 b.setAttribute('aria-pressed', 'false');
@@ -2762,7 +2865,7 @@ function syncControls() {
 
 // ── VALIDATION ──────────────────────────────────────────────────
 // A query type must be fully filled out only when its volume > 0.
-const REQUIRED_FIELDS = ['backfill', 'refresh', 'depth', 'videoMetrics', 'creatorMetrics', 'brandedQueryType'];
+const REQUIRED_FIELDS = ['publishingRecency', 'backfill', 'refresh', 'depth', 'videoMetrics', 'creatorMetrics', 'brandedQueryType'];
 const formVolume = (f) => qTiers(f.qt)[f.brandedVolumeIdx];
 const missingFields = (f) => formVolume(f) <= 0 ? [] : REQUIRED_FIELDS.filter(k => !f[k]);
 
@@ -3005,12 +3108,13 @@ document.addEventListener('keydown', (e) => {
 // Configurator CTA
 function summarizeForm(f, p) {
     return [
+        `Publishing recency: ${f.publishingRecency ? RECENCY_LABELS[f.publishingRecency] : 'not selected'}`,
         `Historical backfill: ${f.backfill ? BACKFILL_LABELS[f.backfill] : 'not selected'}`,
         `Refresh: ${f.refresh || 'not selected'}`,
         `Search depth: ${f.depth || 'not selected'}`,
         `Video metrics: ${f.videoMetrics ? VIDEO_METRICS_LABELS[f.videoMetrics] : 'not selected'}`,
         `Creator metrics: ${f.creatorMetrics ? CREATOR_LABELS[f.creatorMetrics] : 'not selected'}`,
-        `Queries: ${p.brandedCount.toLocaleString()}/refresh (${f.brandedQueryType === 'contextual' ? 'Contextual' : f.brandedQueryType === 'improved' ? 'Adjusted' : 'not selected'}, $${p.setupFee.toLocaleString()} one-time setup)`,
+        `Queries: ${p.brandedCount.toLocaleString()}/refresh (${QT_DISPLAY[f.brandedQueryType] || 'not selected'}, $${p.setupFee.toLocaleString()} one-time setup)`,
         `Query exclusions: ${f.inclusions.size ? Array.from(f.inclusions).map(c => INCLUSION_LABELS[c]).join(', ') : 'none'}`,
         `Shorts vs long-form: ${f.shortsDistinction ? 'yes' : 'no'}`,
         `Monthly: $${Math.round(p.monthlyTotal).toLocaleString()}`

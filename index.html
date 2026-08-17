@@ -1011,19 +1011,6 @@
         }
         .volume-ticks span:first-child { transform: none; }
         .volume-ticks span:last-child { transform: translateX(-100%); }
-        .volume-tier-pill {
-            display: inline-block;
-            font-size: 11px;
-            color: white;
-            background: var(--text-dark);
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin-left: 8px;
-            font-weight: 600;
-        }
-        /* Volume-tier feedback: red while in surcharge, green while in discount. */
-        .volume-tier-pill.surcharge { background: #d1344e; }
-        .volume-tier-pill.discount  { background: #1a8a6e; }
 
         /* ── CHECKBOX GROUP (data types) ── */
         .checkbox-grid {
@@ -1946,9 +1933,6 @@
                     <span style="left:55%">30K</span>
                     <span style="left:100%">100K</span>
                 </div>
-                <div class="query-total-readout" style="justify-content:flex-end;">
-                    <span class="volume-tier-pill" id="volTierPill">no queries</span>
-                </div>
             </div>
 
             <!-- DECISION B: PUBLISHING RECENCY -->
@@ -2243,7 +2227,7 @@
 
                     <div class="price-line">
                         <span class="price-line-label">Base per-query rate</span>
-                        <span class="price-line-value" id="lineBaseRate">$77.77</span>
+                        <span class="price-line-value" id="lineBaseRate">$88.88</span>
                     </div>
                     <div class="price-line">
                         <span class="price-line-label" id="lineBackfillLabel">× Backfill</span>
@@ -2276,10 +2260,6 @@
                     <div class="price-line" id="lineExclusions" style="display:none;">
                         <span class="price-line-label" id="lineExclusionsLabel">× Query exclusions</span>
                         <span class="price-line-value" id="lineExclusionsValue">×1.03</span>
-                    </div>
-                    <div class="price-line">
-                        <span class="price-line-label" id="lineVolumeLabel">× Volume tier</span>
-                        <span class="price-line-value" id="lineVolumeValue">×1.00</span>
                     </div>
 
                     <div class="price-line group-head" id="linePerQueryRow">
@@ -2335,8 +2315,8 @@
 
                 <div class="price-notes">
                     <strong>Pricing notes.</strong>
-                    The per-query rate starts at $77.77 (Query Type 1) or $77.77 (Query Type 2, which is Contextual-only) for the base configuration — 6-month backfill, weekly refresh, titles-only depth, basic video metrics, no creator metrics, and exact queries — and each selection above adjusts it multiplicatively.
-                    The volume curve runs from a +25% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 20K and 50K.
+                    The per-query rate starts at $88.88 (Query Type 1) or $88.88 (Query Type 2, which is Contextual-only) for the base configuration — 6-month backfill, weekly refresh, titles-only depth, basic video metrics, no creator metrics, and exact queries — and each selection above adjusts it multiplicatively.
+                    The per-query rate is flat across volumes — no volume surcharge or discount. Your monthly total is simply the per-query rate times your query count.
                     Geography and producer type do not change the price.
                     All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations.
                     Multi-firehose discounts available — ask us.
@@ -2395,27 +2375,9 @@
 // 1. PRICING MODEL
 // ══════════════════════════════════════════════════════════════
 
-// Volume tiers — 1K → 100K queries/refresh (fine-grained at the low end so small accounts like 1,500 are selectable)
-const VOLUME_TIERS = [
-    1000, 1500, 2000, 2500, 5000, 7500, 10000,
-    15000, // index 7 = reference (1.00x)
-    20000, 25000, 30000, 35000, 40000, 45000, 50000, 60000, 70000, 80000, 90000, 100000
-];
-// Index of the reference tier (15K = 1.00x). Surcharge below, discount above.
-const VOLUME_REF_IDX = 7;
-
-// Volume multiplier — normalized so 15K = 1.00. Surcharge under 15K (up to +25% at 1K),
-// discount over (down to −25% at 100K). Steepest through 20K-50K where most accounts land.
-const VOLUME_MULT = [
-    1.25, 1.21, 1.17, 1.13, 1.09, 1.05, 1.02,        // 1K-10K (surcharge, below ref)
-    1.00,                                            // 15K reference
-    0.96, 0.93, 0.91, 0.89, 0.87, 0.86, 0.85,        // 20K-50K (-4% → -15%)
-    0.82, 0.80, 0.78, 0.76, 0.75                     // 60K-100K (-18% → -25%)
-];
-
 // Per-query-type slider scale — starts at 0, goes to 100K. Query Type 2 can start as low
-// as 500; Query Type 1 starts at 1,000. (The discount curve treats any volume below the
-// 1,000 tier as the smallest bracket, so 500 prices at the +25% floor.)
+// as 500; Query Type 1 starts at 1,000. Volume sets the query COUNT only — the per-query
+// rate is flat (no volume surcharge or discount).
 const QUERY_TIERS_BY_TYPE = {
     type1: [
         0, 1000, 1500, 2000, 2500, 5000, 7500, 10000, 15000, 20000, 25000,
@@ -2429,20 +2391,6 @@ const QUERY_TIERS_BY_TYPE = {
 const qTiers = (qt) => QUERY_TIERS_BY_TYPE[qt] || QUERY_TIERS_BY_TYPE.type1;
 // Tick marks under the slider (value → label); positions are computed per scale in render().
 const VOLUME_TICK_MARKS = [[0, '0'], [2500, '2.5K'], [10000, '10K'], [30000, '30K'], [100000, '100K']];
-
-// Map a combined query total to the staircase tier index (last tier ≤ total).
-function volumeTierIdx(total) {
-    let idx = 0;
-    for (let i = 0; i < VOLUME_TIERS.length; i++) {
-        if (total >= VOLUME_TIERS[i]) idx = i;
-    }
-    return idx;
-}
-// Volume discount multiplier for a combined query total.
-function volumeMultForTotal(total) {
-    if (total <= 0) return 1.00;
-    return VOLUME_MULT[volumeTierIdx(total)];
-}
 
 // ── Per-dimension multipliers (multiplicative). Base rate × each selected option's
 //    multiplier = per-query rate (before the volume-tier adjustment). ──
@@ -2465,7 +2413,7 @@ const EXCLUSION_SURCHARGE = 1.03;
 
 // Base per-query rate — differs by query type (1 = brand queries, 2 = topical queries).
 // Type 2 is Contextual-only, so its higher base already bakes in Contextual (no G surcharge).
-const BASE_RATE = { type1: 77.77, type2: 77.77 };
+const BASE_RATE = { type1: 88.88, type2: 88.88 };
 
 // One-time setup fee — a floor per query type, then per-query above it. Billed once as
 // max(floor, rate × volume): Adjusted $2,500 / 10¢/query, Contextual $5,000 / 45¢/query.
@@ -3032,7 +2980,7 @@ const INFO_COPY = {
         <br><br>
         <i style="">Note: Most companies offering transcript-level searches (like this option), or even just sentiment (which requires transcripts), scrape the transcripts off YouTube.&nbsp; That's against YouTube's Terms of Service, putting both the vendor and you out of compliance.&nbsp; We don't scrape YouTube.&nbsp; We buy our transcripts from Google, explaining the price jump associated with this option.</i>`,
 
-    volume: `One <em>query</em> = one search string. Each query returns 100% of matching videos no matter when they were published, so long as the video had fresh viewing in the past 36 months.&nbsp; Volume below 15,000 queries carries a per-query surcharge; tiers above 15,000 receive an increasingly large discount.&nbsp; We do not truncate results by volume.&nbsp;`,
+    volume: `One <em>query</em> = one search string. Each query returns 100% of matching videos no matter when they were published, so long as the video had fresh viewing in the past 36 months.&nbsp; The per-query rate is flat — the price is simply your per-query rate times the number of queries.&nbsp;`,
 
     dataTypes: `The firehose includes <strong>Category Data</strong>, <strong>Brand Data</strong>, <strong>Creator Data</strong>, and <strong>Actionable Insight Data</strong> by default. <strong>Product Data</strong> is the only optional module and carries its existing 0.15 weight when selected.`,
 
@@ -3064,9 +3012,6 @@ function computePrice(f) {
     const nonBrandedCount = tiers[f.nonBrandedVolumeIdx];   // vestigial (single slider)
     const totalVolume = brandedCount + nonBrandedCount;
 
-    // Volume discount tier is driven by the total.
-    const volumeMult = volumeMultForTotal(totalVolume);
-
     // Per-dimension multipliers (multiplicative). An unselected card falls back to
     // its BASE value (×1.00) so the price reflects the base config until a choice is made.
     const backfillMult   = f.backfill ? BACKFILL_MULT[f.backfill] : 1;
@@ -3081,11 +3026,12 @@ function computePrice(f) {
     const exclusionCount = f.inclusions.size;
     const exclusionMult  = Math.pow(EXCLUSION_SURCHARGE, exclusionCount);
 
-    // Full per-query rate (folds in the volume tier). Base config = $77.77 (Type 1) / $77.77 (Type 2).
+    // Full per-query rate. Base config = $88.88 (Type 1) / $88.88 (Type 2). No volume
+    // surcharge/discount — the rate is flat across volumes.
     const baseRate = BASE_RATE[f.qt] || BASE_RATE.type1;
     const perQuery = baseRate
         * backfillMult * refreshMult * depthMult * metricsMult
-        * shortsMult * creatorMult * queryTypeMult * exclusionMult * volumeMult;
+        * shortsMult * creatorMult * queryTypeMult * exclusionMult;
 
     // Subscription = per-query rate × query count (the multiplicative part).
     const subscriptionMonthly = perQuery * brandedCount;
@@ -3100,7 +3046,7 @@ function computePrice(f) {
 
     return {
         brandedCount, nonBrandedCount, totalVolume,
-        volumeMult, backfillMult, refreshMult, depthMult, metricsMult,
+        backfillMult, refreshMult, depthMult, metricsMult,
         shortsMult, creatorMult, queryTypeMult, exclusionMult, exclusionCount, setupPerQuery,
         perQuery, subscriptionMonthly, monthlyTotal, annualTotal, setupFee
     };
@@ -3337,14 +3283,11 @@ function render() {
         $('lineExclusionsValue').textContent = formatMult(p.exclusionMult);
     }
 
-    // Volume tier, per-query rate, and quantity appear once the slider is moved (volume > 0).
+    // Per-query rate and quantity appear once the slider is moved (volume > 0).
     const hasVolume = p.brandedCount > 0;
-    revealRow($('lineVolumeLabel').parentElement, hasVolume);
     revealRow($('linePerQueryRow'), hasVolume);
     revealRow($('lineQtySubRow'), hasVolume);
     if (hasVolume) {
-        $('lineVolumeLabel').textContent = `× Volume tier (${formatVolume(p.totalVolume)} total)`;
-        $('lineVolumeValue').textContent = formatMult(p.volumeMult);
         $('linePerQueryValue').textContent = formatCurrency(p.perQuery, { perQuery: true });
         $('lineQtySubLabel').textContent = `${formatVolume(p.brandedCount)} queries × ${formatCurrency(p.perQuery, { perQuery: true })}`;
         $('lineQtySubValue').textContent = formatCurrency(p.subscriptionMonthly);
@@ -3369,20 +3312,6 @@ function render() {
     $('qtContextualInfo').style.display = activeTab === 'type2' ? 'none' : '';
     $('brandedNum').textContent = formatVolume(p.brandedCount);
     $('brandedSlider').setAttribute('aria-valuetext', `${formatVolume(p.brandedCount)} queries`);
-
-    // Combined-total tier pill
-    const tierIdx = volumeTierIdx(p.totalVolume);
-    let pill;
-    const inSurcharge = p.totalVolume > 0 && tierIdx < VOLUME_REF_IDX;
-    const inDiscount  = p.totalVolume > 0 && tierIdx > VOLUME_REF_IDX;
-    if (p.totalVolume <= 0) pill = 'no queries';
-    else if (tierIdx === VOLUME_REF_IDX) pill = 'reference tier';
-    else if (inSurcharge) pill = `+${Math.round((p.volumeMult - 1) * 100)}% surcharge`;
-    else pill = `−${Math.round((1 - p.volumeMult) * 100)}% discount`;
-    const pillEl = $('volTierPill');
-    pillEl.textContent = pill;
-    pillEl.classList.toggle('surcharge', inSurcharge);
-    pillEl.classList.toggle('discount', inDiscount);
 
     // Slider scale (active tab): max index, fill gradient, and tick positions.
     const tiers = qTiers(state.qt);

@@ -2243,7 +2243,7 @@
 
                     <div class="price-line">
                         <span class="price-line-label">Base per-query rate</span>
-                        <span class="price-line-value" id="lineBaseRate">$11.11</span>
+                        <span class="price-line-value" id="lineBaseRate">$77.77</span>
                     </div>
                     <div class="price-line">
                         <span class="price-line-label" id="lineBackfillLabel">× Backfill</span>
@@ -2335,7 +2335,7 @@
 
                 <div class="price-notes">
                     <strong>Pricing notes.</strong>
-                    The per-query rate starts at $11.11 (Query Type 1) or $33.33 (Query Type 2, which is Contextual-only) for the base configuration — 6-month backfill, weekly refresh, titles-only depth, basic video metrics, no creator metrics, and exact queries — and each selection above adjusts it multiplicatively.
+                    The per-query rate starts at $77.77 (Query Type 1) or $77.77 (Query Type 2, which is Contextual-only) for the base configuration — 6-month backfill, weekly refresh, titles-only depth, basic video metrics, no creator metrics, and exact queries — and each selection above adjusts it multiplicatively.
                     The volume curve runs from a +25% surcharge at the smallest volumes down to a 25% discount at 100K, with the steepest savings between 20K and 50K.
                     Geography and producer type do not change the price.
                     All numbers are USD, monthly recurring, with a 12-month minimum on transcript-tier configurations.
@@ -2465,7 +2465,7 @@ const EXCLUSION_SURCHARGE = 1.03;
 
 // Base per-query rate — differs by query type (1 = brand queries, 2 = topical queries).
 // Type 2 is Contextual-only, so its higher base already bakes in Contextual (no G surcharge).
-const BASE_RATE = { type1: 11.11, type2: 33.33 };
+const BASE_RATE = { type1: 77.77, type2: 77.77 };
 
 // One-time setup fee — a floor per query type, then per-query above it. Billed once as
 // max(floor, rate × volume): Adjusted $2,500 / 10¢/query, Contextual $5,000 / 45¢/query.
@@ -3081,7 +3081,7 @@ function computePrice(f) {
     const exclusionCount = f.inclusions.size;
     const exclusionMult  = Math.pow(EXCLUSION_SURCHARGE, exclusionCount);
 
-    // Full per-query rate (folds in the volume tier). Base config = $11.11 (Type 1) / $33.33 (Type 2).
+    // Full per-query rate (folds in the volume tier). Base config = $77.77 (Type 1) / $77.77 (Type 2).
     const baseRate = BASE_RATE[f.qt] || BASE_RATE.type1;
     const perQuery = baseRate
         * backfillMult * refreshMult * depthMult * metricsMult

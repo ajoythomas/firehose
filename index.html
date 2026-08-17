@@ -335,10 +335,11 @@
                 [explainer] minmax(260px, 340px)
                 [unit] minmax(0, 1fr)
                 [price] minmax(360px, 420px);
-            grid-template-rows: auto auto;
+            grid-template-rows: auto auto auto;
             grid-template-areas:
-                ".         tabs  ."
-                "explainer form  price";
+                ".         batchbar  ."
+                ".         tabs      ."
+                "explainer form      price";
             column-gap: 32px;
             row-gap: 0;
             align-items: start;
@@ -1642,6 +1643,7 @@
                 grid-template-columns: 1fr;
                 grid-template-areas:
                     "explainer"
+                    "batchbar"
                     "tabs"
                     "form"
                     "price";
@@ -1677,6 +1679,47 @@
             .info-popover { left: auto; right: -10px; transform: none; min-width: 240px; }
             .info-popover::before { left: auto; right: 14px; transform: rotate(45deg); }
         }
+
+        /* ── BATCHES — a batch bar above the query-type selector. Each batch is a full,
+              independently-priced configuration; the panel totals every batch. ── */
+        .batch-bar { grid-area: batchbar; display: flex; flex-direction: column; gap: 12px; }
+        .batch-tabs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+        .batch-pill {
+            border: 1.5px solid var(--border-light); background: #fff; color: var(--text-muted);
+            font-family: inherit; font-weight: 700; font-size: 13px; padding: 8px 16px;
+            border-radius: 10px; cursor: pointer; transition: border-color .15s, color .15s, background .15s;
+        }
+        .batch-pill:hover { border-color: var(--pink); color: var(--text-dark); }
+        .batch-pill.active { background: var(--pink-light); border-color: var(--pink); color: var(--pink-dark); }
+        .batch-add {
+            display: inline-flex; align-items: center; gap: 5px;
+            border: 1.5px dashed rgba(248,87,166,0.5); background: transparent; color: var(--pink-dark);
+            font-family: inherit; font-weight: 700; font-size: 13px; padding: 8px 14px;
+            border-radius: 10px; cursor: pointer; transition: background .15s;
+        }
+        .batch-add:hover { background: var(--pink-light); }
+        .batch-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .batch-name {
+            flex: 1 1 220px; min-width: 160px; box-sizing: border-box; font-family: inherit;
+            font-size: 15px; font-weight: 700; color: var(--text-dark); background: #fff;
+            border: 1.5px solid var(--border-light); border-radius: 10px; padding: 10px 14px;
+        }
+        .batch-name::placeholder { color: var(--text-muted); font-weight: 600; }
+        .batch-name:focus { outline: none; border-color: var(--pink); box-shadow: 0 0 0 3px rgba(248,87,166,0.14); }
+        .batch-remove {
+            border: 1.5px solid var(--border-light); background: #fff; color: var(--text-muted);
+            font-family: inherit; font-weight: 600; font-size: 13px; padding: 9px 14px;
+            border-radius: 10px; cursor: pointer; transition: color .15s, border-color .15s;
+        }
+        .batch-remove:hover { color: #bf125d; border-color: rgba(191,18,93,0.4); }
+        /* Bottom "add another batch" call to action, old-style dashed card. */
+        .batch-add-cta {
+            display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+            border: 1.5px dashed rgba(248,87,166,0.4); background: var(--pink-light);
+            border-radius: 16px; padding: 18px 22px; margin-top: 4px;
+        }
+        .batch-add-cta-title { font-size: 15px; font-weight: 800; color: var(--text-dark); }
+        .batch-add-cta-copy { margin: 3px 0 0; font-size: 13px; line-height: 1.5; color: var(--text-muted); max-width: 460px; }
     </style>
 </head>
 <body>
@@ -1849,10 +1892,19 @@
         <!-- ─── CONFIGURATION CARDS ─── -->
         <div class="calc-config">
 
+            <!-- BATCH BAR — one pill per batch; each batch is a full config and the panel totals them all -->
+            <div class="batch-bar" id="batchBar">
+                <div class="batch-tabs" id="batchTabs" role="tablist" aria-label="Query batches"></div>
+                <div class="batch-head">
+                    <input class="batch-name" id="batchName" type="text" placeholder="Batch 1 name (optional)" autocomplete="off" aria-label="Batch name">
+                    <button class="batch-remove" id="batchRemove" type="button">Remove batch</button>
+                </div>
+            </div>
+
             <!-- TABBED UNIT — query-type tabs visually connected to the form below -->
             <div class="tabbed-unit">
 
-            <!-- QUERY TYPE SELECTOR (pick one) -->
+            <!-- QUERY TYPE SELECTOR — sets the active batch's type (Brand vs Topical) -->
             <div class="query-type-select" id="queryTypeSelect" role="radiogroup" aria-label="Query type">
                 <div class="query-type-box selected" data-querytype="type1" role="radio" aria-checked="true" tabindex="0">
                     <span class="query-type-radio"></span>
@@ -2149,9 +2201,17 @@
                 </div>
             </div>
 
+            <!-- Add-another-batch CTA -->
+            <div class="batch-add-cta">
+                <div>
+                    <div class="batch-add-cta-title">Running queries that need a different setup?</div>
+                    <p class="batch-add-cta-copy">Add another batch with its own volume, history and depth. It's priced into this same request.</p>
+                </div>
+                <button class="form-nav-btn" id="addBatchCta" type="button" style="flex:0 0 auto;">+ Add another batch</button>
+            </div>
+
             <div class="form-nav" id="formNav">
                 <span class="form-nav-error" id="formNavError" style="display:none;"></span>
-                <button class="form-nav-btn" id="saveMoveBtn" type="button">Save and Move to Query Type 2 →</button>
                 <button class="form-nav-btn" id="requestSampleBtn" type="button">Book a call for this configuration</button>
             </div>
 
@@ -2237,17 +2297,10 @@
                     </div>
 
                     <div class="price-line group-head">
-                        <span class="price-line-label">Both query types</span>
+                        <span class="price-line-label">All batches</span>
                         <span class="price-line-value"></span>
                     </div>
-                    <div class="price-line">
-                        <span class="price-line-label">Query Type 1</span>
-                        <span class="price-line-value" id="lineType1Value">$0</span>
-                    </div>
-                    <div class="price-line">
-                        <span class="price-line-label">Query Type 2</span>
-                        <span class="price-line-value" id="lineType2Value">$0</span>
-                    </div>
+                    <div id="batchSummaryRows"></div>
                     <div class="price-line subtotal">
                         <span class="price-line-label">Combined monthly</span>
                         <span class="price-line-value" id="lineCombinedValue">$0</span>
@@ -2256,14 +2309,7 @@
 
                 <div class="price-onetime">
                     <div class="price-onetime-title">One-time setup</div>
-                    <div class="price-onetime-row">
-                        <span class="price-line-label" id="lineBackfill1Label">Query Type 1 setup</span>
-                        <span class="price-line-value" id="lineBackfill1Value">$0</span>
-                    </div>
-                    <div class="price-onetime-row">
-                        <span class="price-line-label" id="lineBackfill2Label">Query Type 2 setup</span>
-                        <span class="price-line-value" id="lineBackfill2Value">$0</span>
-                    </div>
+                    <div id="batchSetupRows"></div>
                     <div class="price-onetime-row" style="font-weight:700;margin-top:6px;">
                         <span class="price-line-label">Combined one-time</span>
                         <span class="price-line-value" id="lineBackfillTotal">$0</span>
@@ -2470,16 +2516,20 @@ const INCLUSION_LABELS = {
 const SHORTS_SURCHARGE = 1.03;
 
 // ══════════════════════════════════════════════════════════════
-// 2. STATE
+// 2. STATE — BATCHES
 // ══════════════════════════════════════════════════════════════
-// Each query type (1 = contains a brand name, 2 = subject-matter only) gets its own
-// fully independent copy of the entire form. Tabs switch which copy is being edited.
-function makeForm(qt) {
-    // Nothing is pre-selected. Any unselected option card prices at its BASE value
-    // (×1.00) in computePrice, so moving the volume slider (card A) shows the base
-    // price immediately; picking any card then adjusts the price from there.
+// The firehose is configured as one or more independent "batches". Each batch is a
+// full copy of the form (its own volume, history, depth, etc.) and is priced on its
+// own; every batch totals into one estimate. A batch is Brand (qt=type1) or Topical
+// (qt=type2) — the query-type boxes set the ACTIVE batch's type.
+let batchSeq = 0;
+function makeBatch(qt) {
+    // Nothing is pre-selected. Any unselected option prices at its BASE value (×1.00)
+    // in computePrice, so moving the volume slider shows the base price immediately.
     return {
-        qt,                      // 'type1' | 'type2' — selects the base per-query rate
+        id: ++batchSeq,
+        name: '',
+        qt: qt || 'type1',       // 'type1' (Brand) | 'type2' (Topical) — base per-query rate
         brandedVolumeIdx: 0,     // A — volume starts at 0 ⇒ price is $0 on load
         publishingRecency: null, // B
         backfill: null,          // C
@@ -2493,11 +2543,16 @@ function makeForm(qt) {
         nonBrandedVolumeIdx: 0
     };
 }
-const forms = { type1: makeForm('type1'), type2: makeForm('type2') };
-let activeTab = 'type1';
-// `state` always points at the form for the active tab. All event handlers read/write
-// through it, so they automatically operate on whichever tab is being edited.
-let state = forms[activeTab];
+const batches = [ makeBatch('type1') ];
+let activeBatchId = batches[0].id;
+// `state` always points at the active batch. All event handlers read/write through it,
+// so they operate on whichever batch is being edited. `activeTab` mirrors the active
+// batch's qt so the existing per-type display logic and info-tooltip variants keep working.
+let state = batches[0];
+let activeTab = state.qt;
+const batchIndexOf = (b) => batches.indexOf(b) + 1;
+const batchLabel = (b) => (b.name && b.name.trim()) || ('Batch ' + batchIndexOf(b));
+function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 // ══════════════════════════════════════════════════════════════
 // 3. INFO COPY (tooltip content)
@@ -3050,50 +3105,78 @@ const showLine = (id, show) => { const el = $(id); if (el) el.style.display = sh
 
 const TAB_NAME = { type1: 'Query Type 1', type2: 'Query Type 2' };
 
+// Price the active batch as if it were a given query type — powers the two query-type
+// boxes, which now show what THIS batch would cost as Brand vs Topical.
+function pricedAsType(b, qt) {
+    const vol = qTiers(b.qt)[b.brandedVolumeIdx] || 0;
+    let idx = qTiers(qt).indexOf(vol);
+    if (idx === -1) idx = 0;
+    return computePrice(Object.assign({}, b, { qt, brandedVolumeIdx: idx }));
+}
+
+// Batch pills + add button; batch name/remove are synced in syncControls.
+function renderBatchBar() {
+    const pills = batches.map(b =>
+        `<button type="button" class="batch-pill${b.id === activeBatchId ? ' active' : ''}" data-batch="${b.id}" role="tab" aria-selected="${b.id === activeBatchId}">${escapeHtml(batchLabel(b))}</button>`
+    ).join('');
+    $('batchTabs').innerHTML = pills + '<button type="button" class="batch-add" id="addBatchBtn">+ Add batch</button>';
+    $('batchRemove').style.display = batches.length > 1 ? '' : 'none';
+}
+
 function render() {
     // Publishing Recency (B) caps Historical Backfill (C): drop any backfill longer than
-    // the chosen publishing window (on either tab) before pricing, so the estimate and the
-    // disabled UI never lag a frame behind a recency change.
-    [forms.type1, forms.type2].forEach(f => {
+    // the chosen publishing window, on every batch, before pricing.
+    batches.forEach(f => {
         const max = f.publishingRecency ? RECENCY_MONTHS[f.publishingRecency] : Infinity;
         if (f.backfill && BACKFILL_MONTHS[f.backfill] > max) f.backfill = null;
     });
 
-    // Active tab drives the detailed line items; both feed the combined totals.
+    // Price every batch; the estimate totals all batches. `p` = the active batch, which
+    // drives the detailed line-item breakdown and the form's per-type display.
+    const priced = batches.map(b => ({ b, p: computePrice(b) }));
     const p = computePrice(state);
-    const p1 = computePrice(forms.type1);
-    const p2 = computePrice(forms.type2);
-    const combinedMonthly = p1.monthlyTotal + p2.monthlyTotal;
+    const combinedMonthly = priced.reduce((s, x) => s + x.p.monthlyTotal, 0);
     const combinedAnnual = combinedMonthly * 12;
-    const combinedVolume = p1.totalVolume + p2.totalVolume;
+    const combinedVolume = priced.reduce((s, x) => s + x.p.totalVolume, 0);
     const combinedBlended = combinedVolume > 0 ? combinedMonthly / combinedVolume : 0;
-    const activeName = TAB_NAME[activeTab];
+    const combinedSetup = priced.reduce((s, x) => s + x.p.setupFee, 0);
+    const activeName = `${batchLabel(state)} · ${TAB_NAME[activeTab]}`;
 
-    // Big numbers = combined across both query types
+    renderBatchBar();
+
+    // Big numbers = combined across all batches
     $('priceMonthly').textContent = formatCurrency(combinedMonthly);
     $('priceAnnual').textContent = formatCurrency(combinedAnnual);
     $('priceperQuery').textContent = formatCurrency(combinedBlended, { perQuery: true });
 
     // Surface the one-time setup fee next to the yearly total (full detail stays below).
-    const combinedSetup = p1.setupFee + p2.setupFee;
     $('priceAnnualSetup').innerHTML = combinedSetup > 0
         ? `+ one-time setup fee (<strong>${formatCurrency(combinedSetup)}</strong>)`
         : '';
 
-    // Per-type summary (always visible) + per-tab-box amount badges
-    $('lineType1Value').textContent = formatCurrency(p1.monthlyTotal);
-    $('lineType2Value').textContent = formatCurrency(p2.monthlyTotal);
+    // Per-batch monthly summary + per-batch setup rows in the panel.
+    $('batchSummaryRows').innerHTML = priced.map(({ b, p }) =>
+        `<div class="price-line"><span class="price-line-label">${escapeHtml(batchLabel(b))} <span style="color:var(--text-muted);font-weight:500;">(${b.qt === 'type2' ? 'Topical' : 'Brand'})</span></span><span class="price-line-value">${formatCurrency(p.monthlyTotal)}</span></div>`
+    ).join('');
     $('lineCombinedValue').textContent = formatCurrency(combinedMonthly);
-    $('qtAmount1').textContent = formatCurrency(p1.monthlyTotal) + '/mo';
-    $('qtAmount2').textContent = formatCurrency(p2.monthlyTotal) + '/mo';
+    $('batchSetupRows').innerHTML = priced.map(({ b, p }) =>
+        `<div class="price-onetime-row"><span class="price-line-label">${escapeHtml(batchLabel(b))} setup</span><span class="price-line-value">${formatCurrency(p.setupFee)}</span></div>`
+    ).join('');
 
-    // Form wrapper accent reflects the active tab
+    // Query-type boxes reflect the ACTIVE batch: each shows what this batch costs as that
+    // type; the selected box is the batch's current type.
+    $('qtAmount1').textContent = formatCurrency(pricedAsType(state, 'type1').monthlyTotal) + '/mo';
+    $('qtAmount2').textContent = formatCurrency(pricedAsType(state, 'type2').monthlyTotal) + '/mo';
+    document.querySelectorAll('#queryTypeSelect .query-type-box').forEach(box => {
+        const on = box.dataset.querytype === state.qt;
+        box.classList.toggle('selected', on);
+        box.setAttribute('aria-checked', String(on));
+    });
+
+    // Form wrapper accent reflects the active batch's type
     $('formWrapper').classList.toggle('type2', activeTab === 'type2');
     $('formWrapper').classList.toggle('tab-left', activeTab === 'type1');
     $('formWrapper').classList.toggle('tab-right', activeTab === 'type2');
-    // Footer button: "Save and Move…" on Query Type 1, "Request Sample Data…" on Query Type 2
-    $('saveMoveBtn').style.display = activeTab === 'type1' ? '' : 'none';
-    $('requestSampleBtn').style.display = activeTab === 'type2' ? '' : 'none';
 
     // 1-month backfill removed; backfill is always 6/12/18 months (3 cols).
     const showOneMonth = activeTab === 'type2';
@@ -3228,16 +3311,8 @@ function render() {
         $('lineQtySubValue').textContent = formatCurrency(p.subscriptionMonthly);
     }
 
-    // One-time setup fee — per-query rate (by query type) × volume. Unselected → base (Adjusted).
-    const setupName = (f) => f.brandedQueryType === 'contextual' ? 'Contextual'
-                           : f.brandedQueryType === 'improved' ? 'Adjusted'
-                           : f.brandedQueryType === 'exact' ? 'Exact' : 'base';
-    const setupLabel = (f, p) => `${setupName(f)} · ${formatCurrency(p.setupPerQuery, { perQuery: true })}/query`;
-    $('lineBackfill1Label').textContent = `Query Type 1 setup (${setupLabel(forms.type1, p1)})`;
-    $('lineBackfill1Value').textContent = formatCurrency(p1.setupFee);
-    $('lineBackfill2Label').textContent = `Query Type 2 setup (${setupLabel(forms.type2, p2)})`;
-    $('lineBackfill2Value').textContent = formatCurrency(p2.setupFee);
-    $('lineBackfillTotal').textContent = formatCurrency(p1.setupFee + p2.setupFee);
+    // One-time setup total across all batches (per-batch rows are rendered above).
+    $('lineBackfillTotal').textContent = formatCurrency(combinedSetup);
 
     $('lineSubtotal').textContent = formatCurrency(p.monthlyTotal);
 
@@ -3305,8 +3380,8 @@ document.querySelectorAll('.toggle-row').forEach(group => {
     });
 });
 
-// Push the active form's stored values back into every DOM control. Called when
-// switching tabs so the single rendered form reflects the tab being edited.
+// Push the active batch's stored values back into every DOM control. Called when
+// switching batches or flipping the active batch's type.
 function syncControls() {
     document.querySelectorAll('.toggle-row').forEach(group => {
         const name = group.dataset.input;
@@ -3316,8 +3391,8 @@ function syncControls() {
             btn.setAttribute('aria-pressed', String(isActive));
         });
     });
-    // Set the slider's max for the active tab's scale BEFORE its value, so a Type 2
-    // index (which can reach 500's extra step) isn't clamped when switching tabs.
+    // Set the slider's max for the active batch's scale BEFORE its value, so a Topical
+    // index (which can reach the extra 500-tier) isn't clamped when switching batches.
     $('brandedSlider').max = qTiers(state.qt).length - 1;
     $('brandedSlider').value = state.brandedVolumeIdx;
     shortsCheckbox.checked = state.shortsDistinction;
@@ -3328,13 +3403,20 @@ function syncControls() {
         if (cb) cb.checked = on;
         label.classList.toggle('checked', on);
     });
+    $('batchName').value = state.name;
+    $('batchName').placeholder = 'Batch ' + batchIndexOf(state) + ' name (optional)';
 }
 
 // ── VALIDATION ──────────────────────────────────────────────────
-// A query type must be fully filled out only when its volume > 0.
+// A batch must be fully filled out only when its volume > 0. Topical batches are
+// Contextual-only, so brandedQueryType isn't required for them.
 const REQUIRED_FIELDS = ['publishingRecency', 'backfill', 'refresh', 'depth', 'videoMetrics', 'creatorMetrics', 'brandedQueryType'];
 const formVolume = (f) => qTiers(f.qt)[f.brandedVolumeIdx];
-const missingFields = (f) => formVolume(f) <= 0 ? [] : REQUIRED_FIELDS.filter(k => !f[k]);
+const missingFields = (f) => {
+    if (formVolume(f) <= 0) return [];
+    const req = f.qt === 'type2' ? REQUIRED_FIELDS.filter(k => k !== 'brandedQueryType') : REQUIRED_FIELDS;
+    return req.filter(k => !f[k]);
+};
 
 function clearFieldErrors() {
     document.querySelectorAll('.calc-card.field-error').forEach(c => c.classList.remove('field-error'));
@@ -3342,7 +3424,7 @@ function clearFieldErrors() {
     err.textContent = '';
     err.style.display = 'none';
 }
-// Highlights the missing fields for the CURRENTLY VISIBLE tab and shows a message.
+// Highlights the missing fields in the active batch and shows a message.
 function showFieldErrors(missing, message) {
     clearFieldErrors();
     missing.forEach(k => {
@@ -3357,59 +3439,64 @@ function showFieldErrors(missing, message) {
     if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function setTab(target) {
+// ── BATCH MANAGEMENT ────────────────────────────────────────────
+function setActiveBatch(id) {
+    activeBatchId = id;
+    state = batches.find(b => b.id === id) || batches[0];
+    activeTab = state.qt;
+    clearFieldErrors();
+    syncControls();
+    render();
+}
+function addBatch() {
+    const b = makeBatch('type1');
+    batches.push(b);
+    setActiveBatch(b.id);
+    requestAnimationFrame(() => $('batchBar').scrollIntoView({ behavior: 'smooth', block: 'start' }));
+}
+function removeActiveBatch() {
+    if (batches.length <= 1) return;
+    const i = batches.findIndex(b => b.id === activeBatchId);
+    batches.splice(i, 1);
+    setActiveBatch(batches[Math.max(0, i - 1)].id);
+}
+// Query-type boxes set the ACTIVE batch's type (Brand vs Topical).
+function setActiveBatchType(target) {
+    if (state.qt === target) return;
+    state.qt = target;
     activeTab = target;
-    state = forms[activeTab];
-    document.querySelectorAll('#queryTypeSelect .query-type-box').forEach(b => {
-        const isSelected = b.dataset.querytype === activeTab;
-        b.classList.toggle('selected', isSelected);
-        b.setAttribute('aria-checked', String(isSelected));
-    });
+    const maxIdx = qTiers(target).length - 1;
+    if (state.brandedVolumeIdx > maxIdx) state.brandedVolumeIdx = maxIdx;
+    // Topical is Contextual-only — drop a Brand-only query mode + exclusions.
+    if (target === 'type2') { state.brandedQueryType = null; state.inclusions.clear(); }
     clearFieldErrors();
     syncControls();
     render();
 }
 
-// Tab clicks: moving Type 1 → Type 2 requires Type 1 complete; going back is always allowed.
+// Batch bar: pills (delegated) + add; plus remove, name, and the bottom add-CTA.
+$('batchTabs').addEventListener('click', (e) => {
+    if (e.target.closest('#addBatchBtn')) { addBatch(); return; }
+    const pill = e.target.closest('.batch-pill[data-batch]');
+    if (pill) setActiveBatch(parseInt(pill.dataset.batch, 10));
+});
+$('batchRemove').addEventListener('click', removeActiveBatch);
+$('addBatchCta').addEventListener('click', addBatch);
+$('batchName').addEventListener('input', (e) => {
+    state.name = e.target.value;
+    render();   // refreshes the pill label + panel rows without touching the input
+});
+
+// Query-type boxes: set the active batch's type.
 document.querySelectorAll('#queryTypeSelect .query-type-box').forEach(box => {
-    const selectBox = () => {
-        const target = box.dataset.querytype;
-        if (target === activeTab) return;
-        if (activeTab === 'type1' && target === 'type2') {
-            const miss = missingFields(forms.type1);
-            if (miss.length) {
-                showFieldErrors(miss, 'Complete the highlighted fields in Query Type 1 before moving on — or set its query volume to 0.');
-                return;
-            }
-        }
-        setTab(target);
-    };
+    const choose = () => setActiveBatchType(box.dataset.querytype);
     box.addEventListener('click', (e) => {
         if (e.target.closest('.info-icon')) return;
-        selectBox();
+        choose();
     });
     box.addEventListener('keydown', (e) => {
         if (e.target.closest('.info-icon')) return;
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            selectBox();
-        }
-    });
-});
-
-// "Save and Move to Query Type 2" — same gate as the forward tab click.
-$('saveMoveBtn').addEventListener('click', () => {
-    const miss = missingFields(forms.type1);
-    if (miss.length) {
-        showFieldErrors(miss, 'Complete the highlighted fields in Query Type 1 before moving on — or set its query volume to 0.');
-        return;
-    }
-    setTab('type2');
-    // Scroll to the top of the Query Type 2 form (the query-type tabs) so the user starts
-    // at the beginning of the form, not stranded at the bottom where the Save button was.
-    // Target the tabs (a real box) — .tabbed-unit is display:contents and can't be scrolled to.
-    requestAnimationFrame(() => {
-        $('queryTypeSelect').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); }
     });
 });
 
@@ -3572,49 +3659,42 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && statsModal.classList.contains('open')) closeStats();
 });
 
-// Configurator CTA
+// Configurator CTA — snapshot every batch for the booking notes.
 function summarizeForm(f, p) {
     return [
+        `Type: ${f.qt === 'type2' ? 'Topical' : 'Brand'}`,
         `Publishing recency: ${f.publishingRecency ? RECENCY_LABELS[f.publishingRecency] : 'not selected'}`,
         `Historical backfill: ${f.backfill ? BACKFILL_LABELS[f.backfill] : 'not selected'}`,
         `Refresh: ${f.refresh || 'not selected'}`,
         `Search depth: ${f.depth || 'not selected'}`,
         `Video metrics: ${f.videoMetrics ? VIDEO_METRICS_LABELS[f.videoMetrics] : 'not selected'}`,
         `Creator metrics: ${f.creatorMetrics ? CREATOR_LABELS[f.creatorMetrics] : 'not selected'}`,
-        `Queries: ${p.brandedCount.toLocaleString()}/refresh (${QT_DISPLAY[f.brandedQueryType] || 'not selected'}, $${p.setupFee.toLocaleString()} one-time setup)`,
+        `Queries: ${p.brandedCount.toLocaleString()}/refresh (${f.qt === 'type2' ? 'Contextual' : (QT_DISPLAY[f.brandedQueryType] || 'not selected')}, $${p.setupFee.toLocaleString()} one-time setup)`,
         `Query exclusions: ${f.inclusions.size ? Array.from(f.inclusions).map(c => INCLUSION_LABELS[c]).join(', ') : 'none'}`,
         `Shorts vs long-form: ${f.shortsDistinction ? 'yes' : 'no'}`,
         `Monthly: $${Math.round(p.monthlyTotal).toLocaleString()}`
     ].join('; ');
 }
 function requestSample() {
-    // Need at least one query type with volume, and every non-zero type fully filled out.
-    if (formVolume(forms.type1) <= 0 && formVolume(forms.type2) <= 0) {
-        showFieldErrors([], 'Set a query volume for at least one query type before requesting a sample.');
+    // Need at least one batch with volume, and every batch that has volume fully filled out.
+    if (!batches.some(b => formVolume(b) > 0)) {
+        showFieldErrors([], 'Set a query volume for at least one batch before booking.');
         return;
     }
-    const m2 = missingFields(forms.type2);
-    if (m2.length) {
-        if (activeTab !== 'type2') setTab('type2');
-        showFieldErrors(m2, 'Complete the highlighted fields before requesting a sample.');
-        return;
+    for (const b of batches) {
+        const miss = missingFields(b);
+        if (miss.length) {
+            if (activeBatchId !== b.id) setActiveBatch(b.id);
+            showFieldErrors(miss, `Complete the highlighted fields in ${batchLabel(b)} before booking — or set its query volume to 0.`);
+            return;
+        }
     }
-    const m1 = missingFields(forms.type1);
-    if (m1.length) {
-        setTab('type1');
-        showFieldErrors(m1, 'Complete the highlighted fields in Query Type 1 before requesting a sample.');
-        return;
-    }
-    const p1 = computePrice(forms.type1);
-    const p2 = computePrice(forms.type2);
-    const combinedMonthly = p1.monthlyTotal + p2.monthlyTotal;
-    const combinedOneTime = p1.setupFee + p2.setupFee;
-    const snapshot = [
-        `=== QUERY TYPE 1 (contains a brand name) === ${summarizeForm(forms.type1, p1)}`,
-        `=== QUERY TYPE 2 (subject matter, no brand name) === ${summarizeForm(forms.type2, p2)}`,
-        `=== COMBINED === Monthly: $${Math.round(combinedMonthly).toLocaleString()} | Annual: $${Math.round(combinedMonthly * 12).toLocaleString()} | One-time setup: $${combinedOneTime.toLocaleString()}`
-    ].join('\n');
-    openModal(snapshot);
+    const priced = batches.map(b => ({ b, p: computePrice(b) }));
+    const combinedMonthly = priced.reduce((s, x) => s + x.p.monthlyTotal, 0);
+    const combinedOneTime = priced.reduce((s, x) => s + x.p.setupFee, 0);
+    const lines = priced.map(({ b, p }) => `=== ${batchLabel(b)} (${b.qt === 'type2' ? 'Topical, no brand' : 'Brand'}) === ${summarizeForm(b, p)}`);
+    lines.push(`=== COMBINED === Monthly: $${Math.round(combinedMonthly).toLocaleString()} | Annual: $${Math.round(combinedMonthly * 12).toLocaleString()} | One-time setup: $${combinedOneTime.toLocaleString()}`);
+    openModal(lines.join('\n'));
 }
 $('requestSampleBtn').addEventListener('click', requestSample);
 
